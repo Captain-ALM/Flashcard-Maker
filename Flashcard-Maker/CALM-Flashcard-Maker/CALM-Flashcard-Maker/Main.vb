@@ -58,6 +58,9 @@ Module Main
         sc.CloseForm()
         If t.IsAlive Then t.Join(2500)
         If t.IsAlive Then t.Abort()
+        If Not sc.IsDisposed And Not sc.Disposing Then
+            sc.Dispose()
+        End If
     End Sub
 
     Public Sub runtime()
@@ -94,8 +97,10 @@ Module Main
                         programSwitch = ProgramSwitchMode.Open
                     ElseIf dat.ToLower = "i" Or dat.ToLower = "import" Then
                         programSwitch = ProgramSwitchMode.Import
-                    ElseIf dat.ToLower = "i" Or dat.ToLower = "export" Then
+                    ElseIf dat.ToLower = "e" Or dat.ToLower = "export" Then
                         programSwitch = ProgramSwitchMode.Export
+                    ElseIf dat.ToLower = "n" Or dat.ToLower = "new" Then
+                        programSwitch = ProgramSwitchMode.New
                     End If
                 End If
             End If
@@ -133,7 +138,8 @@ End Module
 
 Enum ProgramSwitchMode As Integer
     None = 0
-    Open = 1
-    Import = 2
-    Export = 3
+    Open = 2
+    Import = 3
+    Export = 4
+    [New] = 1
 End Enum
