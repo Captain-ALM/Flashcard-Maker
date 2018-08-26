@@ -7,15 +7,7 @@
             Dim frm As AboutBx = castForm(Of AboutBx)(ev.FromForm)
             If ev.FromControl Is frm.OKButton Then
                 If ev.EventType = EventType.Click Then
-                    ev.FromForm.Invoke(Sub() ev.FromForm.Close())
-                    toret = False
-                End If
-            ElseIf ev.FromControl Is frm Then
-                If ev.EventType = EventType.Load Then
-                    ev.FromForm.Invoke(Sub() frm.whenLoad())
-                    toret = False
-                ElseIf ev.EventType = EventType.Closed Then
-                    ev.FromForm.Invoke(Sub() frm.whenClosed())
+                    frm.Invoke(Sub() frm.Close())
                     toret = False
                 End If
             End If
@@ -33,6 +25,24 @@
     End Function
 
     Private Function canCastForm(Of t As Form)(f As Form) As Boolean
+        Try
+            Dim nf As t = f
+            Return True
+        Catch ex As InvalidCastException
+            Return False
+        End Try
+    End Function
+
+    Private Function castEd(Of t As EventArgs)(f As EventArgs) As t
+        Try
+            Dim nf As t = f
+            Return nf
+        Catch ex As InvalidCastException
+            Return Nothing
+        End Try
+    End Function
+
+    Private Function canCastEd(Of t As EventArgs)(f As EventArgs) As Boolean
         Try
             Dim nf As t = f
             Return True

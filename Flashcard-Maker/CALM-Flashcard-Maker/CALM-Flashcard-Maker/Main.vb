@@ -66,6 +66,7 @@ Module Main
     Public Sub runtime()
         WorkerPump.startPump()
         WorkerPump.showForm(Of AboutBx)()
+        WorkerPump.showForm(Of AboutBx)()
         WorkerPump.stopPump()
     End Sub
 

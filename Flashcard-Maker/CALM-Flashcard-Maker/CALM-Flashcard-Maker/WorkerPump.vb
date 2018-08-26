@@ -41,12 +41,27 @@ Module WorkerPump
         End If
     End Sub
 
+    Public Sub addEvent(ff As Form, et As EventType, ed As EventArgs)
+        Dim ev As New WorkerEvent(ff, et, ed)
+        If Not workerStates.ContainsKey(ev) Then
+            workerQueue.Enqueue(ev)
+            workerStates.Add(ev, True)
+        End If
+    End Sub
+
+    Public Sub addEvent(ff As Form, fc As Control, et As EventType, ed As EventArgs)
+        Dim ev As New WorkerEvent(ff, fc, et, ed)
+        If Not workerStates.ContainsKey(ev) Then
+            workerQueue.Enqueue(ev)
+            workerStates.Add(ev, True)
+        End If
+    End Sub
+
     Public Sub addParser(p As IEventParser)
         parsers.Add(p)
     End Sub
 
     Public Function showForm(Of t As Form)(Optional index As Integer = 0, Optional owner As Form = Nothing) As Boolean
-        Dim frm As Form = Nothing
         Dim ci As Integer = 0
         If index < 0 Then Return False
         For Each cf As Form In formInstanceRegistry
@@ -66,6 +81,71 @@ Module WorkerPump
         Return False
     End Function
 
+    Public Function removeForm(Of t As Form)(Optional index As Integer = 0) As Boolean
+        Dim ci As Integer = 0
+        If index < 0 Then Return False
+        For Each cf As Form In formInstanceRegistry
+            If canCastForm(Of t)(cf) Then
+                If ci = index Then
+                    If cf.Visible Then
+                        Return False
+                    Else
+                        Return formInstanceRegistry.Remove(cf)
+                    End If
+                Else
+                    ci = ci + 1
+                End If
+            End If
+        Next
+        Return False
+    End Function
+
+    Public Function removeForms(Of t As Form)() As Boolean
+        Dim toret As Boolean = True
+        Dim cnt As Integer = 0
+        For Each cf As Form In formInstanceRegistry
+            If canCastForm(Of t)(cf) Then
+                If cf.Visible Then
+                    toret = toret And False
+                Else
+                    toret = toret And formInstanceRegistry.Remove(cf)
+                End If
+                cnt += 1
+            End If
+        Next
+        If cnt < 1 Then toret = False
+        Return toret
+    End Function
+
+    Public Function removeParser(Of t As IEventParser)(Optional index As Integer = 0) As Boolean
+        Dim frm As Form = Nothing
+        Dim ci As Integer = 0
+        If index < 0 Then Return False
+        For Each cf As IEventParser In parsers
+            If canCastParser(Of t)(cf) Then
+                If ci = index Then
+                    Return parsers.Remove(cf)
+                End If
+            Else
+                ci = ci + 1
+            End If
+        Next
+        Return False
+    End Function
+
+    Public Function removeParsers(Of t As IEventParser)() As Boolean
+        Dim toret As Boolean = True
+        Dim cnt As Integer = 0
+        For Each cf As IEventParser In parsers
+            If canCastParser(Of t)(cf) Then
+                toret = toret And parsers.Remove(cf)
+                cnt += 1
+            End If
+        Next
+        If cnt < 1 Then toret = False
+        Return toret
+    End Function
+
     Private Function castForm(Of t As Form)(f As Form) As t
         Try
             Dim nf As t = f
@@ -76,6 +156,24 @@ Module WorkerPump
     End Function
 
     Private Function canCastForm(Of t As Form)(f As Form) As Boolean
+        Try
+            Dim nf As t = f
+            Return True
+        Catch ex As InvalidCastException
+            Return False
+        End Try
+    End Function
+
+    Private Function castParser(Of t As IEventParser)(f As IEventParser) As t
+        Try
+            Dim nf As t = f
+            Return nf
+        Catch ex As InvalidCastException
+            Return Nothing
+        End Try
+    End Function
+
+    Private Function canCastParser(Of t As IEventParser)(f As IEventParser) As Boolean
         Try
             Dim nf As t = f
             Return True

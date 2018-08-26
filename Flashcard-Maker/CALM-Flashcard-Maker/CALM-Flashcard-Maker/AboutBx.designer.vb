@@ -118,7 +118,6 @@ Partial Class AboutBx
         'OKButton
         '
         Me.OKButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.OKButton.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.OKButton.Location = New System.Drawing.Point(318, 232)
         Me.OKButton.Name = "OKButton"
         Me.OKButton.Size = New System.Drawing.Size(75, 23)
@@ -175,7 +174,6 @@ Partial Class AboutBx
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.CancelButton = Me.OKButton
         Me.ClientSize = New System.Drawing.Size(414, 276)
         Me.Controls.Add(Me.TableLayoutPanel)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
