@@ -1,5 +1,6 @@
 ﻿Public NotInheritable Class AboutBx
     Private ct As Boolean = False
+    Private ct2 As Boolean = False
 
     Private Sub AboutBx_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         addEvent(New WorkerEvent(Me, EventType.Load, e))
@@ -10,8 +11,11 @@
     End Sub
 
     Private Sub AboutBx_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
-        whenClosed()
-        addEvent(New WorkerEvent(Me, EventType.Closed, e))
+        If Not ct2 Then
+            whenClosed()
+            addEvent(New WorkerEvent(Me, EventType.Closed, e))
+            ct2 = True
+        End If
     End Sub
 
     Public Sub whenClosed()
@@ -25,6 +29,7 @@
                 Me.Hide()
                 Me.DialogResult = Windows.Forms.DialogResult.OK
             End If
+            Me.OnFormClosed(New FormClosedEventArgs(e.CloseReason))
             addEvent(New WorkerEvent(Me, EventType.Closing, e))
             ct = True
         End If
@@ -32,18 +37,18 @@
 
 #Region "closeOverride"
     Public Shadows Sub Close()
-        Dim cea As New FormClosingEventArgs(CloseReason.None, False)
+        'Dim cea As New FormClosedEventArgs(CloseReason.None)
         'Me.OnFormClosing(cea)
-        If Not cea.Cancel Then
-            Me.Hide()
-            Me.DialogResult = Windows.Forms.DialogResult.OK
-        End If
+        Me.Hide()
+        'Me.OnFormClosed(cea)
+        Me.DialogResult = Windows.Forms.DialogResult.OK
     End Sub
 #End Region
 
     Private Sub AboutBx_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         Me.DialogResult = Windows.Forms.DialogResult.None
         ct = False
+        ct2 = False
         Dim ApplicationTitle As String
         If My.Application.Info.Title <> "" Then
             ApplicationTitle = My.Application.Info.Title
