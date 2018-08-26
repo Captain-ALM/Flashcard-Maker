@@ -52,7 +52,6 @@ Module Main
         End Try
 
         WorkerPump.addFormInstance(New AboutBx())
-        WorkerPump.addParser(New PAboutBx())
 
         'Close the splash form and thread.
         sc.CloseForm()
@@ -65,8 +64,6 @@ Module Main
 
     Public Sub runtime()
         WorkerPump.startPump()
-        WorkerPump.showForm(Of AboutBx)()
-        WorkerPump.showForm(Of AboutBx)()
         WorkerPump.stopPump()
     End Sub
 
