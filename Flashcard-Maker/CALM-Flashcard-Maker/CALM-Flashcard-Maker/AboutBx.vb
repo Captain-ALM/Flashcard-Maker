@@ -24,23 +24,18 @@
 
     Private Sub AboutBx_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         If Not ct Then
-            If e.CloseReason = CloseReason.UserClosing Then
-                e.Cancel = True
-                Me.Hide()
-                Me.DialogResult = Windows.Forms.DialogResult.OK
-            End If
-            Me.OnFormClosed(New FormClosedEventArgs(e.CloseReason))
+            e.Cancel = True
+            Me.Hide()
+            Me.DialogResult = Windows.Forms.DialogResult.OK
             addEvent(New WorkerEvent(Me, EventType.Closing, e))
+            Me.OnFormClosed(New FormClosedEventArgs(e.CloseReason))
             ct = True
         End If
     End Sub
 
 #Region "closeOverride"
     Public Shadows Sub Close()
-        'Dim cea As New FormClosedEventArgs(CloseReason.None)
-        'Me.OnFormClosing(cea)
         Me.Hide()
-        'Me.OnFormClosed(cea)
         Me.DialogResult = Windows.Forms.DialogResult.OK
     End Sub
 #End Region
