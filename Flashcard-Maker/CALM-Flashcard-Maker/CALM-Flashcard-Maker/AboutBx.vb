@@ -1,6 +1,6 @@
 ﻿Public NotInheritable Class AboutBx
-    Private ct As Boolean = False
-    Private ct2 As Boolean = False
+    Private formClosingDone As Boolean = False
+    Private formClosedDone As Boolean = False
 
     Private Sub AboutBx_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         addEvent(New WorkerEvent(Me, EventType.Load, e))
@@ -11,10 +11,10 @@
     End Sub
 
     Private Sub AboutBx_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
-        If Not ct2 Then
+        If Not formClosedDone Then
             whenClosed()
             addEvent(New WorkerEvent(Me, EventType.Closed, e))
-            ct2 = True
+            formClosedDone = True
         End If
     End Sub
 
@@ -23,27 +23,31 @@
     End Sub
 
     Private Sub AboutBx_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-        If Not ct Then
-            e.Cancel = True
-            Me.Hide()
-            Me.DialogResult = Windows.Forms.DialogResult.OK
+        If Not formClosingDone Then
+            If Me.Visible Then
+                'If close button pressed
+                e.Cancel = True
+                Me.Hide()
+                Me.DialogResult = Windows.Forms.DialogResult.OK
+            End If
             addEvent(New WorkerEvent(Me, EventType.Closing, e))
             Me.OnFormClosed(New FormClosedEventArgs(e.CloseReason))
-            ct = True
+            formClosingDone = True
         End If
     End Sub
 
 #Region "closeOverride"
     Public Shadows Sub Close()
         Me.Hide()
+        Me.OnFormClosing(New FormClosingEventArgs(CloseReason.UserClosing, False))
         Me.DialogResult = Windows.Forms.DialogResult.OK
     End Sub
 #End Region
 
     Private Sub AboutBx_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         Me.DialogResult = Windows.Forms.DialogResult.None
-        ct = False
-        ct2 = False
+        formClosingDone = False
+        formClosedDone = False
         Dim ApplicationTitle As String
         If My.Application.Info.Title <> "" Then
             ApplicationTitle = My.Application.Info.Title
