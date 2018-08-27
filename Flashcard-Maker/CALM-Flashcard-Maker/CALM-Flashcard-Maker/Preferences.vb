@@ -73,7 +73,7 @@ Public Class Preferences
     End Sub
 
     Public Overridable Function getPreference() As List(Of IPreference(Of Object)) Implements IPreference(Of List(Of IPreference(Of Object))).getPreference
-        Throw New InvalidOperationException("Get preference object using getPreference<IPreference<Object> t>(String name, [Optional] Integer index = 0)")
+        Return prefs
     End Function
 
     Public Overridable Function getPreference(Of t As IPreference(Of Object))(name As String, Optional index As Integer = 0) As t
@@ -83,7 +83,7 @@ Public Class Preferences
     End Function
 
     Public Overridable Sub setPreference(pref As List(Of IPreference(Of Object))) Implements IPreference(Of List(Of IPreference(Of Object))).setPreference
-        Throw New InvalidOperationException("Set preference object using setPreference<IPreference<Object> t>(t pref, [Optional] Integer index = 0)")
+        prefs = pref
     End Sub
 
     Public Overridable Sub setPreference(Of t As IPreference(Of Object))(pref As t, Optional index As Integer = 0)
