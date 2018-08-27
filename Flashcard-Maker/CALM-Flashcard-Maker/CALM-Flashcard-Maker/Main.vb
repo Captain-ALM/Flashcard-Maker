@@ -13,6 +13,7 @@ Module Main
     Public programAssembly As Assembly = Assembly.GetEntryAssembly()
     Public programPath As String = programAssembly.Location
     Public execdir As String = Path.GetDirectoryName(programPath)
+    Public worker As WorkerPump = Nothing
     Private sc As SplashScr = Nothing
     Private wa As Boolean = True
 
@@ -51,7 +52,8 @@ Module Main
         Catch ex As IOException
         End Try
 
-        WorkerPump.addFormInstance(New AboutBx())
+        worker = New WorkerPump()
+        worker.addFormInstance(New AboutBx(worker))
 
         'Close the splash form and thread.
         sc.CloseForm()
@@ -63,12 +65,12 @@ Module Main
     End Sub
 
     Public Sub runtime()
-        WorkerPump.startPump()
-        WorkerPump.stopPump()
+        worker.startPump()
+        worker.stopPump()
     End Sub
 
     Public Sub shutdown()
-        If WorkerPump.pumping() Then WorkerPump.stopPumpForce()
+        If worker.pumping() Then worker.stopPumpForce()
     End Sub
 
     Sub decodeArgs()

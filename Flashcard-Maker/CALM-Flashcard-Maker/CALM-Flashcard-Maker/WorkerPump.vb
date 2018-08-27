@@ -1,6 +1,8 @@
 ﻿Imports System.Threading
 
-Module WorkerPump
+Public Class WorkerPump
+    Implements IDisposable
+
     Private formInstanceRegistry As New List(Of Form)
     Private workerQueue As New Queue(Of WorkerEvent)
     Private workerStates As New Dictionary(Of WorkerEvent, Boolean)
@@ -8,19 +10,34 @@ Module WorkerPump
     Private parsers As New List(Of IEventParser)
     Private wThread As Thread = Nothing
 
+    Public Sub New()
+        wThread = New Thread(New ThreadStart(AddressOf workerRunner))
+        wThread.IsBackground = True
+    End Sub
+
+    Public ReadOnly Property IsDisposed As Boolean
+        Get
+            Return disp
+        End Get
+    End Property
+
+    Public ReadOnly Property Disposing As Boolean
+        Get
+            Return disping
+        End Get
+    End Property
+
     Public Sub addFormInstance(f As Form)
         formInstanceRegistry.Add(f)
     End Sub
 
     Public Sub startPump()
-        wThread = New Thread(New ThreadStart(AddressOf workerRunner))
-        wThread.IsBackground = True
         pump = True
         wThread.Start()
     End Sub
 
     Public Function pumping() As Boolean
-        Return pump And wThread.IsAlive
+        Return pump Or wThread.IsAlive
     End Function
 
     Public Function stopPump() As Boolean
@@ -182,29 +199,53 @@ Module WorkerPump
         End Try
     End Function
 
+    Private Function castObject(Of t)(f As Object) As t
+        Try
+            Dim nf As t = f
+            Return nf
+        Catch ex As InvalidCastException
+            Return Nothing
+        End Try
+    End Function
+
+    Private Function canCastObject(Of t)(f As Object) As Boolean
+        Try
+            Dim nf As t = f
+            Return True
+        Catch ex As InvalidCastException
+            Return False
+        End Try
+    End Function
+
     Private Sub workerRunner()
-        While pump
-            Try
-                Thread.Sleep(100)
-                While workerQueue.Count > 0
-                    Dim ev As WorkerEvent = workerQueue.Dequeue()
-                    If ev.FromForm IsNot ev.FromControl Then
-                        ev.FromControl.Invoke(Sub() ev.FromControl.Enabled = False)
-                    End If
-                    Dim en As Boolean = parseEvents(ev)
-                    If ev.FromForm IsNot ev.FromControl And en Then
-                        ev.FromControl.Invoke(Sub() ev.FromControl.Enabled = True)
-                    End If
-                    If workerStates.ContainsKey(ev) Then
-                        workerStates.Remove(ev)
-                    End If
+        Try
+            While pump
+                Try
                     Thread.Sleep(100)
-                End While
-            Catch ex As ThreadAbortException
-                Throw ex
-            Catch ex As Exception
-            End Try
-        End While
+                    While workerQueue.Count > 0
+                        Dim ev As WorkerEvent = workerQueue.Dequeue()
+                        If ev.FromForm IsNot ev.FromControl Then
+                            ev.FromControl.Invoke(Sub() ev.FromControl.Enabled = False)
+                        End If
+                        Dim en As Boolean = parseEvents(ev)
+                        If ev.FromForm IsNot ev.FromControl And en Then
+                            ev.FromControl.Invoke(Sub() ev.FromControl.Enabled = True)
+                        End If
+                        If workerStates.ContainsKey(ev) Then
+                            workerStates.Remove(ev)
+                        End If
+                        Thread.Sleep(100)
+                    End While
+                Catch ex As ThreadAbortException
+                    Throw ex
+                Catch ex As Exception
+                End Try
+            End While
+        Catch ex As ThreadAbortException
+            Throw ex
+        Catch ex As Exception
+        End Try
+        pump = False
     End Sub
 
     Function parseEvents(ev As WorkerEvent) As Boolean
@@ -214,13 +255,70 @@ Module WorkerPump
         Next
         Return toret
     End Function
-End Module
 
-Interface IEventParser
+#Region "IDisposable Support"
+    Private disposedValue As Boolean = False ' To detect redundant calls
+    Private disping As Boolean = False
+    Private disp As Boolean = False
+
+    ' IDisposable
+    Protected Overridable Sub Dispose(disposing As Boolean)
+        If Not Me.disposedValue Then
+            If disposing Then
+                Me.disping = True
+                workerQueue.Clear()
+                workerStates.Clear()
+                For Each frm As Form In formInstanceRegistry
+                    If Not frm.IsDisposed And Not frm.Disposing Then
+                        frm.Dispose()
+                    End If
+                Next
+                formInstanceRegistry.Clear()
+                For Each par As IEventParser In parsers
+                    If canCastObject(Of IDisposable)(par) Then
+                        Dim disppar As IDisposable = castObject(Of IDisposable)(par)
+                        disppar.Dispose()
+                    End If
+                Next
+                parsers.Clear()
+            End If
+
+            ' t.o.d.o. free unmanaged resources (unmanaged objects) and override Finalize() below.
+            wThread = Nothing
+            pump = Nothing
+            workerQueue = Nothing
+            workerStates = Nothing
+            formInstanceRegistry = Nothing
+            parsers = Nothing
+            Me.disping = False
+            Me.disp = True
+        End If
+        Me.disposedValue = True
+    End Sub
+
+    't.o.d.o. override Finalize() only if Dispose(ByVal disposing As Boolean) above has code to free unmanaged resources.
+    'Protected Overrides Sub Finalize()
+    '    ' Do not change this code.  Put cleanup code in Dispose(ByVal disposing As Boolean) above.
+    '    Dispose(False)
+    '    MyBase.Finalize()
+    'End Sub
+
+    ' This code added by Visual Basic to correctly implement the disposable pattern.
+    Public Sub Dispose() Implements IDisposable.Dispose
+        ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+        If pumping() Then Throw New InvalidOperationException("Stop the workerpump before disposing.")
+        Dispose(True)
+        GC.SuppressFinalize(Me)
+    End Sub
+#End Region
+
+End Class
+
+Public Interface IEventParser
     Function Parse(ev As WorkerEvent) As Boolean
 End Interface
 
-Structure WorkerEvent
+Public Structure WorkerEvent
     Public FromForm As Form
     Public FromControl As Control
     Public EventType As EventType
@@ -239,7 +337,7 @@ Structure WorkerEvent
     End Sub
 End Structure
 
-Enum EventType As Integer
+Public Enum EventType As Integer
     None = 0
     Click = 1
     Load = 2

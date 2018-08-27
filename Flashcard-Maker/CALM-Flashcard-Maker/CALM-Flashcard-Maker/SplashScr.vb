@@ -1,7 +1,7 @@
 ﻿Public NotInheritable Class SplashScr
     Public wasactive As Boolean = False
-
-    Public Sub New()
+    'Should not construct externaly
+    Sub New()
         Me.SetStyle(ControlStyles.SupportsTransparentBackColor, True)
 
         ' This call is required by the designer.
