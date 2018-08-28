@@ -48,16 +48,21 @@ Public Class Preferences
         Next
     End Sub
 
+    Protected slockGetPreferenceIndex As New Object()
+
     Protected Overridable Function getPreferenceIndex(name As String, Optional index As Integer = 0) As Integer
-        Dim cnt As Integer = 0
-        Dim indx As Integer = 0
-        For Each pref As IPreference(Of Object) In prefs
-            If pref.getName() = name Then
-                If cnt = index Then Return indx Else cnt += 1
-            End If
-            indx += 1
-        Next
-        Return -1
+        Dim toret As Integer = -1
+        SyncLock slockGetPreferenceIndex
+            Dim cnt As Integer = 0
+            Dim indx As Integer = 0
+            For Each pref As IPreference(Of Object) In prefs
+                If pref.getName() = name Then
+                    If cnt = index Then toret = indx Else cnt += 1
+                End If
+                indx += 1
+            Next
+        End SyncLock
+        Return toret
     End Function
 
     Public Overridable Function savePreference() As String Implements IPreference(Of List(Of IPreference(Of Object))).savePreference
@@ -92,27 +97,48 @@ Public Class Preferences
         prefs(indx) = pref
     End Sub
 
+    Public Overridable Sub addPreference(Of t As IPreference(Of Object))(pref As t)
+        prefs.Add(pref)
+    End Sub
+
+    Public Overridable Sub removePreference(name As String, Optional index As Integer = 0)
+        Dim indx As Integer = getPreferenceIndex(name, index)
+        If indx < 0 Then Return
+        prefs.RemoveAt(indx)
+    End Sub
+
     Protected Class ser
         Private Shared formatter As New BinaryFormatter()
+        Private Shared slock As New Object()
         Public Shared Function serialize(obj As Object) As String
             Try
-                Dim ms As New MemoryStream()
-                formatter.Serialize(ms, obj)
-                Dim toreturn As String = Convert.ToBase64String(ms.ToArray)
-                ms.Dispose()
-                ms = Nothing
+                Dim toreturn As String = ""
+                SyncLock slock
+                    Dim ms As New MemoryStream()
+                    formatter.Serialize(ms, obj)
+                    toreturn = Convert.ToBase64String(ms.ToArray)
+                    ms.Dispose()
+                    ms = Nothing
+                End SyncLock
                 Return toreturn
+            Catch ex As IOException
+                Return ""
             Catch ex As SerializationException
                 Return ""
             End Try
         End Function
         Public Shared Function deserialize(ser As String) As Object
             Try
-                Dim ms As New MemoryStream(Convert.FromBase64String(ser))
-                Dim toreturn As Object = formatter.Deserialize(ms)
-                ms.Dispose()
-                ms = Nothing
+                Dim toreturn As Object = Nothing
+                SyncLock slock
+                    Dim ms As New MemoryStream(Convert.FromBase64String(ser))
+                    formatter.Deserialize(ms)
+                    ms.Dispose()
+                    ms = Nothing
+                End SyncLock
                 Return toreturn
+            Catch ex As IOException
+                Return Nothing
             Catch ex As SerializationException
                 Return Nothing
             End Try
@@ -157,25 +183,36 @@ Public Class Preference(Of t)
 
     Protected Class ser
         Private Shared formatter As New BinaryFormatter()
+        Private Shared slock As New Object()
         Public Shared Function serialize(obj As Object) As String
             Try
-                Dim ms As New MemoryStream()
-                formatter.Serialize(ms, obj)
-                Dim toreturn As String = Convert.ToBase64String(ms.ToArray)
-                ms.Dispose()
-                ms = Nothing
+                Dim toreturn As String = ""
+                SyncLock slock
+                    Dim ms As New MemoryStream()
+                    formatter.Serialize(ms, obj)
+                    toreturn = Convert.ToBase64String(ms.ToArray)
+                    ms.Dispose()
+                    ms = Nothing
+                End SyncLock
                 Return toreturn
+            Catch ex As IOException
+                Return ""
             Catch ex As SerializationException
                 Return ""
             End Try
         End Function
         Public Shared Function deserialize(ser As String) As Object
             Try
-                Dim ms As New MemoryStream(Convert.FromBase64String(ser))
-                Dim toreturn As Object = formatter.Deserialize(ms)
-                ms.Dispose()
-                ms = Nothing
+                Dim toreturn As Object = Nothing
+                SyncLock slock
+                    Dim ms As New MemoryStream(Convert.FromBase64String(ser))
+                    formatter.Deserialize(ms)
+                    ms.Dispose()
+                    ms = Nothing
+                End SyncLock
                 Return toreturn
+            Catch ex As IOException
+                Return Nothing
             Catch ex As SerializationException
                 Return Nothing
             End Try
