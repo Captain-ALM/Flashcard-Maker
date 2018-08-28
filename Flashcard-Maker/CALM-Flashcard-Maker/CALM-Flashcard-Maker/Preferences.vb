@@ -3,26 +3,27 @@ Imports System.IO
 Imports System.Runtime.Serialization
 
 Public Class Preferences
-    Implements IPreference(Of List(Of IPreference(Of Object)))
+    Implements IPreference
+
 
     Protected nom As String = ""
-    Protected prefs As New List(Of IPreference(Of Object))
+    Protected prefs As New List(Of IPreference)
 
     Sub New()
         nom = ""
-        prefs = New List(Of IPreference(Of Object))
+        prefs = New List(Of IPreference)
     End Sub
 
     Public Sub New(name As String)
         nom = name
-        prefs = New List(Of IPreference(Of Object))
+        prefs = New List(Of IPreference)
     End Sub
 
-    Public Overridable Function getName() As String Implements IPreference(Of List(Of IPreference(Of Object))).getName
+    Public Overridable Function getName() As String Implements IPreference.getName
         Return nom
     End Function
 
-    Public Overridable Sub loadPreference(data As String) Implements IPreference(Of List(Of IPreference(Of Object))).loadPreference
+    Public Overridable Sub loadPreference(data As String) Implements IPreference.loadPreference
         Dim lst As List(Of String) = ser.deserialize(data)
         Dim nr As New Dictionary(Of String, Integer)
         For Each pref As String In lst
@@ -55,7 +56,7 @@ Public Class Preferences
         SyncLock slockGetPreferenceIndex
             Dim cnt As Integer = 0
             Dim indx As Integer = 0
-            For Each pref As IPreference(Of Object) In prefs
+            For Each pref As IPreference In prefs
                 If pref.getName() = name Then
                     If cnt = index Then toret = indx Else cnt += 1
                 End If
@@ -65,39 +66,39 @@ Public Class Preferences
         Return toret
     End Function
 
-    Public Overridable Function savePreference() As String Implements IPreference(Of List(Of IPreference(Of Object))).savePreference
+    Public Overridable Function savePreference() As String Implements IPreference.savePreference
         Dim lst As New List(Of String)
-        For Each pref As IPreference(Of Object) In prefs
+        For Each pref As IPreference In prefs
             lst.Add(ser.serialize(pref.getName()) & ":" & ser.serialize(pref.savePreference()))
         Next
         Return ser.serialize(lst)
     End Function
 
-    Public Overridable Sub setName(name As String) Implements IPreference(Of List(Of IPreference(Of Object))).setName
+    Public Overridable Sub setName(name As String) Implements IPreference.setName
         nom = name
     End Sub
 
-    Public Overridable Function getPreference() As List(Of IPreference(Of Object)) Implements IPreference(Of List(Of IPreference(Of Object))).getPreference
+    Public Overridable Function getPreference() As Object Implements IPreference.getPreference
         Return prefs
     End Function
 
-    Public Overridable Function getPreference(Of t As IPreference(Of Object))(name As String, Optional index As Integer = 0) As t
+    Public Overridable Function getPreference(Of t As IPreference)(name As String, Optional index As Integer = 0) As t
         Dim indx As Integer = getPreferenceIndex(name, index)
         If indx < 0 Then Return Nothing
         Return prefs(indx)
     End Function
 
-    Public Overridable Sub setPreference(pref As List(Of IPreference(Of Object))) Implements IPreference(Of List(Of IPreference(Of Object))).setPreference
+    Public Overridable Sub setPreference(pref As Object) Implements IPreference.setPreference
         prefs = pref
     End Sub
 
-    Public Overridable Sub setPreference(Of t As IPreference(Of Object))(pref As t, Optional index As Integer = 0)
+    Public Overridable Sub setPreference(Of t As IPreference)(pref As t, Optional index As Integer = 0)
         Dim indx As Integer = getPreferenceIndex(pref.getName(), index)
         If indx < 0 Then Return
         prefs(indx) = pref
     End Sub
 
-    Public Overridable Sub addPreference(Of t As IPreference(Of Object))(pref As t)
+    Public Overridable Sub addPreference(Of t As IPreference)(pref As t)
         prefs.Add(pref)
     End Sub
 
@@ -157,27 +158,32 @@ Public Class Preference(Of t)
         nom = ""
     End Sub
 
-    Public Overridable Function getName() As String Implements IPreference(Of t).getName
-        Return nom
-    End Function
-
-    Public Overridable Function getPreference() As t Implements IPreference(Of t).getPreference
-        Return val
-    End Function
-
-    Public Overridable Sub loadPreference(data As String) Implements IPreference(Of t).loadPreference
-        val = ser.deserialize(data)
-    End Sub
-
-    Public Overridable Function savePreference() As String Implements IPreference(Of t).savePreference
-        Return ser.serialize(val)
-    End Function
-
-    Public Overridable Sub setName(name As String) Implements IPreference(Of t).setName
+    Public Sub New(name As String)
+        val = Nothing
         nom = name
     End Sub
 
-    Public Overridable Sub setPreference(pref As t) Implements IPreference(Of t).setPreference
+    Public Overridable Function getName() As String Implements IPreference.getName
+        Return nom
+    End Function
+
+    Public Overridable Function getPreferenceAsObject() As Object Implements IPreference.getPreference
+        Return val
+    End Function
+
+    Public Overridable Sub loadPreference(data As String) Implements IPreference.loadPreference
+        val = ser.deserialize(data)
+    End Sub
+
+    Public Overridable Function savePreference() As String Implements IPreference.savePreference
+        Return ser.serialize(val)
+    End Function
+
+    Public Overridable Sub setName(name As String) Implements IPreference.setName
+        nom = name
+    End Sub
+
+    Public Overridable Sub setPreferenceAsObject(pref As Object) Implements IPreference.setPreference
         val = pref
     End Sub
 
@@ -218,13 +224,27 @@ Public Class Preference(Of t)
             End Try
         End Function
     End Class
+
+    Public Overloads Function getPreference() As t Implements IPreference(Of t).getPreference
+
+    End Function
+
+    Public Overloads Sub setPreference(pref As t) Implements IPreference(Of t).setPreference
+
+    End Sub
 End Class
 
-Public Interface IPreference(Of t)
-    Sub setPreference(pref As t)
-    Function getPreference() As t
+Public Interface IPreference
+    Sub setPreference(pref As Object)
+    Function getPreference() As Object
     Function savePreference() As String
     Sub loadPreference(data As String)
     Function getName() As String
     Sub setName(name As String)
+End Interface
+
+Public Interface IPreference(Of t)
+    Inherits IPreference
+    Overloads Sub setPreference(pref As t)
+    Overloads Function getPreference() As t
 End Interface
