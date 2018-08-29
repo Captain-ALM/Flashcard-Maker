@@ -1,10 +1,9 @@
 ﻿Imports System.Runtime.Serialization.Formatters.Binary
 Imports System.IO
 Imports System.Runtime.Serialization
-
+<Serializable>
 Public Class Preferences
     Implements IPreference
-
 
     Protected nom As String = ""
     Protected prefs As New List(Of IPreference)
@@ -24,13 +23,13 @@ Public Class Preferences
     End Function
 
     Public Overridable Sub loadPreference(data As String) Implements IPreference.loadPreference
-        Dim lst As List(Of String) = ser.deserialize(data)
+        Dim lst As List(Of String) = BinarySerializer.deserialize(data)
         Dim nr As New Dictionary(Of String, Integer)
         For Each pref As String In lst
             Dim dat As String() = pref.Split(":")
             If dat.Length = 2 Then
-                Dim pname As String = ser.deserialize(dat(0))
-                Dim pdat As String = ser.deserialize(dat(1))
+                Dim pname As String = BinarySerializer.deserialize(dat(0))
+                Dim pdat As String = BinarySerializer.deserialize(dat(1))
                 Dim i As Integer = -1
                 If nr.ContainsKey(pname) Then
                     i = getPreferenceIndex(pname, nr(pname))
@@ -69,9 +68,9 @@ Public Class Preferences
     Public Overridable Function savePreference() As String Implements IPreference.savePreference
         Dim lst As New List(Of String)
         For Each pref As IPreference In prefs
-            lst.Add(ser.serialize(pref.getName()) & ":" & ser.serialize(pref.savePreference()))
+            lst.Add(BinarySerializer.serialize(pref.getName()) & ":" & BinarySerializer.serialize(pref.savePreference()))
         Next
-        Return ser.serialize(lst)
+        Return BinarySerializer.serialize(lst)
     End Function
 
     Public Overridable Sub setName(name As String) Implements IPreference.setName
@@ -107,46 +106,95 @@ Public Class Preferences
         If indx < 0 Then Return
         prefs.RemoveAt(indx)
     End Sub
-
-    Protected Class ser
-        Private Shared formatter As New BinaryFormatter()
-        Private Shared slock As New Object()
-        Public Shared Function serialize(obj As Object) As String
-            Try
-                Dim toreturn As String = ""
-                SyncLock slock
-                    Dim ms As New MemoryStream()
-                    formatter.Serialize(ms, obj)
-                    toreturn = Convert.ToBase64String(ms.ToArray)
-                    ms.Dispose()
-                    ms = Nothing
-                End SyncLock
-                Return toreturn
-            Catch ex As IOException
-                Return ""
-            Catch ex As SerializationException
-                Return ""
-            End Try
-        End Function
-        Public Shared Function deserialize(ser As String) As Object
-            Try
-                Dim toreturn As Object = Nothing
-                SyncLock slock
-                    Dim ms As New MemoryStream(Convert.FromBase64String(ser))
-                    formatter.Deserialize(ms)
-                    ms.Dispose()
-                    ms = Nothing
-                End SyncLock
-                Return toreturn
-            Catch ex As IOException
-                Return Nothing
-            Catch ex As SerializationException
-                Return Nothing
-            End Try
-        End Function
-    End Class
 End Class
 
+Public Class BinarySerializer
+    Private Shared formatter As New BinaryFormatter()
+    Private Shared slock As New Object()
+    Public Shared Function serialize(obj As Object) As String
+        Try
+            Dim toreturn As String = ""
+            SyncLock slock
+                Dim ms As New MemoryStream()
+                formatter.Serialize(ms, obj)
+                toreturn = Convert.ToBase64String(ms.ToArray)
+                ms.Dispose()
+                ms = Nothing
+            End SyncLock
+            Return toreturn
+        Catch ex As ArgumentNullException
+            Return ""
+        Catch ex As FormatException
+            Return ""
+        Catch ex As IOException
+            Return ""
+        Catch ex As SerializationException
+            Return ""
+        End Try
+    End Function
+    Public Shared Function serialize(Of t)(obj As t) As String
+        Try
+            Dim toreturn As String = ""
+            SyncLock slock
+                Dim ms As New MemoryStream()
+                formatter.Serialize(ms, obj)
+                toreturn = Convert.ToBase64String(ms.ToArray)
+                ms.Dispose()
+                ms = Nothing
+            End SyncLock
+            Return toreturn
+        Catch ex As ArgumentNullException
+            Return ""
+        Catch ex As FormatException
+            Return ""
+        Catch ex As IOException
+            Return ""
+        Catch ex As SerializationException
+            Return ""
+        End Try
+    End Function
+    Public Shared Function deserialize(ser As String) As Object
+        Try
+            Dim toreturn As Object = Nothing
+            SyncLock slock
+                Dim ms As New MemoryStream(Convert.FromBase64String(ser))
+                toreturn = formatter.Deserialize(ms)
+                ms.Dispose()
+                ms = Nothing
+            End SyncLock
+            Return toreturn
+        Catch ex As ArgumentNullException
+            Return Nothing
+        Catch ex As FormatException
+            Return Nothing
+        Catch ex As IOException
+            Return Nothing
+        Catch ex As SerializationException
+            Return Nothing
+        End Try
+    End Function
+    Public Shared Function deserialize(Of t)(ser As String) As t
+        Try
+            Dim toreturn As t = Nothing
+            SyncLock slock
+                Dim ms As New MemoryStream(Convert.FromBase64String(ser))
+                toreturn = formatter.Deserialize(ms)
+                ms.Dispose()
+                ms = Nothing
+            End SyncLock
+            Return toreturn
+        Catch ex As ArgumentNullException
+            Return Nothing
+        Catch ex As FormatException
+            Return Nothing
+        Catch ex As IOException
+            Return Nothing
+        Catch ex As SerializationException
+            Return Nothing
+        End Try
+    End Function
+End Class
+<Serializable>
 Public Class Preference(Of t)
     Implements IPreference(Of t)
 

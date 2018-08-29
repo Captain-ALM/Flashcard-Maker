@@ -79,7 +79,18 @@
     <Compile Include="AboutBx.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main.vb" />
+    <Compile Include="FontDialogNoSize.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GlobalOptions.Designer.vb">
+      <DependentUpon>GlobalOptions.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalOptions.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -113,6 +124,12 @@
   <ItemGroup>
     <EmbeddedResource Include="AboutBx.resx">
       <DependentUpon>AboutBx.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FontDialogNoSize.resx">
+      <DependentUpon>FontDialogNoSize.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GlobalOptions.resx">
+      <DependentUpon>GlobalOptions.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
