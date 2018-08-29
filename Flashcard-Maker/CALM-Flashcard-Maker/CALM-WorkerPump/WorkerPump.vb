@@ -1,4 +1,5 @@
 ﻿Imports System.Threading
+Imports System.Windows.Forms
 
 Public Class WorkerPump
     Implements IDisposable
@@ -58,16 +59,26 @@ Public Class WorkerPump
         End If
     End Sub
 
-    Public Sub addEvent(ff As Form, et As EventType, ed As EventArgs)
-        Dim ev As New WorkerEvent(ff, et, ed)
+    Public Sub addEvent(es As Object, et As EventType, ed As EventArgs)
+        Dim ev As New WorkerEvent(es, et, ed)
         If Not workerStates.ContainsKey(ev) Then
             workerQueue.Enqueue(ev)
             workerStates.Add(ev, True)
         End If
     End Sub
 
-    Public Sub addEvent(ff As Form, fc As Control, et As EventType, ed As EventArgs)
-        Dim ev As New WorkerEvent(ff, fc, et, ed)
+    Public Sub addEvent(es As Object, sp As Object, et As EventType, ed As EventArgs)
+        Dim evpl As New List(Of Object)
+        evpl.Add(sp)
+        Dim ev As New WorkerEvent(es, evpl, et, ed)
+        If Not workerStates.ContainsKey(ev) Then
+            workerQueue.Enqueue(ev)
+            workerStates.Add(ev, True)
+        End If
+    End Sub
+
+    Public Sub addEvent(so As Object, sops As List(Of Object), et As EventType, ed As EventArgs)
+        Dim ev As New WorkerEvent(so, sops, et, ed)
         If Not workerStates.ContainsKey(ev) Then
             workerQueue.Enqueue(ev)
             workerStates.Add(ev, True)
@@ -224,12 +235,18 @@ Public Class WorkerPump
                     Thread.Sleep(100)
                     While workerQueue.Count > 0
                         Dim ev As WorkerEvent = workerQueue.Dequeue()
-                        If ev.FromForm IsNot ev.FromControl Then
-                            ev.FromControl.Invoke(Sub() ev.FromControl.Enabled = False)
+                        If Not ev.EventSource.parentObjs.Contains(ev.EventSource.sourceObj) Then
+                            If canCastObject(Of Control)(ev.EventSource.sourceObj) Then
+                                Dim c As Control = castObject(Of Control)(ev.EventSource.sourceObj)
+                                c.Invoke(Sub() c.Enabled = False)
+                            End If
                         End If
                         Dim en As Boolean = parseEvents(ev)
-                        If ev.FromForm IsNot ev.FromControl And en Then
-                            ev.FromControl.Invoke(Sub() ev.FromControl.Enabled = True)
+                        If Not ev.EventSource.parentObjs.Contains(ev.EventSource.sourceObj) And en Then
+                            If canCastObject(Of Control)(ev.EventSource.sourceObj) Then
+                                Dim c As Control = castObject(Of Control)(ev.EventSource.sourceObj)
+                                c.Invoke(Sub() c.Enabled = True)
+                            End If
                         End If
                         If workerStates.ContainsKey(ev) Then
                             workerStates.Remove(ev)
@@ -318,30 +335,66 @@ Public Interface IEventParser
     Function Parse(ev As WorkerEvent) As Boolean
 End Interface
 
-Public Structure WorkerEvent
-    Public FromForm As Form
-    Public FromControl As Control
+Public Class WorkerEvent
+    Public EventSource As Source
     Public EventType As EventType
     Public EventData As EventArgs
-    Public Sub New(ff As Form, et As EventType, ed As EventArgs)
-        FromForm = ff
-        FromControl = ff
-        EventType = et
-        EventData = ed
-    End Sub
-    Public Sub New(ff As Form, fc As Control, et As EventType, ed As EventArgs)
-        FromForm = ff
-        FromControl = fc
-        EventType = et
-        EventData = ed
-    End Sub
-End Structure
 
-Public Enum EventType As Integer
-    None = 0
-    Click = 1
-    Load = 2
-    Shown = 3
-    Closing = 4
-    Closed = 5
-End Enum
+    Public Sub New(so As Object, et As EventType, ed As EventArgs)
+        EventSource = New Source(so)
+        EventType = et
+        EventData = ed
+    End Sub
+
+    Public Sub New(so As Object, sop As List(Of Object), et As EventType, ed As EventArgs)
+        EventSource = New Source(so, sop)
+        EventType = et
+        EventData = ed
+    End Sub
+
+    Public Structure Source
+        Public sourceObj As Object
+        Public parentObjs As List(Of Object)
+        Sub New(so As Object, Optional pos As List(Of Object) = Nothing)
+            sourceObj = so
+            parentObjs = pos
+            If parentObjs Is Nothing Then
+                parentObjs = New List(Of Object)
+            End If
+        End Sub
+    End Structure
+End Class
+
+Public Class EventType
+    Private _data As String = ""
+    Public Sub New()
+        _data = "none"
+    End Sub
+    Public Sub New(data As String)
+        _data = data.ToLower
+    End Sub
+    Public Function getEvent() As String
+        Return _data
+    End Function
+    Shared Widening Operator CType(str As String) As EventType
+        Return New EventType(str)
+    End Operator
+    Shared Widening Operator CType(et As EventType) As String
+        Return et.getEvent()
+    End Operator
+    Shared Operator =(v1 As EventType, v2 As EventType) As Boolean
+        Return v1.getEvent() = v2.getEvent()
+    End Operator
+    Shared Operator <>(v1 As EventType, v2 As EventType) As Boolean
+        Return v1.getEvent() <> v2.getEvent()
+    End Operator
+End Class
+
+Public Class EventTypes
+    Public Shared ReadOnly None As New EventType("None")
+    Public Shared ReadOnly Click As New EventType("Click")
+    Public Shared ReadOnly Load As New EventType("Load")
+    Public Shared ReadOnly Shown As New EventType("Shown")
+    Public Shared ReadOnly Closing As New EventType("Closing")
+    Public Shared ReadOnly Closed As New EventType("Closed")
+End Class

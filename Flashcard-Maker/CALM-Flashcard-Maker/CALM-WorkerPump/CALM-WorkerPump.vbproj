@@ -4,33 +4,30 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AECB26A0-4C2E-48C6-B638-95E552EF07F4}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
-    <StartupObject>captainalm.FlashCardMaker.Main</StartupObject>
-    <RootNamespace>captainalm.FlashCardMaker</RootNamespace>
-    <AssemblyName>CALM-Flashcard-Maker</AssemblyName>
+    <ProjectGuid>{FCD62167-DC20-4E56-A4C5-75AE10B186BB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>captainalm.workerpumper</RootNamespace>
+    <AssemblyName>CALM-WorkerPump</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>WindowsFormsWithCustomSubMain</MyType>
+    <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>CALM-Flashcard-Maker.xml</DocumentationFile>
+    <DocumentationFile>CALM-WorkerPump.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>CALM-Flashcard-Maker.xml</DocumentationFile>
+    <DocumentationFile>CALM-WorkerPump.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -45,14 +42,9 @@
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>FCARDMK.ico</ApplicationIcon>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -65,31 +57,12 @@
     <Import Include="System.Collections" />
     <Import Include="System.Collections.Generic" />
     <Import Include="System.Data" />
-    <Import Include="System.Drawing" />
     <Import Include="System.Diagnostics" />
-    <Import Include="System.Windows.Forms" />
     <Import Include="System.Linq" />
     <Import Include="System.Xml.Linq" />
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AboutBx.designer.vb">
-      <DependentUpon>AboutBx.vb</DependentUpon>
-    </Compile>
-    <Compile Include="AboutBx.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FontDialogNoSize.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GlobalOptions.Designer.vb">
-      <DependentUpon>GlobalOptions.vb</DependentUpon>
-    </Compile>
-    <Compile Include="GlobalOptions.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Main.vb">
-    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -105,41 +78,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="SplashScr.designer.vb">
-      <DependentUpon>SplashScr.vb</DependentUpon>
-    </Compile>
-    <Compile Include="SplashScr.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Waiter.designer.vb">
-      <DependentUpon>Waiter.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Waiter.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="WorkerPump.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AboutBx.resx">
-      <DependentUpon>AboutBx.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FontDialogNoSize.resx">
-      <DependentUpon>FontDialogNoSize.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GlobalOptions.resx">
-      <DependentUpon>GlobalOptions.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SplashScr.resx">
-      <DependentUpon>SplashScr.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Waiter.resx">
-      <DependentUpon>Waiter.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -152,21 +98,6 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="App.config" />
-    <None Include="Resources\LICENSE" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="FCARDMK.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CALM-Preferences\CALM-Preferences.vbproj">
-      <Project>{b61139fd-3918-4cc0-b16d-db3552acdd69}</Project>
-      <Name>CALM-Preferences</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CALM-WorkerPump\CALM-WorkerPump.vbproj">
-      <Project>{fcd62167-dc20-4e56-a4c5-75ae10b186bb}</Project>
-      <Name>CALM-WorkerPump</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

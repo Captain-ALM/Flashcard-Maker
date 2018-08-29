@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Reflection
 Imports System.Threading
+Imports captainalm.workerpumper
 
 Module Main
     Public args As String() = Environment.GetCommandLineArgs()
@@ -65,9 +66,7 @@ Module Main
     End Sub
 
     Public Sub runtime()
-        worker.addFormInstance(New f)
         worker.startPump()
-        worker.showForm(Of f)()
         worker.stopPump()
     End Sub
 
@@ -136,24 +135,6 @@ Module Main
         End If
         wa = sc.wasactive
     End Sub
-
-    Private Class f
-        Inherits Form
-
-        Private WithEvents b As New Button
-
-        Public Sub loader(sender As Object, args As EventArgs) Handles Me.Shown
-            b.Text = "Click Me"
-            Me.Controls.Add(b)
-        End Sub
-
-        Public Sub h(sender As Object, args As EventArgs) Handles b.Click
-            Dim p As New FontDialogNoSize()
-            p.ShowDialog()
-            Dim p2 As New FontDialog()
-            p2.ShowDialog()
-        End Sub
-    End Class
 End Module
 
 Enum ProgramSwitchMode As Integer

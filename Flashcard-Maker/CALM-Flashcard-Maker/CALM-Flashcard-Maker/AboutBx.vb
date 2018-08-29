@@ -1,4 +1,6 @@
-﻿Public NotInheritable Class AboutBx
+﻿Imports captainalm.workerpumper
+
+Public NotInheritable Class AboutBx
     Private formClosingDone As Boolean = False
     Private formClosedDone As Boolean = False
     Private wp As WorkerPump = Nothing
