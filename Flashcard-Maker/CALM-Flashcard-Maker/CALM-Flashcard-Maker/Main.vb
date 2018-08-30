@@ -24,9 +24,19 @@ Module Main
     Private wa As Boolean = True
 
     Public Sub main()
-        init()
-        runtime()
-        shutdown()
+        Try
+            init()
+            Try
+                runtime()
+            Catch ex As Exception
+                Dim frm As New UnhandledExceptionViewer(False, True, True, ex)
+                Dim r As System.Windows.Forms.DialogResult = frm.ShowDialog()
+            End Try
+            shutdown()
+        Catch ex As Exception
+            Dim frm As New UnhandledExceptionViewer(False, True, True, ex)
+            Dim r As System.Windows.Forms.DialogResult = frm.ShowDialog()
+        End Try
     End Sub
 
     Public Sub init()
