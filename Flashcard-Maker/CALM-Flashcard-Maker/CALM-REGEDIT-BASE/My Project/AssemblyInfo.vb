@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("CALM-REGEDIT-BASE")> 
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("CALM-REGEDIT-BASE")> 
-<Assembly: AssemblyCopyright("Copyright ©  2018")> 
+<Assembly: AssemblyTitle("CALM REGEDIT Library - Base")> 
+<Assembly: AssemblyDescription("CALM REGEDIT Library - Base")> 
+<Assembly: AssemblyCompany("Captain ALM")> 
+<Assembly: AssemblyProduct("CALM REGEDIT Library - Base")> 
+<Assembly: AssemblyCopyright("Copyright © Captain ALM 2018")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.0.0.0")> 
-<Assembly: AssemblyFileVersion("1.0.0.0")> 
+<Assembly: AssemblyVersion("0.0.0.0")> 
+<Assembly: AssemblyFileVersion("0.0.0.0")> 
