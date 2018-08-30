@@ -7,6 +7,7 @@ Public NotInheritable Class Project
     Private pbit As New List(Of Term(Of Bitmap, Bitmap))
     Private ppg As New List(Of Bitmap)
     Private pterm As New List(Of Term(Of String, String))
+    Private pcard As New List(Of Card)
     Private pnom As String = ""
     Private Const pver As Integer = 1
 
@@ -14,6 +15,8 @@ Public NotInheritable Class Project
         pnom = name
         pset = New ProjectPreferences(name)
     End Sub
+
+    'TODO: FILL IN PROJECT CODE.
 End Class
 
 <Serializable>
@@ -35,6 +38,7 @@ Public NotInheritable Class ProjectPreferences
         MyBase.addPreference(Of IPreference(Of Integer))(New Preference(Of Integer)("TermCount"))
         MyBase.addPreference(Of IPreference(Of Boolean))(New Preference(Of Boolean)("SetTermCountPerRecommenedFontSize"))
         MyBase.addPreference(Of IPreference(Of Integer))(New Preference(Of Integer)("RecommenedFontSize"))
+        MyBase.addPreference(Of IPreference(Of Boolean))(New Preference(Of Boolean)("CanSplitWords"))
     End Sub
 
     Public Overrides Sub addPreference(Of t As IPreference)(pref As t)
@@ -48,6 +52,13 @@ Public NotInheritable Class ProjectPreferences
     Public Overrides Sub setPreference(pref As Object)
         Throw New InvalidOperationException()
     End Sub
+End Class
+
+<Serializable>
+Public Class Card
+    Private terms As New List(Of Term(Of String, String))
+    Private fonts As New List(Of Term(Of Font, Font))
+    'TODO: FILL IN CARD CODE.
 End Class
 
 <Serializable>

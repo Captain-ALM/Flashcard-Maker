@@ -2,7 +2,12 @@
 Imports System.Reflection
 Imports System.Threading
 Imports captainalm.workerpumper
-
+Imports System.Runtime.Serialization
+Imports System.Runtime.Serialization.Formatters.Binary
+''' <summary>
+''' The main static class - internal.
+''' </summary>
+''' <remarks></remarks>
 Module Main
     Public args As String() = Environment.GetCommandLineArgs()
     Public targetFile As String = ""
@@ -136,7 +141,10 @@ Module Main
         wa = sc.wasactive
     End Sub
 End Module
-
+''' <summary>
+''' The program switch mode - internal.
+''' </summary>
+''' <remarks></remarks>
 Enum ProgramSwitchMode As Integer
     None = 0
     Open = 2
@@ -144,3 +152,94 @@ Enum ProgramSwitchMode As Integer
     Export = 4
     [New] = 1
 End Enum
+
+''' <summary>
+''' Internal Binary Serializer Helper.
+''' </summary>
+''' <remarks></remarks>
+NotInheritable Class BinarySerializer
+    Private Shared formatter As New BinaryFormatter()
+    Private Shared slock As New Object()
+    Public Shared Function serialize(obj As Object) As String
+        Try
+            Dim toreturn As String = ""
+            SyncLock slock
+                Dim ms As New MemoryStream()
+                formatter.Serialize(ms, obj)
+                toreturn = Convert.ToBase64String(ms.ToArray)
+                ms.Dispose()
+                ms = Nothing
+            End SyncLock
+            Return toreturn
+        Catch ex As ArgumentNullException
+            Return ""
+        Catch ex As FormatException
+            Return ""
+        Catch ex As IOException
+            Return ""
+        Catch ex As SerializationException
+            Return ""
+        End Try
+    End Function
+    Public Shared Function serialize(Of t)(obj As t) As String
+        Try
+            Dim toreturn As String = ""
+            SyncLock slock
+                Dim ms As New MemoryStream()
+                formatter.Serialize(ms, obj)
+                toreturn = Convert.ToBase64String(ms.ToArray)
+                ms.Dispose()
+                ms = Nothing
+            End SyncLock
+            Return toreturn
+        Catch ex As ArgumentNullException
+            Return ""
+        Catch ex As FormatException
+            Return ""
+        Catch ex As IOException
+            Return ""
+        Catch ex As SerializationException
+            Return ""
+        End Try
+    End Function
+    Public Shared Function deserialize(ser As String) As Object
+        Try
+            Dim toreturn As Object = Nothing
+            SyncLock slock
+                Dim ms As New MemoryStream(Convert.FromBase64String(ser))
+                toreturn = formatter.Deserialize(ms)
+                ms.Dispose()
+                ms = Nothing
+            End SyncLock
+            Return toreturn
+        Catch ex As ArgumentNullException
+            Return Nothing
+        Catch ex As FormatException
+            Return Nothing
+        Catch ex As IOException
+            Return Nothing
+        Catch ex As SerializationException
+            Return Nothing
+        End Try
+    End Function
+    Public Shared Function deserialize(Of t)(ser As String) As t
+        Try
+            Dim toreturn As t = Nothing
+            SyncLock slock
+                Dim ms As New MemoryStream(Convert.FromBase64String(ser))
+                toreturn = formatter.Deserialize(ms)
+                ms.Dispose()
+                ms = Nothing
+            End SyncLock
+            Return toreturn
+        Catch ex As ArgumentNullException
+            Return Nothing
+        Catch ex As FormatException
+            Return Nothing
+        Catch ex As IOException
+            Return Nothing
+        Catch ex As SerializationException
+            Return Nothing
+        End Try
+    End Function
+End Class
