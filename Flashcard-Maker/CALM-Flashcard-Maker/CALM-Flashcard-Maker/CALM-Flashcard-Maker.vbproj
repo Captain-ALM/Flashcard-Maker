@@ -105,6 +105,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Project.vb" />
     <Compile Include="SplashScr.designer.vb">
       <DependentUpon>SplashScr.vb</DependentUpon>
     </Compile>
@@ -117,7 +118,6 @@
     <Compile Include="Waiter.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WorkerPump.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AboutBx.resx">

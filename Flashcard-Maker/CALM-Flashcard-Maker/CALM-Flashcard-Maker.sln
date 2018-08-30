@@ -5,6 +5,10 @@ VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CALM-Flashcard-Maker", "CALM-Flashcard-Maker\CALM-Flashcard-Maker.vbproj", "{AECB26A0-4C2E-48C6-B638-95E552EF07F4}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CALM-Preferences", "CALM-Preferences\CALM-Preferences.vbproj", "{B61139FD-3918-4CC0-B16D-DB3552ACDD69}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CALM-WorkerPump", "CALM-WorkerPump\CALM-WorkerPump.vbproj", "{FCD62167-DC20-4E56-A4C5-75AE10B186BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{AECB26A0-4C2E-48C6-B638-95E552EF07F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AECB26A0-4C2E-48C6-B638-95E552EF07F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AECB26A0-4C2E-48C6-B638-95E552EF07F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B61139FD-3918-4CC0-B16D-DB3552ACDD69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B61139FD-3918-4CC0-B16D-DB3552ACDD69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B61139FD-3918-4CC0-B16D-DB3552ACDD69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B61139FD-3918-4CC0-B16D-DB3552ACDD69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCD62167-DC20-4E56-A4C5-75AE10B186BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCD62167-DC20-4E56-A4C5-75AE10B186BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCD62167-DC20-4E56-A4C5-75AE10B186BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCD62167-DC20-4E56-A4C5-75AE10B186BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

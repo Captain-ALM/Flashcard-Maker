@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("CALM-WorkerPump")> 
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("CALM-WorkerPump")> 
-<Assembly: AssemblyCopyright("Copyright ©  2018")> 
+<Assembly: AssemblyTitle("CALM-WorkerPump : Contains The Worker Pump API")> 
+<Assembly: AssemblyDescription("CALM-WorkerPump : Contains The Worker Pump API")> 
+<Assembly: AssemblyCompany("Captain ALM")> 
+<Assembly: AssemblyProduct("CALM-WorkerPump : Contains The Worker Pump API")> 
+<Assembly: AssemblyCopyright("Copyright © Captain ALM 2018")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.0.0.0")> 
-<Assembly: AssemblyFileVersion("1.0.0.0")> 
+<Assembly: AssemblyVersion("0.0.0.0")> 
+<Assembly: AssemblyFileVersion("0.0.0.0")> 
