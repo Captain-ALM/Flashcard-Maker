@@ -552,4 +552,8 @@ Public Class EventTypes
     Public Shared ReadOnly Shown As New EventType("Shown")
     Public Shared ReadOnly Closing As New EventType("Closing")
     Public Shared ReadOnly Closed As New EventType("Closed")
+    Public Shared ReadOnly CheckedChanged As New EventType("CheckedChanged")
+    Public Shared ReadOnly ValueChanged As New EventType("ValueChanged")
+    Public Shared ReadOnly SelectedIndexChanged As New EventType("SelectedIndexChanged")
+    Public Shared ReadOnly DialogClosed As New EventType("DialogClosed")
 End Class

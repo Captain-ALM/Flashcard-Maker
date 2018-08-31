@@ -30,7 +30,7 @@
 
     Private Sub butcont_Click(sender As Object, e As EventArgs) Handles butcont.Click
         If cc Then
-            Me.DialogResult = Windows.Forms.DialogResult.Retry
+            Me.DialogResult = Windows.Forms.DialogResult.Ignore
             Me.Close()
         End If
     End Sub
@@ -52,8 +52,12 @@
     End Sub
 
     Private Sub UnhandledExceptionViewer_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-        If Me.DialogResult <> Windows.Forms.DialogResult.Abort And Me.DialogResult <> Windows.Forms.DialogResult.Retry Then
-            Me.DialogResult = Windows.Forms.DialogResult.Abort
+        If Me.DialogResult <> Windows.Forms.DialogResult.Abort And Me.DialogResult <> Windows.Forms.DialogResult.Ignore Then
+            If cc Then
+                Me.DialogResult = Windows.Forms.DialogResult.Ignore
+            Else
+                Me.DialogResult = Windows.Forms.DialogResult.Abort
+            End If
         End If
     End Sub
 End Class

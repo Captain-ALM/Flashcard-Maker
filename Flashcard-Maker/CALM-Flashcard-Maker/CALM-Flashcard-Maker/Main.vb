@@ -4,6 +4,9 @@ Imports System.Threading
 Imports captainalm.workerpumper
 Imports System.Runtime.Serialization
 Imports System.Runtime.Serialization.Formatters.Binary
+Imports captainalm.util.preference
+Imports System.Drawing.Printing
+
 ''' <summary>
 ''' The main static class - internal.
 ''' </summary>
@@ -20,6 +23,7 @@ Module Main
     Public programPath As String = programAssembly.Location
     Public execdir As String = Path.GetDirectoryName(programPath)
     Public worker As WorkerPump = Nothing
+    Public globalops As New GlobalPreferenceSet
     Private sc As SplashScr = Nothing
     Private wa As Boolean = True
 
@@ -31,12 +35,21 @@ Module Main
             Catch ex As Exception
                 Dim frm As New UnhandledExceptionViewer(False, True, True, ex)
                 Dim r As System.Windows.Forms.DialogResult = frm.ShowDialog()
+                If Not frm.Disposing And Not frm.IsDisposed Then
+                    frm.Dispose()
+                End If
+                frm = Nothing
             End Try
             shutdown()
         Catch ex As Exception
             Dim frm As New UnhandledExceptionViewer(False, True, True, ex)
             Dim r As System.Windows.Forms.DialogResult = frm.ShowDialog()
+            If Not frm.Disposing And Not frm.IsDisposed Then
+                frm.Dispose()
+            End If
+            frm = Nothing
         End Try
+        Environment.Exit(0)
     End Sub
 
     Public Sub init()
@@ -51,6 +64,75 @@ Module Main
 
         'Decode passed args Flashcard-Maker.exe <TargetFile> <switch> <exportnumber(export switch only)>
         decodeArgs()
+
+        Dim succededslod As Boolean = False
+        Try
+            If File.Exists(execdir & "\settings.ser") Then
+                Dim str As String = File.ReadAllText(execdir & "\settings.ser")
+                If str = "" Then
+                    Throw New IOException("File Invalid!")
+                End If
+                globalops.loadPreference(str)
+            Else
+                Throw New IOException("File Does Not Exist!")
+            End If
+            succededslod = True
+        Catch ex As InvalidCastException
+            succededslod = False
+        Catch ex As ArgumentNullException
+            succededslod = False
+        Catch ex As IOException
+            succededslod = False
+        End Try
+
+        If Not succededslod Then
+            Dim gp As GlobalPreferences = globalops.getPreference(Of GlobalPreferences)("GlobalPreferences")
+            gp.getPreference(Of IPreference(Of Boolean))("EnableFontSizeLimit").setPreference(True)
+            gp.getPreference(Of IPreference(Of Integer))("MinumumFontSize").setPreference(4)
+            gp.getPreference(Of IPreference(Of Integer))("MaximumFontSize").setPreference(1638)
+            gp.getPreference(Of IPreference(Of Boolean))("EnableThreadErrorMessages").setPreference(True)
+            Dim gpp As ProjectPreferences = globalops.getPreference(Of ProjectPreferences)("GlobalProjectPreferences")
+            gpp.getPreference(Of IPreference(Of PaperKind))("PageSize").setPreference(PaperKind.A4)
+            gpp.getPreference(Of IPreference(Of Integer))("CardWidth").setPreference(10)
+            gpp.getPreference(Of IPreference(Of Integer))("CardHeight").setPreference(10)
+            gpp.getPreference(Of IPreference(Of Font))("Font").setPreference(New Font("Consolas", 8.25, FontStyle.Regular))
+            gpp.getPreference(Of IPreference(Of Color))("Color").setPreference(Color.Black)
+            gpp.getPreference(Of IPreference(Of Boolean))("SetTermCountPerCard").setPreference(True)
+            gpp.getPreference(Of IPreference(Of Integer))("TermCount").setPreference(1)
+            gpp.getPreference(Of IPreference(Of Boolean))("SetTermCountPerRecommenedFontSize").setPreference(False)
+            gpp.getPreference(Of IPreference(Of Integer))("RecommenedFontSize").setPreference(4)
+            gpp.getPreference(Of IPreference(Of Boolean))("CanSplitWords").setPreference(True)
+            Dim fap As FileAssociations = globalops.getPreference(Of FileAssociations)("FileAssociations")
+            Dim s As Boolean = fap.getPreferencesFromRegistry()
+            If Not s Then
+                Try
+                    Throw New Exception("File Associations Could Not Be Loaded")
+                Catch ex As Exception
+                    Dim frm As New UnhandledExceptionViewer(True, False, True, ex)
+                    Dim r As System.Windows.Forms.DialogResult = frm.ShowDialog()
+                    If Not frm.Disposing And Not frm.IsDisposed Then
+                        frm.Dispose()
+                    End If
+                    frm = Nothing
+                    If r = DialogResult.Abort Then
+                        Environment.Exit(1)
+                    End If
+                End Try
+            End If
+            Try
+                File.WriteAllText(execdir & "\settings.ser", globalops.savePreference())
+            Catch ex As IOException
+                Dim frm As New UnhandledExceptionViewer(True, False, True, ex)
+                Dim r As System.Windows.Forms.DialogResult = frm.ShowDialog()
+                If Not frm.Disposing And Not frm.IsDisposed Then
+                    frm.Dispose()
+                End If
+                frm = Nothing
+                If r = DialogResult.Abort Then
+                    Environment.Exit(1)
+                End If
+            End Try
+        End If
 
         Try
             If File.Exists(execdir & "\license.txt") Then

@@ -169,6 +169,24 @@ Public Class FontDialogNoSize
         dummyForm.Close()
         Return result
     End Function
+
+    Public Property FontValue As Font
+        Get
+            Return dlgFont.Font
+        End Get
+        Set(value As Font)
+            dlgFont.Font = value
+        End Set
+    End Property
+
+    Public Property ColorValue As Color
+        Get
+            Return dlgFont.Color
+        End Get
+        Set(value As Color)
+            dlgFont.Color = value
+        End Set
+    End Property
 End Class
 
 <Flags()>

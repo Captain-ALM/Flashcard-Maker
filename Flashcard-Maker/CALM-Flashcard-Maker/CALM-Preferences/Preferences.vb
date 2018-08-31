@@ -391,7 +391,7 @@ Public Interface IPreference
     Sub setName(name As String)
 End Interface
 ''' <summary>
-''' Preovides an Interface for Generic Preferences.
+''' Provides an Interface for Generic Preferences.
 ''' </summary>
 ''' <typeparam name="t">The generic value of the preference.</typeparam>
 ''' <remarks></remarks>
