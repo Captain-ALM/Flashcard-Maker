@@ -287,7 +287,7 @@ Public NotInheritable Class FileAssociations
 
     Public Sub New()
         MyBase.New("FileAssociations")
-        MyBase.addPreference(Of IPreference(Of Boolean))(New Preference(Of Boolean)("ApplicationRegistered"))
+        MyBase.addPreference(Of IPreference(Of ApplicationRegisterMode))(New Preference(Of ApplicationRegisterMode)("ApplicationRegistered"))
         MyBase.addPreference(Of IPreference(Of RegisterMode))(New Preference(Of RegisterMode)(".fcp"))
         MyBase.addPreference(Of IPreference(Of RegisterMode))(New Preference(Of RegisterMode)(".calmfcmp"))
     End Sub
@@ -309,10 +309,12 @@ Public NotInheritable Class FileAssociations
     End Function
 
     Public Function getPreferencesFromRegistry() As Boolean
+        'TODO: fill in Registry Code
         Return False
     End Function
 
     Public Function setPreferencesToRegistry() As Boolean
+        'TODO: fill in Registry Code
         Return False
     End Function
 
@@ -321,6 +323,13 @@ Public NotInheritable Class FileAssociations
         NotRegistered = 0
         Registered = 1
         RegisteredAndDefault = 2
+    End Enum
+
+    <Serializable>
+    Public Enum ApplicationRegisterMode As Integer
+        NotRegistered = 0
+        UserRegistered = 1
+        LocalMachineRegistered = 2
     End Enum
 End Class
 

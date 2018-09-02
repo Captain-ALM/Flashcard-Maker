@@ -187,43 +187,43 @@ Public Class FontDialogNoSize
             dlgFont.Color = value
         End Set
     End Property
+
+    <Flags()>
+    Private Enum SetWindowPosFlags
+        SWP_NOSIZE = 1
+        SWP_NOMOVE
+        SWP_NOZORDER = 4
+        SWP_NOREDRAW = 8
+        SWP_NOACTIVATE = 16
+        SWP_FRAMECHANGED = 32
+        SWP_SHOWWINDOW = 64
+        SWP_HIDEWINDOW = 128
+        SWP_NOCOPYBITS = 256
+        SWP_NOOWNERZORDER = 512
+        SWP_NOSENDCHANGING = 1024
+        SWP_DRAWFRAME = 32
+        SWP_NOREPOSITION = 512
+        SWP_DEFERERASE = 8192
+        SWP_ASYNCWINDOWPOS = 16384
+    End Enum
+
+    Private Class Win32
+        Public Delegate Function EnumWindowsCallBack(hWnd As IntPtr, lParam As Integer) As Boolean
+
+        Public Const SW_HIDE As Integer = 0
+
+        Public Const SW_SHOW As Integer = 5
+
+        Public Const WM_ACTIVATE As Integer = 6
+
+        Public Declare Function GetDlgItem Lib "user32.dll" (hDlg As IntPtr, nIDDlgItem As Integer) As IntPtr
+
+        Public Declare Function ShowWindow Lib "user32.dll" (hWnd As IntPtr, nCmdShow As Integer) As Boolean
+
+        Public Declare Sub GetClassName Lib "User32.Dll" (hWnd As IntPtr, param As StringBuilder, length As Integer)
+
+        Public Declare Function EnumChildWindows Lib "user32.Dll" (hWndParent As IntPtr, lpEnumFunc As Win32.EnumWindowsCallBack, lParam As Integer) As Boolean
+
+        Public Declare Auto Function SetWindowPos Lib "user32.dll" (hWnd As IntPtr, hWndInsertAfter As IntPtr, x As Integer, y As Integer, Width As Integer, Height As Integer, flags As SetWindowPosFlags) As Boolean
+    End Class
 End Class
-
-<Flags()>
-Public Enum SetWindowPosFlags
-    SWP_NOSIZE = 1
-    SWP_NOMOVE
-    SWP_NOZORDER = 4
-    SWP_NOREDRAW = 8
-    SWP_NOACTIVATE = 16
-    SWP_FRAMECHANGED = 32
-    SWP_SHOWWINDOW = 64
-    SWP_HIDEWINDOW = 128
-    SWP_NOCOPYBITS = 256
-    SWP_NOOWNERZORDER = 512
-    SWP_NOSENDCHANGING = 1024
-    SWP_DRAWFRAME = 32
-    SWP_NOREPOSITION = 512
-    SWP_DEFERERASE = 8192
-    SWP_ASYNCWINDOWPOS = 16384
-End Enum
-
-Public Module Win32
-    Public Delegate Function EnumWindowsCallBack(hWnd As IntPtr, lParam As Integer) As Boolean
-
-    Public Const SW_HIDE As Integer = 0
-
-    Public Const SW_SHOW As Integer = 5
-
-    Public Const WM_ACTIVATE As Integer = 6
-
-    Public Declare Function GetDlgItem Lib "user32.dll" (hDlg As IntPtr, nIDDlgItem As Integer) As IntPtr
-
-    Public Declare Function ShowWindow Lib "user32.dll" (hWnd As IntPtr, nCmdShow As Integer) As Boolean
-
-    Public Declare Sub GetClassName Lib "User32.Dll" (hWnd As IntPtr, param As StringBuilder, length As Integer)
-
-    Public Declare Function EnumChildWindows Lib "user32.Dll" (hWndParent As IntPtr, lpEnumFunc As Win32.EnumWindowsCallBack, lParam As Integer) As Boolean
-
-    Public Declare Auto Function SetWindowPos Lib "user32.dll" (hWnd As IntPtr, hWndInsertAfter As IntPtr, x As Integer, y As Integer, Width As Integer, Height As Integer, flags As SetWindowPosFlags) As Boolean
-End Module

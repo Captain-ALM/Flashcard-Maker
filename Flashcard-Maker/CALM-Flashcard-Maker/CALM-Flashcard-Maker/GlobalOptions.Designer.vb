@@ -576,6 +576,7 @@ Partial Class GlobalOptions
         'nudrfs
         '
         Me.nudrfs.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.nudrfs.Enabled = False
         Me.nudrfs.Location = New System.Drawing.Point(139, 5)
         Me.nudrfs.Maximum = New Decimal(New Integer() {1638, 0, 0, 0})
         Me.nudrfs.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
@@ -588,6 +589,7 @@ Partial Class GlobalOptions
         '
         Me.Label10.AutoSize = True
         Me.Label10.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label10.Enabled = False
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 5.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.Location = New System.Drawing.Point(3, 0)
         Me.Label10.Name = "Label10"
@@ -605,13 +607,13 @@ Partial Class GlobalOptions
         Me.rbututcprfs.Name = "rbututcprfs"
         Me.rbututcprfs.Size = New System.Drawing.Size(273, 31)
         Me.rbututcprfs.TabIndex = 1
-        Me.rbututcprfs.TabStop = True
         Me.rbututcprfs.Text = "Set Term Count Per Recommended Font Size:"
         Me.rbututcprfs.UseVisualStyleBackColor = True
         '
         'rbutcpc
         '
         Me.rbutcpc.AutoSize = True
+        Me.rbutcpc.Checked = True
         Me.rbutcpc.Dock = System.Windows.Forms.DockStyle.Fill
         Me.rbutcpc.Location = New System.Drawing.Point(3, 3)
         Me.rbutcpc.Name = "rbutcpc"
