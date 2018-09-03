@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <StartupObject>captainalm.FlashCardMaker.Main</StartupObject>
     <RootNamespace>captainalm.FlashCardMaker</RootNamespace>
-    <AssemblyName>CALM-Flashcard-Maker</AssemblyName>
+    <AssemblyName>cfcmkr</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsFormsWithCustomSubMain</MyType>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -20,7 +20,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>CALM-Flashcard-Maker.xml</DocumentationFile>
+    <DocumentationFile>cfcmkr.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -30,7 +30,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>CALM-Flashcard-Maker.xml</DocumentationFile>
+    <DocumentationFile>cfcmkr.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -79,6 +79,7 @@
     <Compile Include="AboutBx.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FileAssociations.vb" />
     <Compile Include="FontDialogNoSize.vb">
       <SubType>UserControl</SubType>
     </Compile>
@@ -105,11 +106,18 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="PGlobalOptions.vb" />
     <Compile Include="Project.vb" />
     <Compile Include="SplashScr.designer.vb">
       <DependentUpon>SplashScr.vb</DependentUpon>
     </Compile>
     <Compile Include="SplashScr.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UnhandledExceptionViewer.Designer.vb">
+      <DependentUpon>UnhandledExceptionViewer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UnhandledExceptionViewer.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Waiter.designer.vb">
@@ -137,6 +145,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SplashScr.resx">
       <DependentUpon>SplashScr.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UnhandledExceptionViewer.resx">
+      <DependentUpon>UnhandledExceptionViewer.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Waiter.resx">
       <DependentUpon>Waiter.vb</DependentUpon>
