@@ -118,6 +118,8 @@ Public NotInheritable Class FileAssociations
                 MyBase.getPreference(Of IPreference(Of RegisterMode))(".calmfcmp").setPreference(RegisterMode.NotRegistered)
             End If
             Return True
+        Else
+            Return True
         End If
         Return False
     End Function
@@ -494,6 +496,8 @@ Public NotInheritable Class FileAssociations
                     End If
                 End If
             End If
+        Else
+            Return True
         End If
         Return False
     End Function
