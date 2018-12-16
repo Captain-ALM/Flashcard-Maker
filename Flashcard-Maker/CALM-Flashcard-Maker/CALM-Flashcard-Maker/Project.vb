@@ -4,9 +4,9 @@ Imports System.Drawing.Printing
 <Serializable>
 Public NotInheritable Class Project
     Private pset As ProjectPreferences = Nothing
-    Private pbit As New List(Of Term(Of Bitmap, Bitmap))
+    Private pbit As New List(Of Pair(Of Bitmap, Bitmap))
     Private ppg As New List(Of Bitmap)
-    Private pterm As New List(Of Term(Of String, String))
+    Private pterm As New List(Of TermSet(Of TermSource, TermSource))
     Private pcard As New List(Of Card)
     Private pnom As String = ""
     Private Const pver As Integer = 1
@@ -56,36 +56,6 @@ End Class
 
 <Serializable>
 Public Class Card
-    Private terms As New List(Of Term(Of String, String))
-    Private fonts As New List(Of Term(Of Font, Font))
+    Private terms As New List(Of TermSet(Of TermSource, TermSource))
     'TODO: FILL IN CARD CODE.
-End Class
-
-<Serializable>
-Public Class Term(Of a, b)
-    Private vara As a
-    Private varb As b
-
-    Public Sub New(va As a, vb As b)
-        vara = va
-        varb = vb
-    End Sub
-
-    Public Property TermA() As a
-        Get
-            Return vara
-        End Get
-        Set(value As a)
-            vara = value
-        End Set
-    End Property
-
-    Public Property TermB() As b
-        Get
-            Return varb
-        End Get
-        Set(value As b)
-            varb = value
-        End Set
-    End Property
 End Class

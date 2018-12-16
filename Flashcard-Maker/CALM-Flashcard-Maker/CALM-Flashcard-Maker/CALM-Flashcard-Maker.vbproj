@@ -114,6 +114,7 @@
     <Compile Include="SplashScr.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="TermSources.vb" />
     <Compile Include="UnhandledExceptionViewer.Designer.vb">
       <DependentUpon>UnhandledExceptionViewer.vb</DependentUpon>
     </Compile>
