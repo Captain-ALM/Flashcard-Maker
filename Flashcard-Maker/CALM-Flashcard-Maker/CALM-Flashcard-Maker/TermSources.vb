@@ -1,10 +1,125 @@
 ﻿<Serializable>
 Public MustInherit Class TermSource
-    Public MustOverride Function getImage(width As Integer, height As Integer, usegivensize As Boolean) As Image
+    Public MustOverride Function getImage(width As Integer, height As Integer, Optional usegivensize As Boolean = True) As Image
     Public MustOverride ReadOnly Property termSourceType As String
 End Class
 
-'TODO: ImageTermBase, ImageStoreTerm, ImageReferenceTerm [These classes are internal for now but must be fully completed]
+<Serializable>
+Public MustInherit Class ImageTermBase
+    Inherits TermSource
+
+    Public MustOverride Function getHeldImage() As Image
+
+    Public Overrides ReadOnly Property termSourceType As String
+        Get
+            Return "ImageTerm"
+        End Get
+    End Property
+End Class
+
+<Serializable>
+Public Class ImageStoreTerm
+    Inherits ImageTermBase
+    Implements IStoredData
+
+    Protected storedImage As Byte() = Nothing
+    Protected path As String = ""
+
+    Public Overrides Function getHeldImage() As Image
+        If storedImage Is Nothing Then loadData()
+        Return New Bitmap(New IO.MemoryStream(storedImage))
+    End Function
+
+    Public Overrides Function getImage(width As Integer, height As Integer, Optional usegivensize As Boolean = True) As Image
+        Dim img As New Bitmap(width, height)
+        Using oimg As Bitmap = getHeldImage()
+            Using g As Graphics = Graphics.FromImage(img)
+                g.DrawImage(oimg, 0, 0, width, height)
+            End Using
+        End Using
+        Return img
+    End Function
+
+    Public Overrides ReadOnly Property termSourceType As String
+        Get
+            Return MyBase.termSourceType & "." & "ImageStoreTerm"
+        End Get
+    End Property
+
+    Public Property dataPath As String Implements IReferencedData.dataPath
+        Get
+            Return path
+        End Get
+        Set(value As String)
+            path = value
+        End Set
+    End Property
+
+    Public Sub loadData() Implements IReferencedData.loadData
+        storedImage = IO.File.ReadAllBytes(path)
+    End Sub
+
+    Public Sub saveData() Implements IReferencedData.saveData
+        IO.File.WriteAllBytes(path, storedImage)
+    End Sub
+
+    Public Property storedData As Byte() Implements IStoredData.storedData
+        Get
+            Return storedImage
+        End Get
+        Set(value As Byte())
+            storedImage = value
+        End Set
+    End Property
+End Class
+
+<Serializable>
+Public Class ImageReferenceTerm
+    Inherits ImageTermBase
+    Implements IReferencedData
+
+    Protected path As String = ""
+    <NonSerialized>
+    Protected storedImage As Byte() = Nothing
+
+    Public Overrides Function getHeldImage() As Image
+        loadData()
+        Return New Bitmap(New IO.MemoryStream(storedImage))
+    End Function
+
+    Public Overrides Function getImage(width As Integer, height As Integer, Optional usegivensize As Boolean = True) As Image
+        Dim img As New Bitmap(width, height)
+        Using oimg As Bitmap = getHeldImage()
+            Using g As Graphics = Graphics.FromImage(img)
+                g.DrawImage(oimg, 0, 0, width, height)
+            End Using
+        End Using
+        Return img
+    End Function
+
+    Public Overrides ReadOnly Property termSourceType As String
+        Get
+            Return MyBase.termSourceType & "." & "ImageReferenceTerm"
+        End Get
+    End Property
+
+    Public Property dataPath As String Implements IReferencedData.dataPath
+        Get
+            Return path
+        End Get
+        Set(value As String)
+            path = value
+        End Set
+    End Property
+
+    Public Sub loadData() Implements IReferencedData.loadData
+        storedImage = IO.File.ReadAllBytes(path)
+    End Sub
+
+    Public Sub saveData() Implements IReferencedData.saveData
+        IO.File.WriteAllBytes(path, storedImage)
+    End Sub
+End Class
 
 <Serializable>
 Public Class TextTerm
@@ -69,8 +184,8 @@ Public Class TextTerm
         End Set
     End Property
 
-    Public Overloads Overrides Function getImage(width As Integer, height As Integer, usegivensize As Boolean) As Image
-        Return TextRender.renderImage(New Size(width, height), txt, fnt, col, mfs, ws, usegivensize)
+    Public Overloads Overrides Function getImage(width As Integer, height As Integer, Optional usegivensize As Boolean = True) As Image
+        Return TextRender.renderImage(New Size(width, height), txt, fnt, col, mfs, ws, Not usegivensize)
     End Function
 
     Public Overrides ReadOnly Property termSourceType As String
@@ -357,3 +472,14 @@ Public Class NonFittingImageException
         MyBase.New(message)
     End Sub
 End Class
+
+Public Interface IReferencedData
+    Property dataPath As String
+    Sub loadData()
+    Sub saveData()
+End Interface
+
+Public Interface IStoredData
+    Inherits IReferencedData
+    Property storedData As Byte()
+End Interface
