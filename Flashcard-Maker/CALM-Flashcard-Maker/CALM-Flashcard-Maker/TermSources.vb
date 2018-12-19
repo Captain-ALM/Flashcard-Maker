@@ -414,6 +414,18 @@ Public Class TermSet(Of a As TermSource, b As TermSource)
             varb = value
         End Set
     End Property
+
+    Public ReadOnly Property Term1Image(w As Integer, h As Integer, Optional ugs As Boolean = True) As Image
+        Get
+            Return vara.getImage(w, h, ugs)
+        End Get
+    End Property
+
+    Public ReadOnly Property Term2Image(w As Integer, h As Integer, Optional ugs As Boolean = True) As Image
+        Get
+            Return varb.getImage(w, h, ugs)
+        End Get
+    End Property
 End Class
 
 <Serializable>
