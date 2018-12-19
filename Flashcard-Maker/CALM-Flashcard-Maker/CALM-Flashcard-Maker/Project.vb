@@ -4,7 +4,7 @@ Imports System.Drawing.Printing
 <Serializable>
 Public NotInheritable Class Project
     Private pset As ProjectPreferences = Nothing
-    Private pbit As New List(Of Pair(Of Image, Image))
+    Private pimg As New List(Of Pair(Of Image, Image))
     Private pterm As New List(Of TermSet(Of TermSource, TermSource))
     Private pcard As New List(Of Card)
     Private pnom As String = ""
@@ -25,7 +25,76 @@ Public NotInheritable Class Project
     End Function
 
     Public Function generateImages() As Boolean
+        pimg.Clear()
 
+    End Function
+
+    Public Function addData(dat As TermSet(Of TermSource, TermSource)) As Integer
+        clearCards()
+        clearImages()
+        pterm.Add(dat)
+        Return pterm.Count - 1
+    End Function
+
+    Public Sub removeData(index As Integer)
+        clearCards()
+        clearImages()
+        pterm.RemoveAt(index)
+    End Sub
+
+    Public Sub clearData()
+        clearCards()
+        clearImages()
+        pterm.Clear()
+    End Sub
+
+    Public ReadOnly Property dataCount As Integer
+        Get
+            Return pterm.Count
+        End Get
+    End Property
+
+    Public Property data(index As Integer) As TermSet(Of TermSource, TermSource)
+        Get
+            If index < pterm.Count And index > -1 Then Return pterm(index)
+            Return New TermSet(Of TermSource, TermSource)(Nothing, Nothing)
+        End Get
+        Set(value As TermSet(Of TermSource, TermSource))
+            clearCards()
+            clearImages()
+            If index < pterm.Count And index > -1 Then pterm(index) = value
+        End Set
+    End Property
+
+    Public Sub clearCards()
+        pcard.Clear()
+    End Sub
+
+    Public ReadOnly Property cardCount As Integer
+        Get
+            Return pcard.Count
+        End Get
+    End Property
+
+    Public Sub clearImages()
+        pimg.Clear()
+    End Sub
+
+    Public ReadOnly Property imageCount As Integer
+        Get
+            Return pimg.Count
+        End Get
+    End Property
+
+    Default Public ReadOnly Property image(index As Integer) As Pair(Of Image, Image)
+        Get
+            If index < pimg.Count And index > -1 Then Return pimg(index)
+            Return New Pair(Of Image, Image)(Nothing, Nothing)
+        End Get
+    End Property
+
+    Public Function getImages() As Pair(Of Image, Image)()
+        Return pimg.ToArray
     End Function
 End Class
 
