@@ -15,18 +15,105 @@ Public NotInheritable Class Project
         pset = New ProjectPreferences(name)
     End Sub
 
+    Public ReadOnly Property projectVersion As Integer
+        Get
+            Return pver
+        End Get
+    End Property
+
     'TODO: FILL IN PROJECT CODE.
     Public Function render() As Boolean
-
+        If generateCards() Then Return generateImages() Else Return False
     End Function
 
     Public Function generateCards() As Boolean
-
+        pcard.Clear()
+        clearImages()
+        Try
+            If pterm.Count < 1 Then Return False
+            Dim cw As Integer = pset.getPreference(Of IPreference(Of Integer))("CardWidth").getPreference()
+            Dim ch As Integer = pset.getPreference(Of IPreference(Of Integer))("CardHeight").getPreference()
+            Dim tw As Integer = cw
+            Dim th As Integer = ch
+            Dim css As New CardSizeSetup(CardSizeSetting.none, 0)
+            If pset.getPreference(Of IPreference(Of Boolean))("SetTermCountPerCard").getPreference() Then
+                css.setting = CardSizeSetting.settermcountpercard
+                css.termcount = pset.getPreference(Of IPreference(Of Integer))("TermCount").getPreference()
+                th = ch \ css.termcount
+            ElseIf pset.getPreference(Of IPreference(Of Boolean))("SetTermCountPerRecommenedFontSize").getPreference() Then
+                css.setting = CardSizeSetting.settermcountperrecommendedfont
+                css.recommendedfontsize = pset.getPreference(Of IPreference(Of Integer))("RecommenedFontSize").getPreference()
+                th = ch
+            End If
+            Dim pos As Integer = 0
+            Dim terms As New List(Of TermSet(Of TermSource, TermSource))
+            Dim addcard As Boolean = False
+            For Each ts As TermSet(Of TermSource, TermSource) In pterm
+                Dim hta As Integer = 0
+                While True
+                    If addcard Then
+                        addcard = False
+                        pos = 0
+                        th = ch
+                        pcard.Add(New Card(terms.ToArray))
+                        terms.Clear()
+                    End If
+                    Dim imgs As Image() = New Image() {Nothing, Nothing}
+                    Try
+                        If css.setting = CardSizeSetting.settermcountpercard Then
+                            imgs = New Image() {ts.Term1Image(tw, th, True), ts.Term2Image(tw, th, True)}
+                            hta = th
+                        ElseIf css.setting = CardSizeSetting.settermcountperrecommendedfont Then
+                            imgs = New Image() {ts.Term1Image(tw, th, False), ts.Term2Image(tw, th, False)}
+                            If hta < imgs(0).Height Then hta = imgs(0).Height
+                            If hta < imgs(1).Height Then hta = imgs(1).Height
+                            th -= hta
+                        End If
+                        If pos + hta > ch - pos Then
+                            addcard = True
+                            Continue While
+                        Else
+                            terms.Add(ts)
+                        End If
+                        Exit While
+                    Catch ex As NonFittingException
+                        If pos <> 0 Then addcard = True Else Throw New NonFittingException("Term Does Not Fit On Card.")
+                        Continue While
+                    End Try
+                End While
+                pos += hta
+            Next
+            If terms.Count > 0 Then pcard.Add(New Card(terms.ToArray))
+            terms.Clear()
+            Return True
+        Catch ex As Threading.ThreadAbortException
+            Throw ex
+        Catch ex As Exception
+        End Try
+        Return False
     End Function
 
     Public Function generateImages() As Boolean
         pimg.Clear()
-
+        Try
+            If pcard.Count < 1 Then Return False
+            For Each c As Card In pcard
+                Dim css As New CardSizeSetup(CardSizeSetting.none, 0)
+                If pset.getPreference(Of IPreference(Of Boolean))("SetTermCountPerCard").getPreference() Then
+                    css.setting = CardSizeSetting.settermcountpercard
+                    css.termcount = pset.getPreference(Of IPreference(Of Integer))("TermCount").getPreference()
+                ElseIf pset.getPreference(Of IPreference(Of Boolean))("SetTermCountPerRecommenedFontSize").getPreference() Then
+                    css.setting = CardSizeSetting.settermcountperrecommendedfont
+                    css.recommendedfontsize = pset.getPreference(Of IPreference(Of Integer))("RecommenedFontSize").getPreference()
+                End If
+                pimg.Add(c.getCardImages(pset.getPreference(Of IPreference(Of Integer))("CardWidth").getPreference(), pset.getPreference(Of IPreference(Of Integer))("CardHeight").getPreference(), css))
+            Next
+            Return True
+        Catch ex As Threading.ThreadAbortException
+            Throw ex
+        Catch ex As Exception
+        End Try
+        Return False
     End Function
 
     Public Function addData(dat As TermSet(Of TermSource, TermSource)) As Integer

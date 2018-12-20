@@ -31,6 +31,7 @@ Public Class ImageStoreTerm
     End Function
 
     Public Overrides Function getImage(width As Integer, height As Integer, Optional usegivensize As Boolean = True) As Image
+        If width < 1 Or height < 1 Then Throw New NonFittingImageException("Width Or Height are less than 0.")
         Dim img As New Bitmap(width, height)
         Using oimg As Bitmap = getHeldImage()
             Using g As Graphics = Graphics.FromImage(img)
@@ -88,6 +89,7 @@ Public Class ImageReferenceTerm
     End Function
 
     Public Overrides Function getImage(width As Integer, height As Integer, Optional usegivensize As Boolean = True) As Image
+        If width < 1 Or height < 1 Then Throw New NonFittingImageException("Width Or Height are less than 0.")
         Dim img As New Bitmap(width, height)
         Using oimg As Bitmap = getHeldImage()
             Using g As Graphics = Graphics.FromImage(img)
@@ -185,6 +187,7 @@ Public Class TextTerm
     End Property
 
     Public Overloads Overrides Function getImage(width As Integer, height As Integer, Optional usegivensize As Boolean = True) As Image
+        If width < 1 Or height < 1 Then Throw New NonFittingTextException("Width Or Height are less than 0.")
         Return TextRender.renderImage(New Size(width, height), txt, fnt, col, mfs, ws, Not usegivensize)
     End Function
 
@@ -255,12 +258,13 @@ Public Class TextRender
                 Next
             Catch ex As NonFittingTextException
                 If ex.Message.Contains("Text does not fit.") Then
-                    Exit While
+                    Throw ex
                 Else
                     itr += 1
                 End If
             End Try
         End While
+        If itr > (fnt.Size - efsize) Then Throw New NonFittingException("Text does not fit, Iterations:" & itr)
         Dim img As Image = Nothing
         If usecalculatedheight Then img = New Bitmap(ssize.Width, aheight) Else img = New Bitmap(ssize.Width, ssize.Height)
         Dim pos As Integer = 0
