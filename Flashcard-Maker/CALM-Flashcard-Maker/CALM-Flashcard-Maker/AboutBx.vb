@@ -10,7 +10,6 @@ Public NotInheritable Class AboutBx
         ' This call is required by the designer.
         InitializeComponent()
 
-        ' Add any initialization after the InitializeComponent() call.
         If workerp IsNot Nothing Then
             wp = workerp
             ue = True
@@ -20,20 +19,22 @@ Public NotInheritable Class AboutBx
     End Sub
 
     Private Sub AboutBx_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        wp.addEvent(New WorkerEvent(Me, EventTypes.Load, e))
+        If ue Then wp.addEvent(New WorkerEvent(Me, EventTypes.Load, e))
     End Sub
 
     Private Sub OKButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OKButton.Click
         Me.Close()
-        Dim l As New List(Of Object)
-        l.Add(Me)
-        wp.addEvent(New WorkerEvent(OKButton, l, EventTypes.Click, e))
+        If ue Then
+            Dim l As New List(Of Object)
+            l.Add(Me)
+            wp.addEvent(New WorkerEvent(OKButton, l, EventTypes.Click, e))
+        End If
     End Sub
 
     Private Sub AboutBx_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         If Not formClosedDone Then
             whenClosed()
-            wp.addEvent(New WorkerEvent(Me, EventTypes.Closed, e))
+            If ue Then wp.addEvent(New WorkerEvent(Me, EventTypes.Closed, e))
             formClosedDone = True
         End If
     End Sub
@@ -50,7 +51,7 @@ Public NotInheritable Class AboutBx
                 Me.Hide()
                 Me.DialogResult = Windows.Forms.DialogResult.OK
             End If
-            wp.addEvent(New WorkerEvent(Me, EventTypes.Closing, e))
+            If ue Then wp.addEvent(New WorkerEvent(Me, EventTypes.Closing, e))
             Me.OnFormClosed(New FormClosedEventArgs(e.CloseReason))
             formClosingDone = True
         End If
@@ -81,6 +82,6 @@ Public NotInheritable Class AboutBx
         Me.LabelCompanyName.Text = My.Application.Info.CompanyName
         Me.TextBoxDescription.Text = "Description: " & vbCrLf & My.Application.Info.Description & vbCrLf & description
         Me.TextBox1.Text = "License: " & vbCrLf & license
-        wp.addEvent(Me, EventTypes.Shown, e)
+        If ue Then wp.addEvent(Me, EventTypes.Shown, e)
     End Sub
 End Class

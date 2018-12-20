@@ -5,9 +5,20 @@ Imports System.Text
 Imports System.Windows.Forms
 
 Public Class FontDialogNoSize
-    Inherits UserControl
+    Inherits CommonDialog
 
-    Private Class FontDialogNative
+    Private components As IContainer = Nothing
+    Protected dlgFont As FontDialog
+    Protected Const WM_ACTIVATE As Integer = 6
+    Protected Const UFLAGSHIDE As SetWindowPosFlags = CType(659, SetWindowPosFlags)
+    Protected Delegate Function EnumWindowsCallBack(hWnd As IntPtr, lParam As Integer) As Boolean
+    Protected Declare Function GetDlgItem Lib "user32.dll" (hDlg As IntPtr, nIDDlgItem As Integer) As IntPtr
+    Protected Declare Function ShowWindow Lib "user32.dll" (hWnd As IntPtr, nCmdShow As Integer) As Boolean
+    Protected Declare Sub GetClassName Lib "User32.Dll" (hWnd As IntPtr, param As StringBuilder, length As Integer)
+    Protected Declare Function EnumChildWindows Lib "user32.Dll" (hWndParent As IntPtr, lpEnumFunc As EnumWindowsCallBack, lParam As Integer) As Boolean
+    Protected Declare Auto Function SetWindowPos Lib "user32.dll" (hWnd As IntPtr, hWndInsertAfter As IntPtr, x As Integer, y As Integer, Width As Integer, Height As Integer, flags As SetWindowPosFlags) As Boolean
+
+    Protected Class FontDialogNative
         Inherits NativeWindow
         Implements IDisposable
 
@@ -21,8 +32,8 @@ Public Class FontDialogNoSize
             Me.mFontDialogHandle = handle
             Me.mSourceControl = sourceControl
             MyBase.AssignHandle(Me.mFontDialogHandle)
-            Win32.ShowWindow(Win32.GetDlgItem(Me.mFontDialogHandle, 1090), 0)
-            Win32.ShowWindow(Win32.GetDlgItem(Me.mFontDialogHandle, 1138), 0)
+            ShowWindow(GetDlgItem(Me.mFontDialogHandle, 1090), 0)
+            ShowWindow(GetDlgItem(Me.mFontDialogHandle, 1138), 0)
         End Sub
 
         Public Sub Dispose() Implements IDisposable.Dispose
@@ -33,12 +44,12 @@ Public Class FontDialogNoSize
         End Sub
 
         Private Sub PopulateWindowsHandlers()
-            Win32.EnumChildWindows(Me.mFontDialogHandle, AddressOf Me.OpenFileDialogEnumWindowCallBack, 0)
+            EnumChildWindows(Me.mFontDialogHandle, AddressOf Me.OpenColorDialogEnumWindowCallBack, 0)
         End Sub
 
-        Private Function OpenFileDialogEnumWindowCallBack(hwnd As IntPtr, lParam As Integer) As Boolean
+        Private Function OpenColorDialogEnumWindowCallBack(hwnd As IntPtr, lParam As Integer) As Boolean
             Dim stringBuilder As StringBuilder = New StringBuilder(256)
-            Win32.GetClassName(hwnd, stringBuilder, stringBuilder.Capacity)
+            GetClassName(hwnd, stringBuilder, stringBuilder.Capacity)
             Dim result As Boolean = False
             If stringBuilder.ToString().StartsWith("#32770") Then
                 Me.mBaseDialogNative = New FontDialogNoSize.BaseDialogNative(hwnd)
@@ -50,7 +61,7 @@ Public Class FontDialogNoSize
         End Function
     End Class
 
-    Private Class BaseDialogNative
+    Protected Class BaseDialogNative
         Inherits NativeWindow
         Implements IDisposable
 
@@ -66,7 +77,7 @@ Public Class FontDialogNoSize
         End Sub
     End Class
 
-    Private Class DialogBooterForm
+    Protected Class DialogBooterForm
         Inherits Form
 
         Private mNativeDialog As FontDialogNoSize.FontDialogNative = Nothing
@@ -102,7 +113,7 @@ Public Class FontDialogNoSize
         End Sub
 
         Protected Overrides Sub WndProc(ByRef m As Message)
-            If Me.mWatchForActivate AndAlso m.Msg = 6 Then
+            If Me.mWatchForActivate AndAlso m.Msg = WM_ACTIVATE Then
                 Me.mWatchForActivate = False
                 Me.mFontDialogHandle = m.LParam
                 Me.mNativeDialog = New FontDialogNoSize.FontDialogNative(m.LParam, Me.mFileDialogEx)
@@ -110,12 +121,6 @@ Public Class FontDialogNoSize
             MyBase.WndProc(m)
         End Sub
     End Class
-
-    Private Const UFLAGSHIDE As SetWindowPosFlags = CType(659, SetWindowPosFlags)
-
-    Private components As IContainer = Nothing
-
-    Private dlgFont As FontDialog
 
     Public ReadOnly Property FontDialog() As FontDialog
         Get
@@ -132,14 +137,13 @@ Public Class FontDialogNoSize
 
     Private Sub InitializeComponent()
         Me.dlgFont = New System.Windows.Forms.FontDialog()
-        Me.SuspendLayout()
-        '
-        'FontDialogNoSize
-        '
-        Me.Name = "FontDialogNoSize"
-        Me.Size = New System.Drawing.Size(0, 0)
-        Me.ResumeLayout(False)
-
+        'Me.SuspendLayout()
+        ''
+        ''FontDialogNoSize
+        ''
+        'Me.Name = "FontDialogNoSize"
+        'Me.Size = New System.Drawing.Size(0, 0)
+        'Me.ResumeLayout(False)
     End Sub
 
     Public Sub New()
@@ -152,15 +156,15 @@ Public Class FontDialogNoSize
         dlgFont.ShowColor = CanSelectColours
     End Sub
 
-    Public Function ShowDialog() As DialogResult
+    Public Overloads Function ShowDialog() As DialogResult
         Return Me.ShowDialog(Nothing)
     End Function
 
-    Public Function ShowDialog(owner As IWin32Window) As DialogResult
+    Public Overloads Function ShowDialog(owner As IWin32Window) As DialogResult
         Dim result As DialogResult = DialogResult.Cancel
         Dim dummyForm As FontDialogNoSize.DialogBooterForm = New FontDialogNoSize.DialogBooterForm(Me)
         dummyForm.Show(owner)
-        Win32.SetWindowPos(dummyForm.Handle, IntPtr.Zero, 0, 0, 0, 0, CType(659, SetWindowPosFlags))
+        SetWindowPos(dummyForm.Handle, IntPtr.Zero, 0, 0, 0, 0, UFLAGSHIDE)
         dummyForm.WatchForActivate = True
         Try
             result = Me.dlgFont.ShowDialog(dummyForm)
@@ -189,7 +193,7 @@ Public Class FontDialogNoSize
     End Property
 
     <Flags()>
-    Private Enum SetWindowPosFlags
+    Protected Enum SetWindowPosFlags
         SWP_NOSIZE = 1
         SWP_NOMOVE
         SWP_NOZORDER = 4
@@ -207,23 +211,25 @@ Public Class FontDialogNoSize
         SWP_ASYNCWINDOWPOS = 16384
     End Enum
 
-    Private Class Win32
-        Public Delegate Function EnumWindowsCallBack(hWnd As IntPtr, lParam As Integer) As Boolean
+    Public Overrides Sub Reset()
+        Me.dlgFont.Reset()
+    End Sub
 
-        Public Const SW_HIDE As Integer = 0
+    Protected Overrides Function RunDialog(hwndOwner As IntPtr) As Boolean
+        If hwndOwner <> IntPtr.Zero Then ShowDialog(New Win32WindowHolder(hwndOwner)) Else ShowDialog()
+        Return True
+    End Function
 
-        Public Const SW_SHOW As Integer = 5
-
-        Public Const WM_ACTIVATE As Integer = 6
-
-        Public Declare Function GetDlgItem Lib "user32.dll" (hDlg As IntPtr, nIDDlgItem As Integer) As IntPtr
-
-        Public Declare Function ShowWindow Lib "user32.dll" (hWnd As IntPtr, nCmdShow As Integer) As Boolean
-
-        Public Declare Sub GetClassName Lib "User32.Dll" (hWnd As IntPtr, param As StringBuilder, length As Integer)
-
-        Public Declare Function EnumChildWindows Lib "user32.Dll" (hWndParent As IntPtr, lpEnumFunc As Win32.EnumWindowsCallBack, lParam As Integer) As Boolean
-
-        Public Declare Auto Function SetWindowPos Lib "user32.dll" (hWnd As IntPtr, hWndInsertAfter As IntPtr, x As Integer, y As Integer, Width As Integer, Height As Integer, flags As SetWindowPosFlags) As Boolean
+    Protected Class Win32WindowHolder
+        Implements IWin32Window
+        Private _handle As IntPtr = IntPtr.Zero
+        Public Sub New(hnd As IntPtr)
+            _handle = hnd
+        End Sub
+        Public ReadOnly Property Handle As IntPtr Implements IWin32Window.Handle
+            Get
+                Return _handle
+            End Get
+        End Property
     End Class
 End Class

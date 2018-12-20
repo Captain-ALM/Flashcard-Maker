@@ -50,6 +50,17 @@ Public Class WorkerPump
         End Get
     End Property
     ''' <summary>
+    ''' Whether the pump has event data to process.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property PumpBusy As Boolean
+        Get
+            Return workerQueue.Count > 0
+        End Get
+    End Property
+    ''' <summary>
     ''' Adds a form to the form registry.
     ''' </summary>
     ''' <param name="f">The form instance.</param>
@@ -334,13 +345,13 @@ Public Class WorkerPump
                     While workerQueue.Count > 0
                         Dim ev As WorkerEvent = workerQueue.Dequeue()
                         If Not ev.EventSource.parentObjs.Contains(ev.EventSource.sourceObj) Then
-                            If canCastObject(Of Control)(ev.EventSource.sourceObj) Then
+                            If canCastObject(Of Control)(ev.EventSource.sourceObj) And Not canCastObject(Of Form)(ev.EventSource.sourceObj) Then
                                 Dim c As Control = castObject(Of Control)(ev.EventSource.sourceObj)
                                 c.Invoke(Sub() c.Enabled = False)
                             End If
                         End If
                         Dim en As Boolean = parseEvents(ev)
-                        If Not ev.EventSource.parentObjs.Contains(ev.EventSource.sourceObj) And en Then
+                        If Not ev.EventSource.parentObjs.Contains(ev.EventSource.sourceObj) And en And Not canCastObject(Of Form)(ev.EventSource.sourceObj) Then
                             If canCastObject(Of Control)(ev.EventSource.sourceObj) Then
                                 Dim c As Control = castObject(Of Control)(ev.EventSource.sourceObj)
                                 c.Invoke(Sub() c.Enabled = True)
@@ -452,6 +463,7 @@ End Interface
 ''' </summary>
 ''' <remarks></remarks>
 Public Class WorkerEvent
+    Inherits EventArgs
     Public EventSource As Source
     Public EventType As EventType
     Public EventData As EventArgs

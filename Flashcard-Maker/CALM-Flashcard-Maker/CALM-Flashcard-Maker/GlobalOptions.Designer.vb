@@ -29,29 +29,29 @@ Partial Class GlobalOptions
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.chkbxetem = New System.Windows.Forms.CheckBox()
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Label2 = New System.Windows.Forms.Label()
+        Me.lblmaxfs = New System.Windows.Forms.Label()
         Me.nudmax = New System.Windows.Forms.NumericUpDown()
         Me.chkbxesl = New System.Windows.Forms.CheckBox()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.lblminfs = New System.Windows.Forms.Label()
         Me.nudmin = New System.Windows.Forms.NumericUpDown()
         Me.TabPageDefaultProjectOptions = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel6 = New System.Windows.Forms.TableLayoutPanel()
         Me.nudch = New System.Windows.Forms.NumericUpDown()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.Label3 = New System.Windows.Forms.Label()
+        Me.lblch = New System.Windows.Forms.Label()
+        Me.lblcw = New System.Windows.Forms.Label()
+        Me.lblpgs = New System.Windows.Forms.Label()
         Me.cbxps = New System.Windows.Forms.ComboBox()
         Me.nudcw = New System.Windows.Forms.NumericUpDown()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel7 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Label8 = New System.Windows.Forms.Label()
+        Me.lblfc = New System.Windows.Forms.Label()
         Me.txtbxfc = New System.Windows.Forms.TextBox()
-        Me.Label7 = New System.Windows.Forms.Label()
+        Me.lblfe = New System.Windows.Forms.Label()
         Me.txtbxfe = New System.Windows.Forms.TextBox()
-        Me.Label6 = New System.Windows.Forms.Label()
+        Me.lblfn = New System.Windows.Forms.Label()
         Me.butcfs = New System.Windows.Forms.Button()
         Me.butcfc = New System.Windows.Forms.Button()
         Me.txtbxfn = New System.Windows.Forms.TextBox()
@@ -60,24 +60,24 @@ Partial Class GlobalOptions
         Me.chkbxasw = New System.Windows.Forms.CheckBox()
         Me.TableLayoutPanel10 = New System.Windows.Forms.TableLayoutPanel()
         Me.nudrfs = New System.Windows.Forms.NumericUpDown()
-        Me.Label10 = New System.Windows.Forms.Label()
+        Me.lblrfs = New System.Windows.Forms.Label()
         Me.rbututcprfs = New System.Windows.Forms.RadioButton()
         Me.rbutcpc = New System.Windows.Forms.RadioButton()
         Me.TableLayoutPanel9 = New System.Windows.Forms.TableLayoutPanel()
         Me.nudtc = New System.Windows.Forms.NumericUpDown()
-        Me.Label9 = New System.Windows.Forms.Label()
+        Me.lbltc = New System.Windows.Forms.Label()
         Me.TabPageFileAssociations = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel11 = New System.Windows.Forms.TableLayoutPanel()
         Me.TableLayoutPanel14 = New System.Windows.Forms.TableLayoutPanel()
         Me.rbutcalmfcmppnr = New System.Windows.Forms.RadioButton()
         Me.rbutcalmfcmpraop = New System.Windows.Forms.RadioButton()
         Me.rbutcalmfcmpradp = New System.Windows.Forms.RadioButton()
-        Me.Label12 = New System.Windows.Forms.Label()
+        Me.lblpfcalmfcmp = New System.Windows.Forms.Label()
         Me.TableLayoutPanel13 = New System.Windows.Forms.TableLayoutPanel()
         Me.rbutfcppnr = New System.Windows.Forms.RadioButton()
         Me.rbutfcpraop = New System.Windows.Forms.RadioButton()
         Me.rbutfcpradp = New System.Windows.Forms.RadioButton()
-        Me.Label11 = New System.Windows.Forms.Label()
+        Me.lblpffcp = New System.Windows.Forms.Label()
         Me.butok = New System.Windows.Forms.Button()
         Me.ColorDialog1 = New System.Windows.Forms.ColorDialog()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -186,7 +186,7 @@ Partial Class GlobalOptions
         Me.TableLayoutPanel4.ColumnCount = 2
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel4.Controls.Add(Me.Label2, 0, 0)
+        Me.TableLayoutPanel4.Controls.Add(Me.lblmaxfs, 0, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.nudmax, 1, 0)
         Me.TableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel4.Location = New System.Drawing.Point(285, 70)
@@ -197,16 +197,16 @@ Partial Class GlobalOptions
         Me.TableLayoutPanel4.Size = New System.Drawing.Size(276, 61)
         Me.TableLayoutPanel4.TabIndex = 2
         '
-        'Label2
+        'lblmaxfs
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label2.Location = New System.Drawing.Point(3, 0)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(132, 61)
-        Me.Label2.TabIndex = 0
-        Me.Label2.Text = "Maximum Font Size:"
-        Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblmaxfs.AutoSize = True
+        Me.lblmaxfs.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lblmaxfs.Location = New System.Drawing.Point(3, 0)
+        Me.lblmaxfs.Name = "lblmaxfs"
+        Me.lblmaxfs.Size = New System.Drawing.Size(132, 61)
+        Me.lblmaxfs.TabIndex = 0
+        Me.lblmaxfs.Text = "Maximum Font Size:"
+        Me.lblmaxfs.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'nudmax
         '
@@ -237,7 +237,7 @@ Partial Class GlobalOptions
         Me.TableLayoutPanel3.ColumnCount = 2
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel3.Controls.Add(Me.Label1, 0, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.lblminfs, 0, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.nudmin, 1, 0)
         Me.TableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel3.Location = New System.Drawing.Point(3, 70)
@@ -248,16 +248,16 @@ Partial Class GlobalOptions
         Me.TableLayoutPanel3.Size = New System.Drawing.Size(276, 61)
         Me.TableLayoutPanel3.TabIndex = 1
         '
-        'Label1
+        'lblminfs
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label1.Location = New System.Drawing.Point(3, 0)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(132, 61)
-        Me.Label1.TabIndex = 0
-        Me.Label1.Text = "Minumum Font Size:"
-        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblminfs.AutoSize = True
+        Me.lblminfs.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lblminfs.Location = New System.Drawing.Point(3, 0)
+        Me.lblminfs.Name = "lblminfs"
+        Me.lblminfs.Size = New System.Drawing.Size(132, 61)
+        Me.lblminfs.TabIndex = 0
+        Me.lblminfs.Text = "Minumum Font Size:"
+        Me.lblminfs.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'nudmin
         '
@@ -316,9 +316,9 @@ Partial Class GlobalOptions
         Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel6.Controls.Add(Me.nudch, 1, 2)
-        Me.TableLayoutPanel6.Controls.Add(Me.Label5, 0, 2)
-        Me.TableLayoutPanel6.Controls.Add(Me.Label4, 0, 1)
-        Me.TableLayoutPanel6.Controls.Add(Me.Label3, 0, 0)
+        Me.TableLayoutPanel6.Controls.Add(Me.lblch, 0, 2)
+        Me.TableLayoutPanel6.Controls.Add(Me.lblcw, 0, 1)
+        Me.TableLayoutPanel6.Controls.Add(Me.lblpgs, 0, 0)
         Me.TableLayoutPanel6.Controls.Add(Me.cbxps, 1, 0)
         Me.TableLayoutPanel6.Controls.Add(Me.nudcw, 1, 1)
         Me.TableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill
@@ -342,38 +342,38 @@ Partial Class GlobalOptions
         Me.nudch.TabIndex = 5
         Me.nudch.Value = New Decimal(New Integer() {10, 0, 0, 0})
         '
-        'Label5
+        'lblch
         '
-        Me.Label5.AutoSize = True
-        Me.Label5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label5.Location = New System.Drawing.Point(3, 74)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(130, 38)
-        Me.Label5.TabIndex = 4
-        Me.Label5.Text = "Card Height (mm):"
-        Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblch.AutoSize = True
+        Me.lblch.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lblch.Location = New System.Drawing.Point(3, 74)
+        Me.lblch.Name = "lblch"
+        Me.lblch.Size = New System.Drawing.Size(130, 38)
+        Me.lblch.TabIndex = 4
+        Me.lblch.Text = "Card Height (mm):"
+        Me.lblch.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'Label4
+        'lblcw
         '
-        Me.Label4.AutoSize = True
-        Me.Label4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label4.Location = New System.Drawing.Point(3, 37)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(130, 37)
-        Me.Label4.TabIndex = 2
-        Me.Label4.Text = "Card Width (mm):"
-        Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblcw.AutoSize = True
+        Me.lblcw.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lblcw.Location = New System.Drawing.Point(3, 37)
+        Me.lblcw.Name = "lblcw"
+        Me.lblcw.Size = New System.Drawing.Size(130, 37)
+        Me.lblcw.TabIndex = 2
+        Me.lblcw.Text = "Card Width (mm):"
+        Me.lblcw.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'Label3
+        'lblpgs
         '
-        Me.Label3.AutoSize = True
-        Me.Label3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label3.Location = New System.Drawing.Point(3, 0)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(130, 37)
-        Me.Label3.TabIndex = 0
-        Me.Label3.Text = "Page Size:"
-        Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblpgs.AutoSize = True
+        Me.lblpgs.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lblpgs.Location = New System.Drawing.Point(3, 0)
+        Me.lblpgs.Name = "lblpgs"
+        Me.lblpgs.Size = New System.Drawing.Size(130, 37)
+        Me.lblpgs.TabIndex = 0
+        Me.lblpgs.Text = "Page Size:"
+        Me.lblpgs.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'cbxps
         '
@@ -413,11 +413,11 @@ Partial Class GlobalOptions
         Me.TableLayoutPanel7.ColumnCount = 2
         Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel7.Controls.Add(Me.Label8, 0, 2)
+        Me.TableLayoutPanel7.Controls.Add(Me.lblfc, 0, 2)
         Me.TableLayoutPanel7.Controls.Add(Me.txtbxfc, 1, 2)
-        Me.TableLayoutPanel7.Controls.Add(Me.Label7, 0, 1)
+        Me.TableLayoutPanel7.Controls.Add(Me.lblfe, 0, 1)
         Me.TableLayoutPanel7.Controls.Add(Me.txtbxfe, 1, 1)
-        Me.TableLayoutPanel7.Controls.Add(Me.Label6, 0, 0)
+        Me.TableLayoutPanel7.Controls.Add(Me.lblfn, 0, 0)
         Me.TableLayoutPanel7.Controls.Add(Me.butcfs, 0, 3)
         Me.TableLayoutPanel7.Controls.Add(Me.butcfc, 1, 3)
         Me.TableLayoutPanel7.Controls.Add(Me.txtbxfn, 1, 0)
@@ -432,16 +432,16 @@ Partial Class GlobalOptions
         Me.TableLayoutPanel7.Size = New System.Drawing.Size(273, 112)
         Me.TableLayoutPanel7.TabIndex = 0
         '
-        'Label8
+        'lblfc
         '
-        Me.Label8.AutoSize = True
-        Me.Label8.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label8.Location = New System.Drawing.Point(3, 56)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(130, 28)
-        Me.Label8.TabIndex = 6
-        Me.Label8.Text = "Font Colour:"
-        Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblfc.AutoSize = True
+        Me.lblfc.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lblfc.Location = New System.Drawing.Point(3, 56)
+        Me.lblfc.Name = "lblfc"
+        Me.lblfc.Size = New System.Drawing.Size(130, 28)
+        Me.lblfc.TabIndex = 6
+        Me.lblfc.Text = "Font Colour:"
+        Me.lblfc.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'txtbxfc
         '
@@ -452,16 +452,16 @@ Partial Class GlobalOptions
         Me.txtbxfc.Size = New System.Drawing.Size(131, 20)
         Me.txtbxfc.TabIndex = 7
         '
-        'Label7
+        'lblfe
         '
-        Me.Label7.AutoSize = True
-        Me.Label7.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label7.Location = New System.Drawing.Point(3, 28)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(130, 28)
-        Me.Label7.TabIndex = 4
-        Me.Label7.Text = "Font Effects:"
-        Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblfe.AutoSize = True
+        Me.lblfe.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lblfe.Location = New System.Drawing.Point(3, 28)
+        Me.lblfe.Name = "lblfe"
+        Me.lblfe.Size = New System.Drawing.Size(130, 28)
+        Me.lblfe.TabIndex = 4
+        Me.lblfe.Text = "Font Effects:"
+        Me.lblfe.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'txtbxfe
         '
@@ -472,16 +472,16 @@ Partial Class GlobalOptions
         Me.txtbxfe.Size = New System.Drawing.Size(131, 20)
         Me.txtbxfe.TabIndex = 5
         '
-        'Label6
+        'lblfn
         '
-        Me.Label6.AutoSize = True
-        Me.Label6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label6.Location = New System.Drawing.Point(3, 0)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(130, 28)
-        Me.Label6.TabIndex = 2
-        Me.Label6.Text = "Font Name:"
-        Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblfn.AutoSize = True
+        Me.lblfn.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lblfn.Location = New System.Drawing.Point(3, 0)
+        Me.lblfn.Name = "lblfn"
+        Me.lblfn.Size = New System.Drawing.Size(130, 28)
+        Me.lblfn.TabIndex = 2
+        Me.lblfn.Text = "Font Name:"
+        Me.lblfn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'butcfs
         '
@@ -563,7 +563,7 @@ Partial Class GlobalOptions
         Me.TableLayoutPanel10.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel10.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel10.Controls.Add(Me.nudrfs, 1, 0)
-        Me.TableLayoutPanel10.Controls.Add(Me.Label10, 0, 0)
+        Me.TableLayoutPanel10.Controls.Add(Me.lblrfs, 0, 0)
         Me.TableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel10.Location = New System.Drawing.Point(282, 40)
         Me.TableLayoutPanel10.Name = "TableLayoutPanel10"
@@ -585,19 +585,19 @@ Partial Class GlobalOptions
         Me.nudrfs.TabIndex = 8
         Me.nudrfs.Value = New Decimal(New Integer() {4, 0, 0, 0})
         '
-        'Label10
+        'lblrfs
         '
-        Me.Label10.AutoSize = True
-        Me.Label10.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label10.Enabled = False
-        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 5.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(3, 0)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(130, 31)
-        Me.Label10.TabIndex = 7
-        Me.Label10.Text = "Recommended Font Size:" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(If a term cannot be fitted with the font size the progra" & _
+        Me.lblrfs.AutoSize = True
+        Me.lblrfs.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lblrfs.Enabled = False
+        Me.lblrfs.Font = New System.Drawing.Font("Microsoft Sans Serif", 5.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblrfs.Location = New System.Drawing.Point(3, 0)
+        Me.lblrfs.Name = "lblrfs"
+        Me.lblrfs.Size = New System.Drawing.Size(130, 31)
+        Me.lblrfs.TabIndex = 7
+        Me.lblrfs.Text = "Recommended Font Size:" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(If a term cannot be fitted with the font size the progra" & _
     "m will change the font size to fit a single term on.)"
-        Me.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblrfs.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'rbututcprfs
         '
@@ -629,7 +629,7 @@ Partial Class GlobalOptions
         Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel9.Controls.Add(Me.nudtc, 1, 0)
-        Me.TableLayoutPanel9.Controls.Add(Me.Label9, 0, 0)
+        Me.TableLayoutPanel9.Controls.Add(Me.lbltc, 0, 0)
         Me.TableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel9.Location = New System.Drawing.Point(282, 3)
         Me.TableLayoutPanel9.Name = "TableLayoutPanel9"
@@ -650,16 +650,16 @@ Partial Class GlobalOptions
         Me.nudtc.TabIndex = 8
         Me.nudtc.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
-        'Label9
+        'lbltc
         '
-        Me.Label9.AutoSize = True
-        Me.Label9.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label9.Location = New System.Drawing.Point(3, 0)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(130, 31)
-        Me.Label9.TabIndex = 7
-        Me.Label9.Text = "Term Count:"
-        Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lbltc.AutoSize = True
+        Me.lbltc.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lbltc.Location = New System.Drawing.Point(3, 0)
+        Me.lbltc.Name = "lbltc"
+        Me.lbltc.Size = New System.Drawing.Size(130, 31)
+        Me.lbltc.TabIndex = 7
+        Me.lbltc.Text = "Term Count:"
+        Me.lbltc.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'TabPageFileAssociations
         '
@@ -701,7 +701,7 @@ Partial Class GlobalOptions
         Me.TableLayoutPanel14.Controls.Add(Me.rbutcalmfcmppnr, 3, 0)
         Me.TableLayoutPanel14.Controls.Add(Me.rbutcalmfcmpraop, 2, 0)
         Me.TableLayoutPanel14.Controls.Add(Me.rbutcalmfcmpradp, 1, 0)
-        Me.TableLayoutPanel14.Controls.Add(Me.Label12, 0, 0)
+        Me.TableLayoutPanel14.Controls.Add(Me.lblpfcalmfcmp, 0, 0)
         Me.TableLayoutPanel14.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel14.Location = New System.Drawing.Point(3, 92)
         Me.TableLayoutPanel14.Name = "TableLayoutPanel14"
@@ -714,13 +714,11 @@ Partial Class GlobalOptions
         'rbutcalmfcmppnr
         '
         Me.rbutcalmfcmppnr.AutoSize = True
-        Me.rbutcalmfcmppnr.Checked = True
         Me.rbutcalmfcmppnr.Dock = System.Windows.Forms.DockStyle.Fill
         Me.rbutcalmfcmppnr.Location = New System.Drawing.Point(420, 3)
         Me.rbutcalmfcmppnr.Name = "rbutcalmfcmppnr"
         Me.rbutcalmfcmppnr.Size = New System.Drawing.Size(135, 77)
         Me.rbutcalmfcmppnr.TabIndex = 12
-        Me.rbutcalmfcmppnr.TabStop = True
         Me.rbutcalmfcmppnr.Text = "Program Not Registered"
         Me.rbutcalmfcmppnr.UseVisualStyleBackColor = True
         '
@@ -746,16 +744,16 @@ Partial Class GlobalOptions
         Me.rbutcalmfcmpradp.Text = "Registered As Default Program"
         Me.rbutcalmfcmpradp.UseVisualStyleBackColor = True
         '
-        'Label12
+        'lblpfcalmfcmp
         '
-        Me.Label12.AutoSize = True
-        Me.Label12.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label12.Location = New System.Drawing.Point(3, 0)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(133, 83)
-        Me.Label12.TabIndex = 9
-        Me.Label12.Text = "Project File (.calmfcmp)"
-        Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblpfcalmfcmp.AutoSize = True
+        Me.lblpfcalmfcmp.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lblpfcalmfcmp.Location = New System.Drawing.Point(3, 0)
+        Me.lblpfcalmfcmp.Name = "lblpfcalmfcmp"
+        Me.lblpfcalmfcmp.Size = New System.Drawing.Size(133, 83)
+        Me.lblpfcalmfcmp.TabIndex = 9
+        Me.lblpfcalmfcmp.Text = "Project File (.calmfcmp)"
+        Me.lblpfcalmfcmp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'TableLayoutPanel13
         '
@@ -767,7 +765,7 @@ Partial Class GlobalOptions
         Me.TableLayoutPanel13.Controls.Add(Me.rbutfcppnr, 3, 0)
         Me.TableLayoutPanel13.Controls.Add(Me.rbutfcpraop, 2, 0)
         Me.TableLayoutPanel13.Controls.Add(Me.rbutfcpradp, 1, 0)
-        Me.TableLayoutPanel13.Controls.Add(Me.Label11, 0, 0)
+        Me.TableLayoutPanel13.Controls.Add(Me.lblpffcp, 0, 0)
         Me.TableLayoutPanel13.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel13.Location = New System.Drawing.Point(3, 3)
         Me.TableLayoutPanel13.Name = "TableLayoutPanel13"
@@ -780,13 +778,11 @@ Partial Class GlobalOptions
         'rbutfcppnr
         '
         Me.rbutfcppnr.AutoSize = True
-        Me.rbutfcppnr.Checked = True
         Me.rbutfcppnr.Dock = System.Windows.Forms.DockStyle.Fill
         Me.rbutfcppnr.Location = New System.Drawing.Point(420, 3)
         Me.rbutfcppnr.Name = "rbutfcppnr"
         Me.rbutfcppnr.Size = New System.Drawing.Size(135, 77)
         Me.rbutfcppnr.TabIndex = 8
-        Me.rbutfcppnr.TabStop = True
         Me.rbutfcppnr.Text = "Program Not Registered"
         Me.rbutfcppnr.UseVisualStyleBackColor = True
         '
@@ -812,16 +808,16 @@ Partial Class GlobalOptions
         Me.rbutfcpradp.Text = "Registered As Default Program"
         Me.rbutfcpradp.UseVisualStyleBackColor = True
         '
-        'Label11
+        'lblpffcp
         '
-        Me.Label11.AutoSize = True
-        Me.Label11.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label11.Location = New System.Drawing.Point(3, 0)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(133, 83)
-        Me.Label11.TabIndex = 5
-        Me.Label11.Text = "Project File (.fcp)"
-        Me.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblpffcp.AutoSize = True
+        Me.lblpffcp.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lblpffcp.Location = New System.Drawing.Point(3, 0)
+        Me.lblpffcp.Name = "lblpffcp"
+        Me.lblpffcp.Size = New System.Drawing.Size(133, 83)
+        Me.lblpffcp.TabIndex = 5
+        Me.lblpffcp.Text = "Project File (.fcp)"
+        Me.lblpffcp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'butok
         '
@@ -897,10 +893,10 @@ Partial Class GlobalOptions
     Friend WithEvents TabPageDefaultProjectOptions As System.Windows.Forms.TabPage
     Friend WithEvents chkbxesl As System.Windows.Forms.CheckBox
     Friend WithEvents TableLayoutPanel3 As System.Windows.Forms.TableLayoutPanel
-    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents lblminfs As System.Windows.Forms.Label
     Friend WithEvents nudmin As System.Windows.Forms.NumericUpDown
     Friend WithEvents TableLayoutPanel4 As System.Windows.Forms.TableLayoutPanel
-    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents lblmaxfs As System.Windows.Forms.Label
     Friend WithEvents nudmax As System.Windows.Forms.NumericUpDown
     Friend WithEvents chkbxetem As System.Windows.Forms.CheckBox
     Friend WithEvents TableLayoutPanel5 As System.Windows.Forms.TableLayoutPanel
@@ -908,41 +904,41 @@ Partial Class GlobalOptions
     Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
     Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
     Friend WithEvents TableLayoutPanel6 As System.Windows.Forms.TableLayoutPanel
-    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents lblpgs As System.Windows.Forms.Label
     Friend WithEvents cbxps As System.Windows.Forms.ComboBox
-    Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents lblcw As System.Windows.Forms.Label
     Friend WithEvents nudcw As System.Windows.Forms.NumericUpDown
     Friend WithEvents nudch As System.Windows.Forms.NumericUpDown
-    Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents lblch As System.Windows.Forms.Label
     Friend WithEvents TableLayoutPanel7 As System.Windows.Forms.TableLayoutPanel
     Friend WithEvents butcfs As System.Windows.Forms.Button
-    Friend WithEvents Label8 As System.Windows.Forms.Label
+    Friend WithEvents lblfc As System.Windows.Forms.Label
     Friend WithEvents txtbxfc As System.Windows.Forms.TextBox
-    Friend WithEvents Label7 As System.Windows.Forms.Label
+    Friend WithEvents lblfe As System.Windows.Forms.Label
     Friend WithEvents txtbxfe As System.Windows.Forms.TextBox
-    Friend WithEvents Label6 As System.Windows.Forms.Label
+    Friend WithEvents lblfn As System.Windows.Forms.Label
     Friend WithEvents butcfc As System.Windows.Forms.Button
     Friend WithEvents txtbxfn As System.Windows.Forms.TextBox
     Friend WithEvents ColorDialog1 As System.Windows.Forms.ColorDialog
     Friend WithEvents TableLayoutPanel8 As System.Windows.Forms.TableLayoutPanel
     Friend WithEvents TableLayoutPanel10 As System.Windows.Forms.TableLayoutPanel
     Friend WithEvents nudrfs As System.Windows.Forms.NumericUpDown
-    Friend WithEvents Label10 As System.Windows.Forms.Label
+    Friend WithEvents lblrfs As System.Windows.Forms.Label
     Friend WithEvents rbututcprfs As System.Windows.Forms.RadioButton
     Friend WithEvents rbutcpc As System.Windows.Forms.RadioButton
     Friend WithEvents TableLayoutPanel9 As System.Windows.Forms.TableLayoutPanel
     Friend WithEvents nudtc As System.Windows.Forms.NumericUpDown
-    Friend WithEvents Label9 As System.Windows.Forms.Label
+    Friend WithEvents lbltc As System.Windows.Forms.Label
     Friend WithEvents TableLayoutPanel11 As System.Windows.Forms.TableLayoutPanel
     Friend WithEvents chkbxasw As System.Windows.Forms.CheckBox
     Friend WithEvents TableLayoutPanel14 As System.Windows.Forms.TableLayoutPanel
     Friend WithEvents rbutcalmfcmppnr As System.Windows.Forms.RadioButton
     Friend WithEvents rbutcalmfcmpraop As System.Windows.Forms.RadioButton
     Friend WithEvents rbutcalmfcmpradp As System.Windows.Forms.RadioButton
-    Friend WithEvents Label12 As System.Windows.Forms.Label
+    Friend WithEvents lblpfcalmfcmp As System.Windows.Forms.Label
     Friend WithEvents TableLayoutPanel13 As System.Windows.Forms.TableLayoutPanel
     Friend WithEvents rbutfcppnr As System.Windows.Forms.RadioButton
     Friend WithEvents rbutfcpraop As System.Windows.Forms.RadioButton
     Friend WithEvents rbutfcpradp As System.Windows.Forms.RadioButton
-    Friend WithEvents Label11 As System.Windows.Forms.Label
+    Friend WithEvents lblpffcp As System.Windows.Forms.Label
 End Class

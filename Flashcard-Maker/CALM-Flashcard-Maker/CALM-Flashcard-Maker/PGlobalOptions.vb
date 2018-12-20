@@ -3,6 +3,7 @@ Imports captainalm.util.preference
 Imports System.Drawing.Printing
 Imports captainalm.FlashCardMaker.FileAssociations
 Imports System.IO
+Imports System.ComponentModel
 
 Public Class PGlobalOptions
     Implements IEventParser
@@ -48,6 +49,9 @@ Public Class PGlobalOptions
                                frm.FontDialogNoSize.FontValue = gpp.getPreference(Of IPreference(Of Font))("Font").getPreference()
                                frm.txtbxfn.Font = New Font(frm.FontDialogNoSize.FontValue.Name, 8.25)
                                frm.txtbxfn.Text = frm.FontDialogNoSize.FontValue.Name
+                               frm.txtbxfn.Font = New Font(frm.FontDialogNoSize.FontValue, frm.FontDialogNoSize.FontValue.Style)
+                               frm.txtbxfe.Font = New Font(frm.FontDialogNoSize.FontValue, frm.FontDialogNoSize.FontValue.Style)
+                               frm.txtbxfc.Font = New Font(frm.FontDialogNoSize.FontValue, frm.FontDialogNoSize.FontValue.Style)
                                frm.txtbxfe.Text = ""
                                If frm.FontDialogNoSize.FontValue.Bold Then
                                    frm.txtbxfe.Text &= "Bold "
@@ -65,21 +69,26 @@ Public Class PGlobalOptions
                                    frm.txtbxfe.Text = frm.txtbxfe.Text.TrimEnd(" ")
                                End If
                                frm.ColorDialog1.Color = gpp.getPreference(Of IPreference(Of Color))("Color").getPreference()
-                               frm.txtbxfc.Text = frm.ColorDialog1.Color.ToString
-                               frm.txtbxfc.BackColor = frm.ColorDialog1.Color
+                               frm.txtbxfc.Text = frm.ColorDialog1.Color.Name
+                               frm.txtbxfn.BackColor = Color.White
+                               frm.txtbxfe.BackColor = Color.White
+                               frm.txtbxfc.BackColor = Color.White
+                               frm.txtbxfn.ForeColor = frm.ColorDialog1.Color
+                               frm.txtbxfe.ForeColor = frm.ColorDialog1.Color
+                               frm.txtbxfc.ForeColor = frm.ColorDialog1.Color
                                frm.rbutcpc.Checked = gpp.getPreference(Of IPreference(Of Boolean))("SetTermCountPerCard").getPreference()
                                frm.nudtc.Value = gpp.getPreference(Of IPreference(Of Integer))("TermCount").getPreference()
-                               frm.rbututcprfs.Checked = gpp.getPreference(Of IPreference(Of Boolean))("SetTermCountPerRecommenedFontSize").getPreference()
-                               frm.nudrfs.Value = gpp.getPreference(Of IPreference(Of Integer))("RecommenedFontSize").getPreference()
+                               frm.rbututcprfs.Checked = gpp.getPreference(Of IPreference(Of Boolean))("SetTermCountPerRecommendedFontSize").getPreference()
+                               frm.nudrfs.Value = gpp.getPreference(Of IPreference(Of Integer))("RecommendedFontSize").getPreference()
                                If frm.rbututcprfs.Checked Then
-                                   frm.Label9.Enabled = False
+                                   frm.lbltc.Enabled = False
                                    frm.nudtc.Enabled = False
-                                   frm.Label10.Enabled = True
+                                   frm.lblrfs.Enabled = True
                                    frm.nudrfs.Enabled = True
                                ElseIf frm.rbutcpc.Checked Then
-                                   frm.Label9.Enabled = True
+                                   frm.lbltc.Enabled = True
                                    frm.nudtc.Enabled = True
-                                   frm.Label10.Enabled = False
+                                   frm.lblrfs.Enabled = False
                                    frm.nudrfs.Enabled = False
                                End If
                                frm.chkbxasw.Checked = gpp.getPreference(Of IPreference(Of Boolean))("CanSplitWords").getPreference()
@@ -118,8 +127,8 @@ Public Class PGlobalOptions
                                        frm.rbutcalmfcmpraop.Checked = False
                                        frm.rbutcalmfcmppnr.Checked = True
                                    End If
-                                   frm.Label11.Enabled = True
-                                   frm.Label12.Enabled = True
+                                   frm.lblpffcp.Enabled = True
+                                   frm.lblpfcalmfcmp.Enabled = True
                                Else
                                    frm.rbutcalmfcmppnr.Checked = False
                                    frm.rbutcalmfcmpradp.Checked = False
@@ -133,13 +142,12 @@ Public Class PGlobalOptions
                                    frm.rbutfcppnr.Enabled = False
                                    frm.rbutfcpradp.Enabled = False
                                    frm.rbutfcpraop.Enabled = False
-                                   frm.Label11.Enabled = False
-                                   frm.Label12.Enabled = False
+                                   frm.lblpffcp.Enabled = False
+                                   frm.lblpfcalmfcmp.Enabled = False
                                End If
                                frm.Enabled = True
                            End Sub)
             ElseIf ev.EventType = EventTypes.Closing Then
-                frm.Invoke(Sub() frm.Enabled = False)
                 Dim s As Boolean = fap.setPreferencesToRegistry()
                 If Not s Then
                     Try
@@ -174,16 +182,16 @@ Public Class PGlobalOptions
             If ev.EventSource.parentObjs.Count = 1 Then
                 If canCastObject(Of GlobalOptions)(ev.EventSource.parentObjs(0)) Then
                     Dim frm As GlobalOptions = castObject(Of GlobalOptions)(ev.EventSource.parentObjs(0))
-                    If canCastObject(Of Control)(ev.EventSource.sourceObj) Then
-                        Dim ctrl As Control = castObject(Of Control)(ev.EventSource.sourceObj)
+                    If canCastObject(Of Component)(ev.EventSource.sourceObj) Then
+                        Dim ctrl As Component = castObject(Of Component)(ev.EventSource.sourceObj)
                         If ctrl Is frm.chkbxesl Then
                             gp.getPreference(Of IPreference(Of Boolean))("EnableFontSizeLimit").setPreference(frm.chkbxesl.Checked)
                             frm.Invoke(Sub() frm.chkbxesl.Enabled = True)
                         ElseIf ctrl Is frm.nudmin Then
-                            gp.getPreference(Of IPreference(Of Boolean))("MinumumFontSize").setPreference(frm.nudmin.Value)
+                            gp.getPreference(Of IPreference(Of Integer))("MinumumFontSize").setPreference(frm.nudmin.Value)
                             If gp.getPreference(Of IPreference(Of Boolean))("EnableFontSizeLimit").getPreference() Then frm.Invoke(Sub() frm.nudmin.Enabled = True)
                         ElseIf ctrl Is frm.nudmax Then
-                            gp.getPreference(Of IPreference(Of Boolean))("MaximumFontSize").setPreference(frm.nudmax.Value)
+                            gp.getPreference(Of IPreference(Of Integer))("MaximumFontSize").setPreference(frm.nudmax.Value)
                             If gp.getPreference(Of IPreference(Of Boolean))("EnableFontSizeLimit").getPreference() Then frm.Invoke(Sub() frm.nudmax.Enabled = True)
                         ElseIf ctrl Is frm.chkbxetem Then
                             gp.getPreference(Of IPreference(Of Boolean))("EnableThreadErrorMessages").setPreference(frm.chkbxetem.Checked)
@@ -199,23 +207,23 @@ Public Class PGlobalOptions
                             Next
                             frm.Invoke(Sub() frm.cbxps.Enabled = True)
                         ElseIf ctrl Is frm.nudcw Then
-                            gpp.getPreference(Of IPreference(Of Boolean))("CardWidth").setPreference(frm.nudcw.Value)
+                            gpp.getPreference(Of IPreference(Of Integer))("CardWidth").setPreference(frm.nudcw.Value)
                             frm.Invoke(Sub() frm.nudcw.Enabled = True)
                         ElseIf ctrl Is frm.nudch Then
-                            gpp.getPreference(Of IPreference(Of Boolean))("CardHeight").setPreference(frm.nudch.Value)
+                            gpp.getPreference(Of IPreference(Of Integer))("CardHeight").setPreference(frm.nudch.Value)
                             frm.Invoke(Sub() frm.nudch.Enabled = True)
                         ElseIf ctrl Is frm.rbutcpc Then
                             gpp.getPreference(Of IPreference(Of Boolean))("SetTermCountPerCard").setPreference(frm.rbutcpc.Checked)
                             frm.Invoke(Sub() frm.rbutcpc.Enabled = True)
                         ElseIf ctrl Is frm.rbututcprfs Then
-                            gpp.getPreference(Of IPreference(Of Boolean))("SetTermCountPerRecommenedFontSize").setPreference(frm.rbututcprfs.Checked)
+                            gpp.getPreference(Of IPreference(Of Boolean))("SetTermCountPerRecommendedFontSize").setPreference(frm.rbututcprfs.Checked)
                             frm.Invoke(Sub() frm.rbututcprfs.Enabled = True)
                         ElseIf ctrl Is frm.nudtc Then
-                            gpp.getPreference(Of IPreference(Of Boolean))("TermCount").setPreference(frm.nudtc.Value)
+                            gpp.getPreference(Of IPreference(Of Integer))("TermCount").setPreference(frm.nudtc.Value)
                             If gpp.getPreference(Of IPreference(Of Boolean))("SetTermCountPerCard").getPreference() Then frm.Invoke(Sub() frm.nudtc.Enabled = True)
                         ElseIf ctrl Is frm.nudrfs Then
-                            gpp.getPreference(Of IPreference(Of Boolean))("RecommendedFontSize").setPreference(frm.nudrfs.Value)
-                            If gpp.getPreference(Of IPreference(Of Boolean))("SetTermCountPerRecommenedFontSize").getPreference() Then frm.Invoke(Sub() frm.nudrfs.Enabled = True)
+                            gpp.getPreference(Of IPreference(Of Integer))("RecommendedFontSize").setPreference(frm.nudrfs.Value)
+                            If gpp.getPreference(Of IPreference(Of Boolean))("SetTermCountPerRecommendedFontSize").getPreference() Then frm.Invoke(Sub() frm.nudrfs.Enabled = True)
                         ElseIf ctrl Is frm.chkbxasw Then
                             gpp.getPreference(Of IPreference(Of Boolean))("CanSplitWords").setPreference(frm.chkbxasw.Checked)
                             frm.Invoke(Sub() frm.chkbxasw.Enabled = True)
@@ -239,46 +247,55 @@ Public Class PGlobalOptions
                             frm.Invoke(Sub() frm.rbutcalmfcmpraop.Enabled = True)
                             'ElseIf ctrl Is frm.Then Then
                         End If
-                        frm.Invoke(Sub() ctrl.Enabled = True)
                         toret = True
                     End If
                 End If
-                ElseIf ev.EventSource.parentObjs.Count = 2 Then
-                    If canCastObject(Of GlobalOptions)(ev.EventSource.parentObjs(1)) And canCastObject(Of Control)(ev.EventSource.parentObjs(0)) Then
-                        Dim frm As GlobalOptions = castObject(Of GlobalOptions)(ev.EventSource.parentObjs(1))
-                        Dim ctrl As Control = castObject(Of Control)(ev.EventSource.parentObjs(0))
-                        If ctrl Is frm.butcfs And canCastObject(Of FontDialogSuccessEventArgs)(ev.EventData) Then
-                            Dim f As FontDialogSuccessEventArgs = castObject(Of FontDialogSuccessEventArgs)(ev.EventData)
-                            frm.Invoke(Sub() frm.txtbxfn.Text = f.Font.ToString)
-                            frm.Invoke(Sub()
-                                           frm.txtbxfe.Text = ""
-                                           If frm.FontDialogNoSize.FontValue.Bold Then
-                                               frm.txtbxfe.Text &= "Bold "
-                                           End If
-                                           If frm.FontDialogNoSize.FontValue.Italic Then
-                                               frm.txtbxfe.Text &= "Italic "
-                                           End If
-                                           If frm.FontDialogNoSize.FontValue.Strikeout Then
-                                               frm.txtbxfe.Text &= "Strikeout "
-                                           End If
-                                           If frm.FontDialogNoSize.FontValue.Underline Then
-                                               frm.txtbxfe.Text &= "Underline "
-                                           End If
-                                           If frm.txtbxfe.Text.EndsWith(" ") Then
-                                               frm.txtbxfe.Text = frm.txtbxfe.Text.TrimEnd(" ")
-                                           End If
-                                       End Sub)
-                            gpp.getPreference(Of IPreference(Of Font))("Font").setPreference(f.Font)
-                        ElseIf ctrl Is frm.butcfc And canCastObject(Of ColorDialogSuccessEventArgs)(ev.EventData) Then
-                            Dim c As ColorDialogSuccessEventArgs = castObject(Of ColorDialogSuccessEventArgs)(ev.EventData)
-                            frm.Invoke(Sub() frm.txtbxfc.Text = c.Color.ToString)
-                            frm.Invoke(Sub() frm.txtbxfc.BackColor = c.Color)
-                            gpp.getPreference(Of IPreference(Of Color))("Color").setPreference(c.Color)
-                        End If
+            ElseIf ev.EventSource.parentObjs.Count = 2 Then
+                If canCastObject(Of GlobalOptions)(ev.EventSource.parentObjs(1)) And canCastObject(Of Component)(ev.EventSource.parentObjs(0)) Then
+                    Dim frm As GlobalOptions = castObject(Of GlobalOptions)(ev.EventSource.parentObjs(1))
+                    Dim ctrl As Component = castObject(Of Component)(ev.EventSource.parentObjs(0))
+                    If ctrl Is frm.butcfs And canCastObject(Of FontDialogSuccessEventArgs)(ev.EventData) Then
+                        Dim f As FontDialogSuccessEventArgs = castObject(Of FontDialogSuccessEventArgs)(ev.EventData)
+                        frm.Invoke(Sub() frm.txtbxfn.Text = f.Font.Name)
+                        frm.Invoke(Sub()
+                                       frm.txtbxfe.Text = ""
+                                       frm.txtbxfn.Font = New Font(frm.FontDialogNoSize.FontValue, frm.FontDialogNoSize.FontValue.Style)
+                                       frm.txtbxfe.Font = New Font(frm.FontDialogNoSize.FontValue, frm.FontDialogNoSize.FontValue.Style)
+                                       frm.txtbxfc.Font = New Font(frm.FontDialogNoSize.FontValue, frm.FontDialogNoSize.FontValue.Style)
+                                       If frm.FontDialogNoSize.FontValue.Bold Then
+                                           frm.txtbxfe.Text &= "Bold "
+                                       End If
+                                       If frm.FontDialogNoSize.FontValue.Italic Then
+                                           frm.txtbxfe.Text &= "Italic "
+                                       End If
+                                       If frm.FontDialogNoSize.FontValue.Strikeout Then
+                                           frm.txtbxfe.Text &= "Strikeout "
+                                       End If
+                                       If frm.FontDialogNoSize.FontValue.Underline Then
+                                           frm.txtbxfe.Text &= "Underline "
+                                       End If
+                                       If frm.txtbxfe.Text.EndsWith(" ") Then
+                                           frm.txtbxfe.Text = frm.txtbxfe.Text.TrimEnd(" ")
+                                       End If
+                                   End Sub)
+                        gpp.getPreference(Of IPreference(Of Font))("Font").setPreference(f.Font)
+                    ElseIf ctrl Is frm.butcfc And canCastObject(Of ColorDialogSuccessEventArgs)(ev.EventData) Then
+                        Dim c As ColorDialogSuccessEventArgs = castObject(Of ColorDialogSuccessEventArgs)(ev.EventData)
+                        frm.Invoke(Sub()
+                                       frm.txtbxfc.Text = c.Color.Name
+                                       frm.txtbxfn.BackColor = Color.White
+                                       frm.txtbxfe.BackColor = Color.White
+                                       frm.txtbxfc.BackColor = Color.White
+                                       frm.txtbxfn.ForeColor = c.Color
+                                       frm.txtbxfe.ForeColor = c.Color
+                                       frm.txtbxfc.ForeColor = c.Color
+                                   End Sub)
+                        gpp.getPreference(Of IPreference(Of Color))("Color").setPreference(c.Color)
                     End If
                 End If
             End If
-            Return toret
+        End If
+        Return toret
     End Function
 
     Private Function castObject(Of t)(f As Object) As t

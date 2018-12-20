@@ -12,7 +12,6 @@ Public NotInheritable Class GlobalOptions
         ' This call is required by the designer.
         InitializeComponent()
 
-        ' Add any initialization after the InitializeComponent() call.
         If workerp IsNot Nothing Then
             wp = workerp
             ue = True
@@ -25,7 +24,7 @@ Public NotInheritable Class GlobalOptions
 
     Private Sub GlobalOptions_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         If Not formClosedDone Then
-            wp.addEvent(New WorkerEvent(Me, EventTypes.Closed, e))
+            If ue Then wp.addEvent(New WorkerEvent(Me, EventTypes.Closed, e))
             formClosedDone = True
         End If
     End Sub
@@ -37,7 +36,7 @@ Public NotInheritable Class GlobalOptions
                 e.Cancel = True
                 Me.Hide()
             End If
-            wp.addEvent(New WorkerEvent(Me, EventTypes.Closing, e))
+            If ue Then wp.addEvent(New WorkerEvent(Me, EventTypes.Closing, e))
             Me.OnFormClosed(New FormClosedEventArgs(e.CloseReason))
             formClosingDone = True
         End If
@@ -55,160 +54,160 @@ Public NotInheritable Class GlobalOptions
         Me.Enabled = False
         formClosingDone = False
         formClosedDone = False
-        wp.addEvent(New WorkerEvent(Me, EventTypes.Shown, e))
+        If ue Then wp.addEvent(New WorkerEvent(Me, EventTypes.Shown, e))
     End Sub
 
     Private Sub chkbxesl_CheckedChanged(sender As Object, e As EventArgs) Handles chkbxesl.CheckedChanged
-        chkbxesl.Enabled = False
+        If ue Then chkbxesl.Enabled = False
         If chkbxesl.Checked Then
-            Label1.Enabled = True
-            Label2.Enabled = True
+            lblminfs.Enabled = True
+            lblmaxfs.Enabled = True
             nudmin.Enabled = True
             nudmax.Enabled = True
         Else
-            Label1.Enabled = False
-            Label2.Enabled = False
+            lblminfs.Enabled = False
+            lblmaxfs.Enabled = False
             nudmin.Enabled = False
             nudmax.Enabled = False
         End If
-        wp.addEvent(Of GlobalOptions)(chkbxesl, Me, EventTypes.CheckedChanged, e)
+        If ue Then wp.addEvent(Of GlobalOptions)(chkbxesl, Me, EventTypes.CheckedChanged, e)
     End Sub
 
     Private Sub nudmin_ValueChanged(sender As Object, e As EventArgs) Handles nudmin.ValueChanged
-        nudmin.Enabled = False
+        If ue Then nudmin.Enabled = False
         nudmax.Minimum = nudmin.Value
         nudrfs.Minimum = nudmin.Value
-        wp.addEvent(Of GlobalOptions)(nudmin, Me, EventTypes.ValueChanged, e)
+        If ue Then wp.addEvent(Of GlobalOptions)(nudmin, Me, EventTypes.ValueChanged, e)
     End Sub
 
     Private Sub nudmax_ValueChanged(sender As Object, e As EventArgs) Handles nudmax.ValueChanged
-        nudmax.Enabled = False
-        nudmax.Maximum = nudmax.Value
+        If ue Then nudmax.Enabled = False
+        nudmin.Maximum = nudmax.Value
         nudrfs.Maximum = nudmax.Value
-        wp.addEvent(Of GlobalOptions)(nudmax, Me, EventTypes.ValueChanged, e)
+        If ue Then wp.addEvent(Of GlobalOptions)(nudmax, Me, EventTypes.ValueChanged, e)
     End Sub
 
     Private Sub chkbxetem_CheckedChanged(sender As Object, e As EventArgs) Handles chkbxetem.CheckedChanged
-        chkbxetem.Enabled = False
-        wp.addEvent(Of GlobalOptions)(chkbxetem, Me, EventTypes.CheckedChanged, e)
+        If ue Then chkbxetem.Enabled = False
+        If ue Then wp.addEvent(Of GlobalOptions)(chkbxetem, Me, EventTypes.CheckedChanged, e)
     End Sub
 
     Private Sub cbxps_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxps.SelectedIndexChanged
-        cbxps.Enabled = False
-        wp.addEvent(Of GlobalOptions)(cbxps, Me, EventTypes.SelectedIndexChanged, e)
+        If ue Then cbxps.Enabled = False
+        If ue Then wp.addEvent(Of GlobalOptions)(cbxps, Me, EventTypes.SelectedIndexChanged, e)
     End Sub
 
     Private Sub nudcw_ValueChanged(sender As Object, e As EventArgs) Handles nudcw.ValueChanged
-        nudcw.Enabled = False
-        wp.addEvent(Of GlobalOptions)(nudcw, Me, EventTypes.ValueChanged, e)
+        If ue Then nudcw.Enabled = False
+        If ue Then wp.addEvent(Of GlobalOptions)(nudcw, Me, EventTypes.ValueChanged, e)
     End Sub
 
     Private Sub nudch_ValueChanged(sender As Object, e As EventArgs) Handles nudch.ValueChanged
-        nudch.Enabled = False
-        wp.addEvent(Of GlobalOptions)(nudch, Me, EventTypes.ValueChanged, e)
+        If ue Then nudch.Enabled = False
+        If ue Then wp.addEvent(Of GlobalOptions)(nudch, Me, EventTypes.ValueChanged, e)
     End Sub
 
     Private Sub butcfs_Click(sender As Object, e As EventArgs) Handles butcfs.Click
-        butcfs.Enabled = False
+        If ue Then butcfs.Enabled = False
         Dim r As DialogResult = FontDialogNoSize.ShowDialog(Me)
         If r = Windows.Forms.DialogResult.OK Then
             Dim lst As New List(Of Object)
             lst.Add(butcfs)
             lst.Add(Me)
-            wp.addEvent(FontDialogNoSize, lst, EventTypes.DialogClosed, New FontDialogSuccessEventArgs(FontDialogNoSize.FontValue, FontDialogNoSize.ColorValue))
+            If ue Then wp.addEvent(FontDialogNoSize, lst, EventTypes.DialogClosed, New FontDialogSuccessEventArgs(FontDialogNoSize.FontValue, FontDialogNoSize.ColorValue))
         End If
-        wp.addEvent(Of GlobalOptions)(FontDialogNoSize, Me, EventTypes.Click, e)
-        butcfs.Enabled = True
+        If ue Then wp.addEvent(Of GlobalOptions)(FontDialogNoSize, Me, EventTypes.Click, e)
+        If ue Then butcfs.Enabled = True
     End Sub
 
     Private Sub butcfc_Click(sender As Object, e As EventArgs) Handles butcfc.Click
-        butcfc.Enabled = False
+        If ue Then butcfc.Enabled = False
         Dim r As DialogResult = ColorDialog1.ShowDialog(Me)
         If r = Windows.Forms.DialogResult.OK Then
             Dim lst As New List(Of Object)
             lst.Add(butcfc)
             lst.Add(Me)
-            wp.addEvent(ColorDialog1, lst, EventTypes.DialogClosed, New ColorDialogSuccessEventArgs(ColorDialog1.Color))
+            If ue Then wp.addEvent(ColorDialog1, lst, EventTypes.DialogClosed, New ColorDialogSuccessEventArgs(ColorDialog1.Color))
         End If
-        wp.addEvent(Of GlobalOptions)(ColorDialog1, Me, EventTypes.Click, e)
-        butcfc.Enabled = True
+        If ue Then wp.addEvent(Of GlobalOptions)(ColorDialog1, Me, EventTypes.Click, e)
+        If ue Then butcfc.Enabled = True
     End Sub
 
     Private Sub rbutcpc_CheckedChanged(sender As Object, e As EventArgs) Handles rbutcpc.CheckedChanged
-        rbutcpc.Enabled = False
+        If ue Then rbutcpc.Enabled = False
         If rbutcpc.Checked Then
-            Label9.Enabled = True
+            lbltc.Enabled = True
             nudtc.Enabled = True
-            Label10.Enabled = False
+            lblrfs.Enabled = False
             nudrfs.Enabled = False
         Else
-            Label9.Enabled = False
+            lbltc.Enabled = False
             nudtc.Enabled = False
-            Label10.Enabled = True
+            lblrfs.Enabled = True
             nudrfs.Enabled = True
         End If
-        wp.addEvent(Of GlobalOptions)(rbutcpc, Me, EventTypes.CheckedChanged, e)
+        If ue Then wp.addEvent(Of GlobalOptions)(rbutcpc, Me, EventTypes.CheckedChanged, e)
     End Sub
 
     Private Sub rbututcprfs_CheckedChanged(sender As Object, e As EventArgs) Handles rbututcprfs.CheckedChanged
-        rbututcprfs.Enabled = False
+        If ue Then rbututcprfs.Enabled = False
         If rbututcprfs.Checked Then
-            Label9.Enabled = False
+            lbltc.Enabled = False
             nudtc.Enabled = False
-            Label10.Enabled = True
+            lblrfs.Enabled = True
             nudrfs.Enabled = True
         Else
-            Label9.Enabled = True
+            lbltc.Enabled = True
             nudtc.Enabled = True
-            Label10.Enabled = False
+            lblrfs.Enabled = False
             nudrfs.Enabled = False
         End If
-        wp.addEvent(Of GlobalOptions)(rbututcprfs, Me, EventTypes.CheckedChanged, e)
+        If ue Then wp.addEvent(Of GlobalOptions)(rbututcprfs, Me, EventTypes.CheckedChanged, e)
     End Sub
 
     Private Sub chkbxasw_CheckedChanged(sender As Object, e As EventArgs) Handles chkbxasw.CheckedChanged
-        chkbxasw.Enabled = False
-        wp.addEvent(Of GlobalOptions)(chkbxasw, Me, EventTypes.CheckedChanged, e)
+        If ue Then chkbxasw.Enabled = False
+        If ue Then wp.addEvent(Of GlobalOptions)(chkbxasw, Me, EventTypes.CheckedChanged, e)
     End Sub
 
     Private Sub nudtc_ValueChanged(sender As Object, e As EventArgs) Handles nudtc.ValueChanged
-        nudtc.Enabled = False
-        wp.addEvent(Of GlobalOptions)(nudtc, Me, EventTypes.ValueChanged, e)
+        If ue Then nudtc.Enabled = False
+        If ue Then wp.addEvent(Of GlobalOptions)(nudtc, Me, EventTypes.ValueChanged, e)
     End Sub
 
     Private Sub nudrfs_ValueChanged(sender As Object, e As EventArgs) Handles nudrfs.ValueChanged
-        nudrfs.Enabled = False
-        wp.addEvent(Of GlobalOptions)(nudrfs, Me, EventTypes.ValueChanged, e)
+        If ue Then nudrfs.Enabled = False
+        If ue Then wp.addEvent(Of GlobalOptions)(nudrfs, Me, EventTypes.ValueChanged, e)
     End Sub
 
     Private Sub rbutfcpradp_CheckedChanged(sender As Object, e As EventArgs) Handles rbutfcpradp.CheckedChanged
-        rbutfcpradp.Enabled = False
-        wp.addEvent(Of GlobalOptions)(rbutfcpradp, Me, EventTypes.CheckedChanged, e)
+        If ue Then rbutfcpradp.Enabled = False
+        If ue Then wp.addEvent(Of GlobalOptions)(rbutfcpradp, Me, EventTypes.CheckedChanged, e)
     End Sub
 
     Private Sub rbutfcpraop_CheckedChanged(sender As Object, e As EventArgs) Handles rbutfcpraop.CheckedChanged
-        rbutfcpraop.Enabled = False
-        wp.addEvent(Of GlobalOptions)(rbutfcpraop, Me, EventTypes.CheckedChanged, e)
+        If ue Then rbutfcpraop.Enabled = False
+        If ue Then wp.addEvent(Of GlobalOptions)(rbutfcpraop, Me, EventTypes.CheckedChanged, e)
     End Sub
 
     Private Sub rbutfcppnr_CheckedChanged(sender As Object, e As EventArgs) Handles rbutfcppnr.CheckedChanged
-        rbutfcppnr.Enabled = False
-        wp.addEvent(Of GlobalOptions)(rbutfcppnr, Me, EventTypes.CheckedChanged, e)
+        If ue Then rbutfcppnr.Enabled = False
+        If ue Then wp.addEvent(Of GlobalOptions)(rbutfcppnr, Me, EventTypes.CheckedChanged, e)
     End Sub
 
     Private Sub rbutcalmfcmpradp_CheckedChanged(sender As Object, e As EventArgs) Handles rbutcalmfcmpradp.CheckedChanged
-        rbutcalmfcmpradp.Enabled = False
-        wp.addEvent(Of GlobalOptions)(rbutcalmfcmpradp, Me, EventTypes.CheckedChanged, e)
+        If ue Then rbutcalmfcmpradp.Enabled = False
+        If ue Then wp.addEvent(Of GlobalOptions)(rbutcalmfcmpradp, Me, EventTypes.CheckedChanged, e)
     End Sub
 
     Private Sub rbutcalmfcmpraop_CheckedChanged(sender As Object, e As EventArgs) Handles rbutcalmfcmpraop.CheckedChanged
-        rbutcalmfcmpraop.Enabled = False
-        wp.addEvent(Of GlobalOptions)(rbutcalmfcmpraop, Me, EventTypes.CheckedChanged, e)
+        If ue Then rbutcalmfcmpraop.Enabled = False
+        If ue Then wp.addEvent(Of GlobalOptions)(rbutcalmfcmpraop, Me, EventTypes.CheckedChanged, e)
     End Sub
 
     Private Sub rbutcalmfcmppnr_CheckedChanged(sender As Object, e As EventArgs) Handles rbutcalmfcmppnr.CheckedChanged
-        rbutcalmfcmppnr.Enabled = False
-        wp.addEvent(Of GlobalOptions)(rbutcalmfcmppnr, Me, EventTypes.CheckedChanged, e)
+        If ue Then rbutcalmfcmppnr.Enabled = False
+        If ue Then wp.addEvent(Of GlobalOptions)(rbutcalmfcmppnr, Me, EventTypes.CheckedChanged, e)
     End Sub
 
     Private Sub butok_Click(sender As Object, e As EventArgs) Handles butok.Click

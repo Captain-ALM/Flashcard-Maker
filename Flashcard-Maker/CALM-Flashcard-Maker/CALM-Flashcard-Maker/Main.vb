@@ -99,8 +99,8 @@ Module Main
             gpp.getPreference(Of IPreference(Of Color))("Color").setPreference(Color.Black)
             gpp.getPreference(Of IPreference(Of Boolean))("SetTermCountPerCard").setPreference(True)
             gpp.getPreference(Of IPreference(Of Integer))("TermCount").setPreference(1)
-            gpp.getPreference(Of IPreference(Of Boolean))("SetTermCountPerRecommenedFontSize").setPreference(False)
-            gpp.getPreference(Of IPreference(Of Integer))("RecommenedFontSize").setPreference(4)
+            gpp.getPreference(Of IPreference(Of Boolean))("SetTermCountPerRecommendedFontSize").setPreference(False)
+            gpp.getPreference(Of IPreference(Of Integer))("RecommendedFontSize").setPreference(4)
             gpp.getPreference(Of IPreference(Of Boolean))("CanSplitWords").setPreference(True)
             Dim fap As FileAssociations = globalops.getPreference(Of FileAssociations)("FileAssociations")
             Dim s As Boolean = fap.getPreferencesFromRegistry()
@@ -152,6 +152,8 @@ Module Main
 
         worker = New WorkerPump()
         worker.addFormInstance(New AboutBx(worker))
+        worker.addFormInstance(New GlobalOptions(worker))
+        worker.addParser(New PGlobalOptions())
 
         'Close the splash form and thread.
         sc.CloseForm()
@@ -164,6 +166,9 @@ Module Main
 
     Public Sub runtime()
         worker.startPump()
+        While worker.PumpBusy
+            Thread.Sleep(100)
+        End While
         worker.stopPump()
     End Sub
 

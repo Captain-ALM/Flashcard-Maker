@@ -40,9 +40,9 @@ Public NotInheritable Class Project
                 css.setting = CardSizeSetting.settermcountpercard
                 css.termcount = pset.getPreference(Of IPreference(Of Integer))("TermCount").getPreference()
                 th = ch \ css.termcount
-            ElseIf pset.getPreference(Of IPreference(Of Boolean))("SetTermCountPerRecommenedFontSize").getPreference() Then
+            ElseIf pset.getPreference(Of IPreference(Of Boolean))("SetTermCountPerRecommendedFontSize").getPreference() Then
                 css.setting = CardSizeSetting.settermcountperrecommendedfont
-                css.recommendedfontsize = pset.getPreference(Of IPreference(Of Integer))("RecommenedFontSize").getPreference()
+                css.recommendedfontsize = pset.getPreference(Of IPreference(Of Integer))("RecommendedFontSize").getPreference()
                 th = ch
             End If
             Dim pos As Integer = 0
@@ -102,9 +102,9 @@ Public NotInheritable Class Project
                 If pset.getPreference(Of IPreference(Of Boolean))("SetTermCountPerCard").getPreference() Then
                     css.setting = CardSizeSetting.settermcountpercard
                     css.termcount = pset.getPreference(Of IPreference(Of Integer))("TermCount").getPreference()
-                ElseIf pset.getPreference(Of IPreference(Of Boolean))("SetTermCountPerRecommenedFontSize").getPreference() Then
+                ElseIf pset.getPreference(Of IPreference(Of Boolean))("SetTermCountPerRecommendedFontSize").getPreference() Then
                     css.setting = CardSizeSetting.settermcountperrecommendedfont
-                    css.recommendedfontsize = pset.getPreference(Of IPreference(Of Integer))("RecommenedFontSize").getPreference()
+                    css.recommendedfontsize = pset.getPreference(Of IPreference(Of Integer))("RecommendedFontSize").getPreference()
                 End If
                 pimg.Add(c.getCardImages(pset.getPreference(Of IPreference(Of Integer))("CardWidth").getPreference(), pset.getPreference(Of IPreference(Of Integer))("CardHeight").getPreference(), css))
             Next
@@ -202,8 +202,8 @@ Public NotInheritable Class ProjectPreferences
         MyBase.addPreference(Of IPreference(Of Color))(New Preference(Of Color)("Color"))
         MyBase.addPreference(Of IPreference(Of Boolean))(New Preference(Of Boolean)("SetTermCountPerCard"))
         MyBase.addPreference(Of IPreference(Of Integer))(New Preference(Of Integer)("TermCount"))
-        MyBase.addPreference(Of IPreference(Of Boolean))(New Preference(Of Boolean)("SetTermCountPerRecommenedFontSize"))
-        MyBase.addPreference(Of IPreference(Of Integer))(New Preference(Of Integer)("RecommenedFontSize"))
+        MyBase.addPreference(Of IPreference(Of Boolean))(New Preference(Of Boolean)("SetTermCountPerRecommendedFontSize"))
+        MyBase.addPreference(Of IPreference(Of Integer))(New Preference(Of Integer)("RecommendedFontSize"))
         MyBase.addPreference(Of IPreference(Of Boolean))(New Preference(Of Boolean)("CanSplitWords"))
     End Sub
 
