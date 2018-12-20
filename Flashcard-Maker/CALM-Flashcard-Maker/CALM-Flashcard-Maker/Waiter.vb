@@ -1,11 +1,4 @@
-﻿'
-' Created by SharpDevelop.
-' User: Alfred
-' Date: 20/08/2018
-' Time: 17:40
-' 
-' To change this template use Tools | Options | Coding | Edit Standard Headers.
-Imports System.Threading
+﻿Imports System.Threading
 Imports captainalm.util.preference
 
 ''' <summary>
@@ -13,13 +6,6 @@ Imports captainalm.util.preference
 ''' </summary>
 ''' <remarks></remarks>
 Partial Public Class Waiter
-    ''' <summary>
-    ''' This is the delegate used in waiter threads.
-    ''' </summary>
-    ''' <param name="passedWaiter">The instance of waiter.</param>
-    ''' <remarks></remarks>
-    Public Delegate Sub WaiterRunnable(ByRef passedWaiter As Waiter)
-
     Private torun As WaiterRunnable = Nothing
     Private _thread As Thread = Nothing
     Private canceled As Boolean = False
@@ -93,14 +79,64 @@ Partial Public Class Waiter
     ''' <remarks></remarks>
     Public Sub resetCancel()
         canceled = False
-        BUTSTOP.Enabled = True
+        callOnForm(Sub() BUTSTOP.Enabled = True)
     End Sub
     ''' <summary>
     ''' Sets the cancel state to true.
     ''' </summary>
     ''' <remarks></remarks>
     Public Sub cancel()
-        BUTSTOP.Enabled = False
+        callOnForm(Sub() BUTSTOP.Enabled = False)
         canceled = True
     End Sub
+    ''' <summary>
+    ''' Sets the text on the waiting form.
+    ''' </summary>
+    ''' <param name="txt">The text to set the label to.</param>
+    ''' <remarks></remarks>
+    Public Sub setText(txt As String)
+        callOnForm(Sub() lbltxt.Text = txt)
+    End Sub
+    ''' <summary>
+    ''' Gets the text on the waiting form.
+    ''' </summary>
+    ''' <returns>The text on the waiting form.</returns>
+    ''' <remarks></remarks>
+    Public Function getText() As String
+        Return callOnForm(Function() As String
+                              Return lbltxt.Text
+                          End Function)
+    End Function
+    ''' <summary>
+    ''' Gets or Sets the title of the form.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Property title As String
+        Get
+            Return callOnForm(Function() As String
+                                  Return Me.Text
+                              End Function)
+        End Get
+        Set(value As String)
+            callOnForm(Sub() Me.Text = value)
+        End Set
+    End Property
+    ''' <summary>
+    ''' Calls a delegate on the form thread.
+    ''' </summary>
+    ''' <param name="del">The delegate to call.</param>
+    ''' <param name="args">The arguments for the delegate.</param>
+    ''' <returns>The return value of the delegate.</returns>
+    ''' <remarks></remarks>
+    Public Function callOnForm(del As [Delegate], ParamArray args As Object()) As Object
+        If Me.InvokeRequired Then Return Me.Invoke(Sub() callOnForm(del, args)) Else Return del.DynamicInvoke(args)
+    End Function
 End Class
+''' <summary>
+''' This is the delegate used in waiter threads.
+''' </summary>
+''' <param name="passedWaiter">The instance of waiter.</param>
+''' <remarks></remarks>
+Public Delegate Sub WaiterRunnable(ByRef passedWaiter As Waiter)

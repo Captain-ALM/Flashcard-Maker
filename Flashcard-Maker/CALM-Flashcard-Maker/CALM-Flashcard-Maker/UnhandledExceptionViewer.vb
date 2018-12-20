@@ -6,13 +6,14 @@
     Private rl As String = ""
     Private Const crlf As String = ChrW(13) & ChrW(10)
 
-    Public Sub New(canContinue As Boolean, canReport As Boolean, canTerminate As Boolean, exc As Exception, Optional reportLink As String = "https://github.com/Captain-ALM/Flashcard-Maker/issues/new")
+    Public Sub New(canContinue As Boolean, canReport As Boolean, canTerminate As Boolean, exc As Exception, Optional reportLink As String = "https://github.com/Captain-ALM/Flashcard-Maker/issues/new", Optional reportLinkAppensioner As IAppensioner = Nothing)
         InitializeComponent()
         cc = canContinue
         cr = canReport
         ct = canTerminate
         ex = exc
         rl = reportLink
+        If reportLinkAppensioner IsNot Nothing Then rl = reportLinkAppensioner.appendText(rl)
         Me.DialogResult = Windows.Forms.DialogResult.None
     End Sub
 
@@ -20,11 +21,11 @@
         butcont.Enabled = cc
         butr.Enabled = cr
         butt.Enabled = ct
-        Dim extxt As String = ex.GetType.ToString & crlf
+        Dim extxt As String = ex.GetType.ToString & crlf & crlf
         extxt &= ex.Message & crlf & crlf
+        extxt &= ex.TargetSite.ToString() & crlf & crlf
         extxt &= ex.Source & crlf & crlf
         extxt &= ex.StackTrace & crlf & crlf
-        extxt &= ex.TargetSite.ToString()
         txtbxex.Text = extxt
     End Sub
 
@@ -61,3 +62,16 @@
         End If
     End Sub
 End Class
+''' <summary>
+''' Defines an Appensioner that appends data to the text it is passed.
+''' </summary>
+''' <remarks></remarks>
+Public Interface IAppensioner
+    ''' <summary>
+    ''' Called to appened text to the passed text.
+    ''' </summary>
+    ''' <param name="text">The passed Text.</param>
+    ''' <returns>The Text with the appension.</returns>
+    ''' <remarks></remarks>
+    Function appendText(text As String) As String
+End Interface

@@ -78,8 +78,10 @@ Partial Class UnhandledExceptionViewer
         Me.txtbxex.Multiline = True
         Me.txtbxex.Name = "txtbxex"
         Me.txtbxex.ReadOnly = True
+        Me.txtbxex.ScrollBars = System.Windows.Forms.ScrollBars.Both
         Me.txtbxex.Size = New System.Drawing.Size(578, 318)
         Me.txtbxex.TabIndex = 0
+        Me.txtbxex.WordWrap = False
         '
         'butcont
         '

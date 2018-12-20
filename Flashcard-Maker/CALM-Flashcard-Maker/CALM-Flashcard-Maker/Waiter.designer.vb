@@ -87,7 +87,7 @@ Partial Class Waiter
         Me.ResumeLayout(False)
 
     End Sub
-	Private pgb As System.Windows.Forms.ProgressBar
-    Private lbltxt As System.Windows.Forms.Label
-    Friend WithEvents BUTSTOP As System.Windows.Forms.Button
+    Public WithEvents pgb As System.Windows.Forms.ProgressBar
+    Public WithEvents lbltxt As System.Windows.Forms.Label
+    Public WithEvents BUTSTOP As System.Windows.Forms.Button
 End Class
