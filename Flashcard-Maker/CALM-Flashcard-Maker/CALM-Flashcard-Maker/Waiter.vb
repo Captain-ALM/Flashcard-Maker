@@ -34,15 +34,18 @@ Partial Public Class Waiter
             _thread = New Thread(New ThreadStart(Sub()
                                                      Try
                                                          torun.Invoke(Me)
-                                                         Me.Invoke(Sub() Me.Close())
+                                                         Me.Invoke(Sub()
+                                                                       Try
+                                                                           Me.Close()
+                                                                       Catch ex As Exception
+                                                                           If globalops.getPreference(Of GlobalPreferences)("GlobalPreferences").getPreference(Of IPreference(Of Boolean))("EnableThreadErrorMessages").getPreference() Then
+                                                                               Dim r As DialogResult = New UnhandledExceptionBooter(New UnhandledExceptionViewer(True, True, False, ex)).showForm()
+                                                                           End If
+                                                                       End Try
+                                                                   End Sub)
                                                      Catch ex As Exception
                                                          If globalops.getPreference(Of GlobalPreferences)("GlobalPreferences").getPreference(Of IPreference(Of Boolean))("EnableThreadErrorMessages").getPreference() Then
-                                                             Dim frm As New UnhandledExceptionViewer(True, True, False, ex)
-                                                             Dim r As System.Windows.Forms.DialogResult = frm.ShowDialog()
-                                                             If Not frm.Disposing And Not frm.IsDisposed Then
-                                                                 frm.Dispose()
-                                                             End If
-                                                             frm = Nothing
+                                                             Dim r As DialogResult = New UnhandledExceptionBooter(New UnhandledExceptionViewer(True, True, False, ex)).showForm()
                                                          End If
                                                      End Try
                                                  End Sub))
@@ -79,14 +82,30 @@ Partial Public Class Waiter
     ''' <remarks></remarks>
     Public Sub resetCancel()
         canceled = False
-        callOnForm(Sub() BUTSTOP.Enabled = True)
+        callOnForm(Sub()
+                       Try
+                           BUTSTOP.Enabled = True
+                       Catch ex As Exception
+                           If globalops.getPreference(Of GlobalPreferences)("GlobalPreferences").getPreference(Of IPreference(Of Boolean))("EnableThreadErrorMessages").getPreference() Then
+                               Dim r As DialogResult = New UnhandledExceptionBooter(New UnhandledExceptionViewer(True, True, False, ex)).showForm()
+                           End If
+                       End Try
+                   End Sub)
     End Sub
     ''' <summary>
     ''' Sets the cancel state to true.
     ''' </summary>
     ''' <remarks></remarks>
     Public Sub cancel()
-        callOnForm(Sub() BUTSTOP.Enabled = False)
+        callOnForm(Sub()
+                       Try
+                           BUTSTOP.Enabled = False
+                       Catch ex As Exception
+                           If globalops.getPreference(Of GlobalPreferences)("GlobalPreferences").getPreference(Of IPreference(Of Boolean))("EnableThreadErrorMessages").getPreference() Then
+                               Dim r As DialogResult = New UnhandledExceptionBooter(New UnhandledExceptionViewer(True, True, False, ex)).showForm()
+                           End If
+                       End Try
+                   End Sub)
         canceled = True
     End Sub
     ''' <summary>
@@ -95,7 +114,15 @@ Partial Public Class Waiter
     ''' <param name="txt">The text to set the label to.</param>
     ''' <remarks></remarks>
     Public Sub setText(txt As String)
-        callOnForm(Sub() lbltxt.Text = txt)
+        callOnForm(Sub()
+                       Try
+                           lbltxt.Text = txt
+                       Catch ex As Exception
+                           If globalops.getPreference(Of GlobalPreferences)("GlobalPreferences").getPreference(Of IPreference(Of Boolean))("EnableThreadErrorMessages").getPreference() Then
+                               Dim r As DialogResult = New UnhandledExceptionBooter(New UnhandledExceptionViewer(True, True, False, ex)).showForm()
+                           End If
+                       End Try
+                   End Sub)
     End Sub
     ''' <summary>
     ''' Gets the text on the waiting form.
@@ -104,7 +131,14 @@ Partial Public Class Waiter
     ''' <remarks></remarks>
     Public Function getText() As String
         Return callOnForm(Function() As String
-                              Return lbltxt.Text
+                              Try
+                                  Return lbltxt.Text
+                              Catch ex As Exception
+                                  If globalops.getPreference(Of GlobalPreferences)("GlobalPreferences").getPreference(Of IPreference(Of Boolean))("EnableThreadErrorMessages").getPreference() Then
+                                      Dim r As DialogResult = New UnhandledExceptionBooter(New UnhandledExceptionViewer(True, True, False, ex)).showForm()
+                                  End If
+                              End Try
+                              Return ""
                           End Function)
     End Function
     ''' <summary>
@@ -116,11 +150,26 @@ Partial Public Class Waiter
     Public Property title As String
         Get
             Return callOnForm(Function() As String
-                                  Return Me.Text
+                                  Try
+                                      Return Me.Text
+                                  Catch ex As Exception
+                                      If globalops.getPreference(Of GlobalPreferences)("GlobalPreferences").getPreference(Of IPreference(Of Boolean))("EnableThreadErrorMessages").getPreference() Then
+                                          Dim r As DialogResult = New UnhandledExceptionBooter(New UnhandledExceptionViewer(True, True, False, ex)).showForm()
+                                      End If
+                                  End Try
+                                  Return ""
                               End Function)
         End Get
         Set(value As String)
-            callOnForm(Sub() Me.Text = value)
+            callOnForm(Sub()
+                           Try
+                               Me.Text = value
+                           Catch ex As Exception
+                               If globalops.getPreference(Of GlobalPreferences)("GlobalPreferences").getPreference(Of IPreference(Of Boolean))("EnableThreadErrorMessages").getPreference() Then
+                                   Dim r As DialogResult = New UnhandledExceptionBooter(New UnhandledExceptionViewer(True, True, False, ex)).showForm()
+                               End If
+                           End Try
+                       End Sub)
         End Set
     End Property
     ''' <summary>
@@ -131,7 +180,15 @@ Partial Public Class Waiter
     ''' <returns>The return value of the delegate.</returns>
     ''' <remarks></remarks>
     Public Function callOnForm(del As [Delegate], ParamArray args As Object()) As Object
-        If Me.InvokeRequired Then Return Me.Invoke(Sub() callOnForm(del, args)) Else Return del.DynamicInvoke(args)
+        If Me.InvokeRequired Then Return Me.Invoke(Sub()
+                                                       Try
+                                                           callOnForm(del, args)
+                                                       Catch ex As Exception
+                                                           If globalops.getPreference(Of GlobalPreferences)("GlobalPreferences").getPreference(Of IPreference(Of Boolean))("EnableThreadErrorMessages").getPreference() Then
+                                                               Dim r As DialogResult = New UnhandledExceptionBooter(New UnhandledExceptionViewer(True, True, False, ex)).showForm()
+                                                           End If
+                                                       End Try
+                                                   End Sub) Else Return del.DynamicInvoke(args)
     End Function
 End Class
 ''' <summary>

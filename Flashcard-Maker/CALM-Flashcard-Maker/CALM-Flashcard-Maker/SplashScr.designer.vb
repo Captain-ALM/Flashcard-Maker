@@ -110,6 +110,7 @@ Partial Class SplashScr
         Me.Name = "SplashScr"
         Me.ShowIcon = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.TransparencyKey = System.Drawing.Color.Gainsboro
         Me.UseWaitCursor = True
         Me.MainLayoutPanel.ResumeLayout(False)
         Me.DetailsLayoutPanel.ResumeLayout(False)

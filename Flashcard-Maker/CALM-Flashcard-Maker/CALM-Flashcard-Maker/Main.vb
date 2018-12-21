@@ -33,21 +33,11 @@ Module Main
             Try
                 runtime()
             Catch ex As Exception
-                Dim frm As New UnhandledExceptionViewer(False, True, True, ex)
-                Dim r As System.Windows.Forms.DialogResult = frm.ShowDialog()
-                If Not frm.Disposing And Not frm.IsDisposed Then
-                    frm.Dispose()
-                End If
-                frm = Nothing
+                Dim r As DialogResult = New UnhandledExceptionBooter(New UnhandledExceptionViewer(False, True, True, ex)).showForm()
             End Try
             shutdown()
         Catch ex As Exception
-            Dim frm As New UnhandledExceptionViewer(False, True, True, ex)
-            Dim r As System.Windows.Forms.DialogResult = frm.ShowDialog()
-            If Not frm.Disposing And Not frm.IsDisposed Then
-                frm.Dispose()
-            End If
-            frm = Nothing
+            Dim r As DialogResult = New UnhandledExceptionBooter(New UnhandledExceptionViewer(False, True, True, ex)).showForm()
         End Try
         Environment.Exit(0)
     End Sub
@@ -60,7 +50,7 @@ Module Main
         t.IsBackground = True
         t.Start()
 
-        Thread.Sleep(1500)
+        Thread.Sleep(2500)
 
         'Decode passed args Flashcard-Maker.exe <TargetFile> <switch> <exportnumber(export switch only)>
         decodeArgs()
@@ -108,12 +98,7 @@ Module Main
                 Try
                     Throw New Exception("File Associations Could Not Be Loaded")
                 Catch ex As Exception
-                    Dim frm As New UnhandledExceptionViewer(True, False, True, ex)
-                    Dim r As System.Windows.Forms.DialogResult = frm.ShowDialog()
-                    If Not frm.Disposing And Not frm.IsDisposed Then
-                        frm.Dispose()
-                    End If
-                    frm = Nothing
+                    Dim r As DialogResult = New UnhandledExceptionBooter(New UnhandledExceptionViewer(True, False, True, ex)).showForm()
                     If r = DialogResult.Abort Then
                         Environment.Exit(1)
                     End If
@@ -122,12 +107,7 @@ Module Main
             Try
                 File.WriteAllText(execdir & "\settings.ser", globalops.savePreference())
             Catch ex As IOException
-                Dim frm As New UnhandledExceptionViewer(True, False, True, ex)
-                Dim r As System.Windows.Forms.DialogResult = frm.ShowDialog()
-                If Not frm.Disposing And Not frm.IsDisposed Then
-                    frm.Dispose()
-                End If
-                frm = Nothing
+                Dim r As DialogResult = New UnhandledExceptionBooter(New UnhandledExceptionViewer(True, False, True, ex)).showForm()
                 If r = DialogResult.Abort Then
                     Environment.Exit(1)
                 End If
@@ -151,6 +131,7 @@ Module Main
         End Try
 
         worker = New WorkerPump()
+        AddHandler worker.OnPumpException, AddressOf ope
         worker.addFormInstance(New AboutBx(worker))
         worker.addFormInstance(New GlobalOptions(worker))
         worker.addParser(New PGlobalOptions())
@@ -179,11 +160,13 @@ Module Main
     Sub decodeArgs()
         For i As Integer = 1 To args.Length - 1 Step 1
             Dim carg As String = args(i)
-            Dim switch As Boolean = carg.StartsWith("-") And carg.Length > 1
+            Dim switch As Boolean = (carg.StartsWith("-") And carg.Length > 1) Or (carg.StartsWith(ControlChars.Quote & "-") And carg.Length > 3)
             Dim hasq As Boolean = carg.StartsWith(quote) And carg.EndsWith(quote) And carg.Length > 2
             Dim dat As String = ""
-            If switch Then
+            If switch And Not hasq Then
                 dat = carg.Substring(1, carg.Length - 1)
+            ElseIf switch And hasq Then
+                dat = carg.Substring(2, carg.Length - 2)
             ElseIf hasq Then
                 dat = carg.Substring(1, carg.Length - 2)
             Else
@@ -236,6 +219,10 @@ Module Main
             sc.ShowDialog()
         End If
         wa = sc.wasactive
+    End Sub
+
+    Sub ope(ex As Exception)
+        Dim r As DialogResult = New UnhandledExceptionBooter(New UnhandledExceptionViewer(True, True, False, ex)).showForm()
     End Sub
 End Module
 ''' <summary>
@@ -338,5 +325,24 @@ NotInheritable Class BinarySerializer
         Catch ex As SerializationException
             Return Nothing
         End Try
+    End Function
+End Class
+
+Friend Class UnhandledExceptionBooter
+    Private expviewer As UnhandledExceptionViewer = Nothing
+    Public Sub New(ByRef exv As UnhandledExceptionViewer)
+        expviewer = exv
+    End Sub
+    Public Function showForm(Optional parent As IWin32Window = Nothing) As DialogResult
+        If Not expviewer.Disposing And Not expviewer.IsDisposed Then
+            Dim r As System.Windows.Forms.DialogResult = expviewer.ShowDialog(parent)
+            If Not expviewer.Disposing And Not expviewer.IsDisposed Then
+                expviewer.Dispose()
+            End If
+            expviewer = Nothing
+            Return r
+        Else
+            Return DialogResult.None
+        End If
     End Function
 End Class

@@ -18,13 +18,13 @@
             Me.Text = System.IO.Path.GetFileNameWithoutExtension(My.Application.Info.AssemblyName)
         End If
 
-        Version.BackColor = Color.FromArgb(128, Color.Gainsboro)
-        Copyright.BackColor = Color.FromArgb(128, Color.Gainsboro)
+        Version.BackColor = Color.FromArgb(150, Color.WhiteSmoke)
+        Copyright.BackColor = Color.FromArgb(150, Color.WhiteSmoke)
 
         Version.Text = System.String.Format(Version.Text, My.Application.Info.Version.Major, My.Application.Info.Version.Minor)
         Copyright.Text = My.Application.Info.Copyright
 
-        Me.BackColor = Color.Transparent
+        Me.BackColor = Color.Gainsboro
     End Sub
 
     Private Sub SplashScr_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated

@@ -348,13 +348,19 @@ Public Class WorkerPump
                             If canCastObject(Of Control)(ev.EventSource.sourceObj) And Not canCastObject(Of Form)(ev.EventSource.sourceObj) Then
                                 Dim c As Control = castObject(Of Control)(ev.EventSource.sourceObj)
                                 c.Invoke(Sub() c.Enabled = False)
+                            ElseIf canCastObject(Of Form)(ev.EventSource.sourceObj) Then
+                                Dim f As Form = castObject(Of Form)(ev.EventSource.sourceObj)
+                                If f.Visible Then f.Invoke(Sub() f.Enabled = False)
                             End If
                         End If
                         Dim en As Boolean = parseEvents(ev)
-                        If Not ev.EventSource.parentObjs.Contains(ev.EventSource.sourceObj) And en And Not canCastObject(Of Form)(ev.EventSource.sourceObj) Then
-                            If canCastObject(Of Control)(ev.EventSource.sourceObj) Then
+                        If Not ev.EventSource.parentObjs.Contains(ev.EventSource.sourceObj) And en Then
+                            If canCastObject(Of Control)(ev.EventSource.sourceObj) And Not canCastObject(Of Form)(ev.EventSource.sourceObj) Then
                                 Dim c As Control = castObject(Of Control)(ev.EventSource.sourceObj)
                                 c.Invoke(Sub() c.Enabled = True)
+                            ElseIf canCastObject(Of Form)(ev.EventSource.sourceObj) Then
+                                Dim f As Form = castObject(Of Form)(ev.EventSource.sourceObj)
+                                If f.Visible Then f.Invoke(Sub() f.Enabled = True)
                             End If
                         End If
                         If workerStates.ContainsKey(ev) Then
