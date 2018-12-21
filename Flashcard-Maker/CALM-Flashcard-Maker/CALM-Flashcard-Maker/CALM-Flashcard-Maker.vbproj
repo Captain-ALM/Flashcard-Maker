@@ -80,9 +80,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FileAssociations.vb" />
-    <Compile Include="FontDialogNoSize.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="FontDialogNoSize.vb" />
     <Compile Include="GlobalOptions.Designer.vb">
       <DependentUpon>GlobalOptions.vb</DependentUpon>
     </Compile>
@@ -131,9 +129,6 @@
   <ItemGroup>
     <EmbeddedResource Include="AboutBx.resx">
       <DependentUpon>AboutBx.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FontDialogNoSize.resx">
-      <DependentUpon>FontDialogNoSize.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GlobalOptions.resx">
       <DependentUpon>GlobalOptions.vb</DependentUpon>
