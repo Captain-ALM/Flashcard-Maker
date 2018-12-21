@@ -9,7 +9,7 @@
     <RootNamespace>captainalm.workerpumper</RootNamespace>
     <AssemblyName>CALM-WorkerPump</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>Windows</MyType>
+    <MyType>Empty</MyType>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
