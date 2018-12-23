@@ -73,6 +73,7 @@ Partial Class Waiter
         Me.Controls.Add(Me.BUTSTOP)
         Me.Controls.Add(Me.pgb)
         Me.Controls.Add(Me.lbltxt)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MaximumSize = New System.Drawing.Size(400, 100)
