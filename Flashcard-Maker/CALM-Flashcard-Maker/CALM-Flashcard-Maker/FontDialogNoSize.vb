@@ -5,7 +5,7 @@ Imports System.Text
 Imports System.Windows.Forms
 
 Public Class FontDialogNoSize
-    Inherits CommonDialog
+    Inherits DialogBaseInstance
 
     Private components As IContainer = Nothing
     Protected dlgFont As FontDialog

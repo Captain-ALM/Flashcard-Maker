@@ -134,6 +134,7 @@ Module Main
         AddHandler worker.OnPumpException, AddressOf ope
         worker.addFormInstance(New AboutBx(worker))
         worker.addFormInstance(New GlobalOptions(worker))
+        worker.addFormInstance(New MainProgram())
         worker.addParser(New PGlobalOptions())
 
         'Close the splash form and thread.
@@ -147,6 +148,7 @@ Module Main
 
     Public Sub runtime()
         worker.startPump()
+        worker.showForm(Of MainProgram)()
         While worker.PumpBusy
             Thread.Sleep(100)
         End While

@@ -5,6 +5,21 @@ Public MustInherit Class TermSource
 End Class
 
 <Serializable>
+Public Class EmptyTerm
+    Inherits TermSource
+
+    Public Overrides Function getImage(width As Integer, height As Integer, Optional usegivensize As Boolean = True) As Image
+        If usegivensize Then Return New Bitmap(width, height) Else Return New Bitmap(0, 0)
+    End Function
+
+    Public Overrides ReadOnly Property termSourceType As String
+        Get
+            Return "EmptyTerm"
+        End Get
+    End Property
+End Class
+
+<Serializable>
 Public MustInherit Class ImageTermBase
     Inherits TermSource
 
@@ -47,7 +62,7 @@ Public Class ImageStoreTerm
         End Get
     End Property
 
-    Public Property dataPath As String Implements IReferencedData.dataPath
+    Public Overridable Property dataPath As String Implements IReferencedData.dataPath
         Get
             Return path
         End Get
@@ -56,15 +71,15 @@ Public Class ImageStoreTerm
         End Set
     End Property
 
-    Public Sub loadData() Implements IReferencedData.loadData
+    Public Overridable Sub loadData() Implements IReferencedData.loadData
         storedImage = IO.File.ReadAllBytes(path)
     End Sub
 
-    Public Sub saveData() Implements IReferencedData.saveData
+    Public Overridable Sub saveData() Implements IReferencedData.saveData
         IO.File.WriteAllBytes(path, storedImage)
     End Sub
 
-    Public Property storedData As Byte() Implements IStoredData.storedData
+    Public Overridable Property storedData As Byte() Implements IStoredData.storedData
         Get
             Return storedImage
         End Get
@@ -105,7 +120,7 @@ Public Class ImageReferenceTerm
         End Get
     End Property
 
-    Public Property dataPath As String Implements IReferencedData.dataPath
+    Public Overridable Property dataPath As String Implements IReferencedData.dataPath
         Get
             Return path
         End Get
@@ -114,11 +129,11 @@ Public Class ImageReferenceTerm
         End Set
     End Property
 
-    Public Sub loadData() Implements IReferencedData.loadData
+    Public Overridable Sub loadData() Implements IReferencedData.loadData
         storedImage = IO.File.ReadAllBytes(path)
     End Sub
 
-    Public Sub saveData() Implements IReferencedData.saveData
+    Public Overridable Sub saveData() Implements IReferencedData.saveData
         IO.File.WriteAllBytes(path, storedImage)
     End Sub
 End Class
@@ -130,6 +145,7 @@ Public Class TextTerm
     Protected txt As String = ""
     Protected fnt As Font = Nothing
     Protected col As Color = Color.Empty
+    Protected bcol As Color = Color.Empty
     Protected mfs As Integer = 1
     Protected ws As Boolean = False
 
@@ -141,7 +157,7 @@ Public Class TextTerm
         ws = wsplit
     End Sub
 
-    Public Property Text As String
+    Public Overridable Property Text As String
         Get
             Return txt
         End Get
@@ -150,7 +166,7 @@ Public Class TextTerm
         End Set
     End Property
 
-    Public Property Font As Font
+    Public Overridable Property Font As Font
         Get
             Return fnt
         End Get
@@ -159,7 +175,7 @@ Public Class TextTerm
         End Set
     End Property
 
-    Public Property Colour As Color
+    Public Overridable Property ForeColour As Color
         Get
             Return col
         End Get
@@ -168,7 +184,16 @@ Public Class TextTerm
         End Set
     End Property
 
-    Public Property MinumumFontSize As Integer
+    Public Overridable Property BackColour As Color
+        Get
+            Return bcol
+        End Get
+        Set(value As Color)
+            bcol = value
+        End Set
+    End Property
+
+    Public Overridable Property MinumumFontSize As Integer
         Get
             Return mfs
         End Get
@@ -177,7 +202,7 @@ Public Class TextTerm
         End Set
     End Property
 
-    Public Property WordSplit As Boolean
+    Public Overridable Property WordSplit As Boolean
         Get
             Return ws
         End Get
@@ -392,7 +417,7 @@ Public Class TextRender
 End Class
 
 <Serializable>
-Public Class TermSet(Of a As TermSource, b As TermSource)
+Public NotInheritable Class TermSet(Of a As TermSource, b As TermSource)
     Private vara As a
     Private varb As b
 
@@ -433,7 +458,7 @@ Public Class TermSet(Of a As TermSource, b As TermSource)
 End Class
 
 <Serializable>
-Public Class Pair(Of a, b)
+Public NotInheritable Class Pair(Of a, b)
     Private vara As a
     Private varb As b
 

@@ -79,15 +79,25 @@
     <Compile Include="AboutBx.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="DialogBaseInstance.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="FileAssociations.vb" />
-    <Compile Include="FontDialogNoSize.vb" />
+    <Compile Include="FontDialogNoSize.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="GlobalOptions.Designer.vb">
       <DependentUpon>GlobalOptions.vb</DependentUpon>
     </Compile>
     <Compile Include="GlobalOptions.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main.vb">
+    <Compile Include="Main.vb" />
+    <Compile Include="MainProgram.Designer.vb">
+      <DependentUpon>MainProgram.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MainProgram.vb">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -112,7 +122,31 @@
     <Compile Include="SplashScr.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="TermSourceBaseControl.Designer.vb">
+      <DependentUpon>TermSourceBaseControl.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TermSourceBaseControl.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="TermSources.vb" />
+    <Compile Include="TermSourceTextBoxControl.Designer.vb">
+      <DependentUpon>TermSourceTextBoxControl.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TermSourceTextBoxControl.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+	<Compile Include="TermSourceButtonControl.Designer.vb">
+      <DependentUpon>TermSourceButtonControl.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TermSourceButtonControl.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+	<Compile Include="TermSourceComboBoxControl.Designer.vb">
+      <DependentUpon>TermSourceComboBoxControl.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TermSourceComboBoxControl.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="UnhandledExceptionViewer.Designer.vb">
       <DependentUpon>UnhandledExceptionViewer.vb</DependentUpon>
     </Compile>
@@ -133,6 +167,9 @@
     <EmbeddedResource Include="GlobalOptions.resx">
       <DependentUpon>GlobalOptions.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MainProgram.resx">
+      <DependentUpon>MainProgram.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -141,6 +178,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SplashScr.resx">
       <DependentUpon>SplashScr.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TermSourceBaseControl.resx">
+      <DependentUpon>TermSourceBaseControl.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UnhandledExceptionViewer.resx">
       <DependentUpon>UnhandledExceptionViewer.vb</DependentUpon>
