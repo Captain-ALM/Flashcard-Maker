@@ -29,7 +29,7 @@ Partial Class TermSourceTextBoxControl
         'TextboxInternal
         '
         Me.TextboxInternal.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TextboxInternal.Location = New System.Drawing.Point(0, 0)
+        Me.TextboxInternal.Location = New System.Drawing.Point(20, 20)
         Me.TextboxInternal.MaxLength = 2147483646
         Me.TextboxInternal.Multiline = True
         Me.TextboxInternal.Name = "TextboxInternal"

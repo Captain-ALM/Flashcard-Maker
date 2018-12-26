@@ -1,7 +1,8 @@
 ﻿Public Class TermSourceComboBoxControl
     Protected _term As TermSource = Nothing
-    Public Event SelectedIndexChanged(index As Integer)
-    Public Sub New(items As String(), Optional sindex As Integer = 0)
+    Public Event SelectedIndexChanged(source As Object, e As TermSourceComboBoxControlSelectedIndexChangedEventArgs)
+    Public Sub New(items As String(), c As Integer, r As Integer, Optional sindex As Integer = 0)
+        MyBase.New(c, r)
         _term = New EmptyTerm()
         InitializeComponent()
         ComboBoxInternal.DropDownStyle = ComboBoxStyle.DropDownList
@@ -21,8 +22,22 @@
         End Get
     End Property
     Private Sub ComboBoxInternal_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBoxInternal.SelectedIndexChanged
-        RaiseEvent SelectedIndexChanged(ComboBoxInternal.SelectedIndex)
+        RaiseEvent SelectedIndexChanged(Me, New TermSourceComboBoxControlSelectedIndexChangedEventArgs(Column, Row, ComboBoxInternal.SelectedIndex))
     End Sub
+End Class
+
+Public Class TermSourceComboBoxControlSelectedIndexChangedEventArgs
+    Inherits TermSourceControlEventArgs
+    Protected _index As Integer
+    Public Sub New(col As Integer, row As Integer, sindex As Integer)
+        MyBase.New(col, row)
+        sindex = _index
+    End Sub
+    Public Overridable ReadOnly Property SelectedIndex As Integer
+        Get
+            Return _index
+        End Get
+    End Property
 End Class
 
 

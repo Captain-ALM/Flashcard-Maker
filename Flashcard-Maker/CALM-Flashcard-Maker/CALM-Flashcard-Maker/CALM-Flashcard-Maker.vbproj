@@ -122,6 +122,12 @@
     <Compile Include="SplashScr.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="TermEditorTable.Designer.vb">
+      <DependentUpon>TermEditorTable.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TermEditorTable.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="TermSourceBaseControl.Designer.vb">
       <DependentUpon>TermSourceBaseControl.vb</DependentUpon>
     </Compile>
@@ -135,13 +141,13 @@
     <Compile Include="TermSourceTextBoxControl.vb">
       <SubType>UserControl</SubType>
     </Compile>
-	<Compile Include="TermSourceButtonControl.Designer.vb">
+    <Compile Include="TermSourceButtonControl.Designer.vb">
       <DependentUpon>TermSourceButtonControl.vb</DependentUpon>
     </Compile>
     <Compile Include="TermSourceButtonControl.vb">
       <SubType>UserControl</SubType>
     </Compile>
-	<Compile Include="TermSourceComboBoxControl.Designer.vb">
+    <Compile Include="TermSourceComboBoxControl.Designer.vb">
       <DependentUpon>TermSourceComboBoxControl.vb</DependentUpon>
     </Compile>
     <Compile Include="TermSourceComboBoxControl.vb">
@@ -179,8 +185,20 @@
     <EmbeddedResource Include="SplashScr.resx">
       <DependentUpon>SplashScr.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="TermEditorTable.resx">
+      <DependentUpon>TermEditorTable.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TermSourceBaseControl.resx">
       <DependentUpon>TermSourceBaseControl.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TermSourceButtonControl.resx">
+      <DependentUpon>TermSourceButtonControl.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TermSourceComboBoxControl.resx">
+      <DependentUpon>TermSourceComboBoxControl.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TermSourceTextBoxControl.resx">
+      <DependentUpon>TermSourceTextBoxControl.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UnhandledExceptionViewer.resx">
       <DependentUpon>UnhandledExceptionViewer.vb</DependentUpon>

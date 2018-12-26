@@ -1,7 +1,8 @@
 ﻿Public Class TermSourceButtonControl
     Protected _term As TermSource = Nothing
-    Public Event ButtonClicked(ByRef term As TermSource)
-    Public Sub New(t As TermSource)
+    Public Event ButtonClicked(source As Object, e As TermSourceButtonControlClickEventArgs)
+    Public Sub New(t As TermSource, c As Integer, r As Integer)
+        MyBase.New(c, r)
         _term = t
         InitializeComponent()
         ButtonInternal.Image = _term.getImage(ButtonInternal.Width, ButtonInternal.Height)
@@ -19,8 +20,17 @@
         End Get
     End Property
     Private Sub ButtonInternal_Click(sender As Object, e As EventArgs) Handles ButtonInternal.Click
-        RaiseEvent ButtonClicked(_term)
+        RaiseEvent ButtonClicked(Me, New TermSourceButtonControlClickEventArgs(Column, Row, _term))
         ButtonInternal.Image = _term.getImage(ButtonInternal.Width, ButtonInternal.Height)
-        OnTermModified()
+        OnTermModified(Me, New TermSourceControlEventArgs(Column, Row, _term))
+    End Sub
+End Class
+
+Public Class TermSourceButtonControlClickEventArgs
+    Inherits TermSourceControlEventArgs
+    Public Sub New(col As Integer, row As Integer, ByRef t As TermSource)
+        MyBase.New(col, row)
+        _term = t
+        _ht = True
     End Sub
 End Class

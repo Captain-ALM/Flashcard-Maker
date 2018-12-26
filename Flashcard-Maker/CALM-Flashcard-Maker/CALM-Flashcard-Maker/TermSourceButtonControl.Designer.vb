@@ -29,7 +29,7 @@ Partial Class TermSourceButtonControl
         'ButtonInternal
         '
         Me.ButtonInternal.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ButtonInternal.Location = New System.Drawing.Point(0, 0)
+        Me.ButtonInternal.Location = New System.Drawing.Point(20, 20)
         Me.ButtonInternal.Name = "ButtonInternal"
         Me.ButtonInternal.Size = New System.Drawing.Size(0, 0)
         Me.ButtonInternal.TabIndex = 0
