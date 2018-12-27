@@ -4,6 +4,7 @@
     Public Event TermModified(sender As Object, e As TermSourceControlEventArgs)
     Public Sub New()
         InitializeComponent()
+        Me.Enabled = False
     End Sub
     Public Sub New(c As Integer, r As Integer)
         InitializeComponent()

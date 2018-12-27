@@ -21,7 +21,36 @@ Public NotInheritable Class Project
         End Get
     End Property
 
-    'TODO: FILL IN PROJECT CODE.
+    Public ReadOnly Property Settings As ProjectPreferences
+        Get
+            Return pset
+        End Get
+    End Property
+
+    Public Sub ImplementSettings()
+        clearCards()
+        clearImages()
+        For i As Integer = 0 To pterm.Count - 1 Step 1
+            Dim ts As TermSet(Of TermSource, TermSource) = pterm(i)
+            If canCastObject(Of TextTerm)(ts.Term1) Then
+                Dim ts1 As TextTerm = castObject(Of TextTerm)(ts.Term1)
+                ts1.Font = pset.getPreference(Of IPreference(Of Font))("Font").getPreference()
+                ts1.ForeColour = pset.getPreference(Of IPreference(Of Color))("Color").getPreference()
+                ts1.MinumumFontSize = globalops.getPreference(Of IPreference(Of GlobalPreferences))("GlobalPreferences").getPreference().getPreference(Of IPreference(Of Integer))("MinumumFontSize").getPreference()
+                ts1.WordSplit = pset.getPreference(Of IPreference(Of Boolean))("CanSplitWords").getPreference()
+                ts.Term1 = ts1
+            End If
+            If canCastObject(Of TextTerm)(ts.Term2) Then
+                Dim ts2 As TextTerm = castObject(Of TextTerm)(ts.Term2)
+                ts2.Font = pset.getPreference(Of IPreference(Of Font))("Font").getPreference()
+                ts2.ForeColour = pset.getPreference(Of IPreference(Of Color))("Color").getPreference()
+                ts2.MinumumFontSize = globalops.getPreference(Of IPreference(Of GlobalPreferences))("GlobalPreferences").getPreference().getPreference(Of IPreference(Of Integer))("MinumumFontSize").getPreference()
+                ts2.WordSplit = pset.getPreference(Of IPreference(Of Boolean))("CanSplitWords").getPreference()
+                ts.Term2 = ts2
+            End If
+        Next
+    End Sub
+
     Public Function render() As Boolean
         If generateCards() Then Return generateImages() Else Return False
     End Function
@@ -182,6 +211,23 @@ Public NotInheritable Class Project
 
     Public Function getImages() As Pair(Of Image, Image)()
         Return pimg.ToArray
+    End Function
+
+    Private Function castObject(Of t)(f As Object) As t
+        Try
+            Dim nf As t = f
+            Return nf
+        Catch ex As InvalidCastException
+            Return Nothing
+        End Try
+    End Function
+    Private Function canCastObject(Of t)(f As Object) As Boolean
+        Try
+            Dim nf As t = f
+            Return True
+        Catch ex As InvalidCastException
+            Return False
+        End Try
     End Function
 End Class
 

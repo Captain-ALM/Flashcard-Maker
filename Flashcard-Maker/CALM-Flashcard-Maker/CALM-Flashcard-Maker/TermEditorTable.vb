@@ -1,4 +1,6 @@
-﻿Public Class TermEditorTable
+﻿Imports captainalm.util.preference
+
+Public Class TermEditorTable
     Private _project As Project = Nothing
     Private cmbxarr As String() = New String() {"", "Text"}
     Private col0 As New List(Of TermSourceBaseControl)
@@ -37,6 +39,7 @@
         TableLayoutPanelInternal.ColumnCount = 2
         TableLayoutPanelInternal.RowCount = 1
         For Each e As TermSourceBaseControl In col0
+            e.Parent = Nothing
             If canCastObject(Of TermSourceComboBoxControl)(e) Then
                 Dim ctrl As TermSourceComboBoxControl = castObject(Of TermSourceComboBoxControl)(e)
                 RemoveHandler ctrl.SelectedIndexChanged, AddressOf onSIChanged
@@ -45,6 +48,7 @@
             e.Dispose()
         Next
         For Each e As TermSourceBaseControl In col1
+            e.Parent = Nothing
             If canCastObject(Of TermSourceComboBoxControl)(e) Then
                 Dim ctrl As TermSourceComboBoxControl = castObject(Of TermSourceComboBoxControl)(e)
                 RemoveHandler ctrl.SelectedIndexChanged, AddressOf onSIChanged
@@ -91,11 +95,11 @@
                 col1.Add(ctrl)
             End If
         Next cv
-        Dim ctrl0 As New TermSourceComboBoxControl(cmbxarr, 0, cv) With {.Dock = DockStyle.Fill, .Parent = TableLayoutPanelInternal}
+        Dim ctrl0 As New TermSourceComboBoxControl(cmbxarr, 0, TableLayoutPanelInternal.RowCount - 1) With {.Dock = DockStyle.Fill, .Parent = TableLayoutPanelInternal}
         AddHandler ctrl0.TermModified, AddressOf onTermModified
         AddHandler ctrl0.SelectedIndexChanged, AddressOf onSIChanged
         col0.Add(ctrl0)
-        Dim ctrl1 As New TermSourceComboBoxControl(cmbxarr, 1, cv) With {.Dock = DockStyle.Fill, .Parent = TableLayoutPanelInternal}
+        Dim ctrl1 As New TermSourceComboBoxControl(cmbxarr, 1, TableLayoutPanelInternal.RowCount - 1) With {.Dock = DockStyle.Fill, .Parent = TableLayoutPanelInternal}
         AddHandler ctrl1.TermModified, AddressOf onTermModified
         AddHandler ctrl1.SelectedIndexChanged, AddressOf onSIChanged
         col1.Add(ctrl1)
@@ -104,6 +108,7 @@
             e.Parent = TableLayoutPanelInternal
             TableLayoutPanelInternal.Controls.Add(e, 0, cv)
             e.Visible = True
+            e.Enabled = True
             cv += 1
         Next
         cv = 0
@@ -111,6 +116,7 @@
             e.Parent = TableLayoutPanelInternal
             TableLayoutPanelInternal.Controls.Add(e, 1, cv)
             e.Visible = True
+            e.Enabled = True
             cv += 1
         Next
     End Sub
@@ -123,10 +129,74 @@
         If _project Is Nothing Then Return False Else Return True
     End Function
     Private Sub onTermModified(sender As Object, e As TermSourceControlEventArgs)
-
+        If e.Column = 0 Then
+            _project.data(e.Row).Term1 = col0(e.Row).Term
+        ElseIf e.Column = 1 Then
+            _project.data(e.Row).Term2 = col1(e.Row).Term
+        End If
     End Sub
     Private Sub onSIChanged(sender As Object, e As TermSourceComboBoxControlSelectedIndexChangedEventArgs)
-
+        If e.SelectedIndex > 0 Then
+            If canCastObject(Of Control)(sender) Then
+                Dim c As Control = castObject(Of Control)(sender)
+                c.Enabled = False
+            End If
+            Dim ctrl As TermSourceBaseControl = Nothing
+            If e.Column = 0 Then
+                ctrl = col0(e.Row)
+            ElseIf e.Column = 1 Then
+                ctrl = col1(e.Row)
+            End If
+            If ctrl IsNot Nothing Then
+                TableLayoutPanelInternal.Controls.Remove(ctrl)
+                ctrl.Parent = Nothing
+                If canCastObject(Of TermSourceComboBoxControl)(ctrl) Then
+                    Dim ctrl2 As TermSourceComboBoxControl = castObject(Of TermSourceComboBoxControl)(ctrl)
+                    RemoveHandler ctrl2.SelectedIndexChanged, AddressOf onSIChanged
+                End If
+                RemoveHandler ctrl.TermModified, AddressOf onTermModified
+                ctrl.Dispose()
+                ctrl = Nothing
+            End If
+            If e.SelectedIndex = 1 Then
+                Dim ts As New TextTerm("", _project.Settings.getPreference(Of IPreference(Of Font))("Font").getPreference(), _project.Settings.getPreference(Of IPreference(Of Color))("Color").getPreference(), globalops.getPreference(Of IPreference(Of GlobalPreferences))("GlobalPreferences").getPreference().getPreference(Of IPreference(Of Integer))("MinumumFontSize").getPreference(), _project.Settings.getPreference(Of IPreference(Of Boolean))("CanSplitWords").getPreference())
+                ctrl = New TermSourceTextBoxControl(ts, e.Column, e.Row) With {.Parent = TableLayoutPanelInternal, .Dock = DockStyle.Fill}
+                AddHandler ctrl.TermModified, AddressOf onTermModified
+                TableLayoutPanelInternal.Controls.Add(ctrl, e.Column, e.Row)
+            End If
+            If ctrl IsNot Nothing Then
+                If e.Column = 0 Then
+                    If e.Row = TableLayoutPanelInternal.RowCount - 1 Then _project.addData(New TermSet(Of TermSource, TermSource)(ctrl.getTerm(), New EmptyTerm())) Else _project.data(e.Row).Term1 = ctrl.getTerm()
+                    col0(e.Row) = ctrl
+                ElseIf e.Column = 1 Then
+                    If e.Row = TableLayoutPanelInternal.RowCount - 1 Then _project.addData(New TermSet(Of TermSource, TermSource)(New EmptyTerm(), ctrl.getTerm())) Else _project.data(e.Row).Term2 = ctrl.getTerm()
+                    col1(e.Row) = ctrl
+                End If
+            End If
+            If e.Row = TableLayoutPanelInternal.RowCount - 1 Then
+                Dim ctrl0 As New TermSourceComboBoxControl(cmbxarr, 0, TableLayoutPanelInternal.RowCount) With {.Dock = DockStyle.Fill, .Parent = TableLayoutPanelInternal}
+                AddHandler ctrl0.TermModified, AddressOf onTermModified
+                AddHandler ctrl0.SelectedIndexChanged, AddressOf onSIChanged
+                col0.Add(ctrl0)
+                Dim ctrl1 As New TermSourceComboBoxControl(cmbxarr, 1, TableLayoutPanelInternal.RowCount) With {.Dock = DockStyle.Fill, .Parent = TableLayoutPanelInternal}
+                AddHandler ctrl1.TermModified, AddressOf onTermModified
+                AddHandler ctrl1.SelectedIndexChanged, AddressOf onSIChanged
+                col1.Add(ctrl1)
+                TableLayoutPanelInternal.RowCount += 1
+                TableLayoutPanelInternal.RowStyles.Add(New RowStyle(SizeType.Percent, 100 / (_project.dataCount + 1)))
+                For i As Integer = 0 To TableLayoutPanelInternal.RowCount - 1 Step 1
+                    TableLayoutPanelInternal.RowStyles(i) = New RowStyle(SizeType.Percent, 100 / (_project.dataCount + 1))
+                Next
+                ctrl0.Parent = TableLayoutPanelInternal
+                TableLayoutPanelInternal.Controls.Add(ctrl0, 0, TableLayoutPanelInternal.RowCount - 1)
+                ctrl0.Visible = True
+                ctrl0.Enabled = True
+                ctrl1.Parent = TableLayoutPanelInternal
+                TableLayoutPanelInternal.Controls.Add(ctrl1, 1, TableLayoutPanelInternal.RowCount - 1)
+                ctrl1.Visible = True
+                ctrl1.Enabled = True
+            End If
+        End If
     End Sub
     Private Function castObject(Of t)(f As Object) As t
         Try
