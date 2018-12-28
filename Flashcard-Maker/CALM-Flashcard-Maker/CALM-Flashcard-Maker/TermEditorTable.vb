@@ -5,6 +5,7 @@ Public Class TermEditorTable
     Private cmbxarr As String() = New String() {"", "Text"}
     Private col0 As New List(Of TermSourceBaseControl)
     Private col1 As New List(Of TermSourceBaseControl)
+    Private _selected As New List(Of TermSourceBaseControl)
     Private ppr As Integer = 200
     Public Sub New()
         InitializeComponent()
@@ -48,9 +49,13 @@ Public Class TermEditorTable
         Dim ctrl1 As New TermSourceComboBoxControl(cmbxarr, 1, at) With {.Dock = DockStyle.Fill, .Parent = TableLayoutPanelInternal}
         AddHandler ctrl0.TermModified, AddressOf onTermModified
         AddHandler ctrl0.SelectedIndexChanged, AddressOf onSIChanged
+        AddHandler ctrl0.ControlSelected, AddressOf onTermSelected
+        AddHandler ctrl0.ControlDeselected, AddressOf onTermDeselected
         col0.Add(ctrl0)
         AddHandler ctrl1.TermModified, AddressOf onTermModified
         AddHandler ctrl1.SelectedIndexChanged, AddressOf onSIChanged
+        AddHandler ctrl1.ControlSelected, AddressOf onTermSelected
+        AddHandler ctrl1.ControlDeselected, AddressOf onTermDeselected
         col1.Add(ctrl1)
         TableLayoutPanelInternal.Controls.Add(ctrl0, 0, at)
         TableLayoutPanelInternal.Controls.Add(ctrl1, 1, at)
@@ -82,6 +87,47 @@ Public Class TermEditorTable
         For i As Integer = 0 To TableLayoutPanelInternal.RowCount - 1 Step 1
             TableLayoutPanelInternal.RowStyles(i) = New RowStyle(SizeType.Percent, 100 / (_project.dataCount + 1))
         Next
+    End Sub
+    Public Sub moveRowUp(row As Integer)
+        If Not projectCheck() Then Return
+        If row < 1 Then Return
+        If row > _project.dataCount - 1 Then Return
+        Dim ctrl0 As TermSourceBaseControl = col0(row)
+        Dim ctrl1 As TermSourceBaseControl = col1(row)
+        Dim ctrl2 As TermSourceBaseControl = col0(row - 1)
+        Dim ctrl3 As TermSourceBaseControl = col1(row - 1)
+        Dim d0 As TermSet(Of TermSource, TermSource) = _project.data(row)
+        Dim d1 As TermSet(Of TermSource, TermSource) = _project.data(row - 1)
+        ctrl0.Row -= 1
+        ctrl1.Row -= 1
+        ctrl2.Row += 1
+        ctrl3.Row += 1
+        _project.data(row - 1) = d0
+        _project.data(row) = d1
+        TableLayoutPanelInternal.SetRow(ctrl0, ctrl0.Row)
+        TableLayoutPanelInternal.SetRow(ctrl1, ctrl1.Row)
+        TableLayoutPanelInternal.SetRow(ctrl2, ctrl2.Row)
+        TableLayoutPanelInternal.SetRow(ctrl3, ctrl3.Row)
+    End Sub
+    Public Sub moveRowDown(row As Integer)
+        If Not projectCheck() Then Return
+        If row > _project.dataCount - 2 Then Return
+        Dim ctrl0 As TermSourceBaseControl = col0(row)
+        Dim ctrl1 As TermSourceBaseControl = col1(row)
+        Dim ctrl2 As TermSourceBaseControl = col0(row + 1)
+        Dim ctrl3 As TermSourceBaseControl = col1(row + 1)
+        Dim d0 As TermSet(Of TermSource, TermSource) = _project.data(row)
+        Dim d1 As TermSet(Of TermSource, TermSource) = _project.data(row + 1)
+        ctrl0.Row += 1
+        ctrl1.Row += 1
+        ctrl2.Row -= 1
+        ctrl3.Row -= 1
+        _project.data(row + 1) = d0
+        _project.data(row) = d1
+        TableLayoutPanelInternal.SetRow(ctrl0, ctrl0.Row)
+        TableLayoutPanelInternal.SetRow(ctrl1, ctrl1.Row)
+        TableLayoutPanelInternal.SetRow(ctrl2, ctrl2.Row)
+        TableLayoutPanelInternal.SetRow(ctrl3, ctrl3.Row)
     End Sub
     Public Sub saveTerms()
         If Not projectCheck() Then Return
@@ -127,31 +173,43 @@ Public Class TermEditorTable
             If s.Term1.termSourceType = "TextTerm" Then
                 Dim ctrl As New TermSourceTextBoxControl(s.Term1, 0, cv) With {.Dock = DockStyle.Fill, .Parent = TableLayoutPanelInternal}
                 AddHandler ctrl.TermModified, AddressOf onTermModified
+                AddHandler ctrl.ControlSelected, AddressOf onTermSelected
+                AddHandler ctrl.ControlDeselected, AddressOf onTermDeselected
                 col0.Add(ctrl)
             ElseIf s.Term1.termSourceType = "EmptyTerm" Then
                 Dim ctrl As New TermSourceComboBoxControl(cmbxarr, 0, cv) With {.Dock = DockStyle.Fill, .Parent = TableLayoutPanelInternal}
                 AddHandler ctrl.TermModified, AddressOf onTermModified
                 AddHandler ctrl.SelectedIndexChanged, AddressOf onSIChanged
+                AddHandler ctrl.ControlSelected, AddressOf onTermSelected
+                AddHandler ctrl.ControlDeselected, AddressOf onTermDeselected
                 col0.Add(ctrl)
             End If
             If s.Term2.termSourceType = "TextTerm" Then
                 Dim ctrl As New TermSourceTextBoxControl(s.Term2, 1, cv) With {.Dock = DockStyle.Fill, .Parent = TableLayoutPanelInternal}
                 AddHandler ctrl.TermModified, AddressOf onTermModified
+                AddHandler ctrl.ControlSelected, AddressOf onTermSelected
+                AddHandler ctrl.ControlDeselected, AddressOf onTermDeselected
                 col1.Add(ctrl)
             ElseIf s.Term2.termSourceType = "EmptyTerm" Then
                 Dim ctrl As New TermSourceComboBoxControl(cmbxarr, 1, cv) With {.Dock = DockStyle.Fill, .Parent = TableLayoutPanelInternal}
                 AddHandler ctrl.TermModified, AddressOf onTermModified
                 AddHandler ctrl.SelectedIndexChanged, AddressOf onSIChanged
+                AddHandler ctrl.ControlSelected, AddressOf onTermSelected
+                AddHandler ctrl.ControlDeselected, AddressOf onTermDeselected
                 col1.Add(ctrl)
             End If
         Next cv
         Dim ctrl0 As New TermSourceComboBoxControl(cmbxarr, 0, TableLayoutPanelInternal.RowCount - 1) With {.Dock = DockStyle.Fill, .Parent = TableLayoutPanelInternal}
         AddHandler ctrl0.TermModified, AddressOf onTermModified
         AddHandler ctrl0.SelectedIndexChanged, AddressOf onSIChanged
+        AddHandler ctrl0.ControlSelected, AddressOf onTermSelected
+        AddHandler ctrl0.ControlDeselected, AddressOf onTermDeselected
         col0.Add(ctrl0)
         Dim ctrl1 As New TermSourceComboBoxControl(cmbxarr, 1, TableLayoutPanelInternal.RowCount - 1) With {.Dock = DockStyle.Fill, .Parent = TableLayoutPanelInternal}
         AddHandler ctrl1.TermModified, AddressOf onTermModified
         AddHandler ctrl1.SelectedIndexChanged, AddressOf onSIChanged
+        AddHandler ctrl1.ControlSelected, AddressOf onTermSelected
+        AddHandler ctrl1.ControlDeselected, AddressOf onTermDeselected
         col1.Add(ctrl1)
         cv = 0
         For Each e As TermSourceBaseControl In col0
@@ -178,6 +236,18 @@ Public Class TermEditorTable
     Private Function projectCheck()
         If _project Is Nothing Then Return False Else Return True
     End Function
+    Private Sub onTermSelected(sender As Object, e As TermSourceControlEventArgs)
+        If canCastObject(Of TermSourceBaseControl)(sender) Then
+            Dim c As TermSourceBaseControl = castObject(Of TermSourceBaseControl)(sender)
+            If Not _selected.Contains(c) And c.Selected Then _selected.Add(c)
+        End If
+    End Sub
+    Private Sub onTermDeselected(sender As Object, e As TermSourceControlEventArgs)
+        If canCastObject(Of TermSourceBaseControl)(sender) Then
+            Dim c As TermSourceBaseControl = castObject(Of TermSourceBaseControl)(sender)
+            If _selected.Contains(c) And Not c.Selected Then _selected.Remove(c)
+        End If
+    End Sub
     Private Sub onTermModified(sender As Object, e As TermSourceControlEventArgs)
         If e.Column = 0 Then
             _project.data(e.Row).Term1 = col0(e.Row).Term
@@ -205,6 +275,8 @@ Public Class TermEditorTable
                 Dim ts As New TextTerm("", _project.Settings.getPreference(Of IPreference(Of Font))("Font").getPreference(), _project.Settings.getPreference(Of IPreference(Of Color))("Color").getPreference(), globalops.getPreference(Of IPreference(Of GlobalPreferences))("GlobalPreferences").getPreference().getPreference(Of IPreference(Of Integer))("MinumumFontSize").getPreference(), _project.Settings.getPreference(Of IPreference(Of Boolean))("CanSplitWords").getPreference())
                 ctrl = New TermSourceTextBoxControl(ts, e.Column, e.Row) With {.Parent = TableLayoutPanelInternal, .Dock = DockStyle.Fill}
                 AddHandler ctrl.TermModified, AddressOf onTermModified
+                AddHandler ctrl.ControlSelected, AddressOf onTermSelected
+                AddHandler ctrl.ControlDeselected, AddressOf onTermDeselected
                 TableLayoutPanelInternal.Controls.Add(ctrl, e.Column, e.Row)
                 ctrl.Enabled = True
                 ctrl.Visible = True
@@ -227,10 +299,14 @@ Public Class TermEditorTable
         Dim ctrl0 As New TermSourceComboBoxControl(cmbxarr, 0, TableLayoutPanelInternal.RowCount) With {.Dock = DockStyle.Fill, .Parent = TableLayoutPanelInternal}
         AddHandler ctrl0.TermModified, AddressOf onTermModified
         AddHandler ctrl0.SelectedIndexChanged, AddressOf onSIChanged
+        AddHandler ctrl0.ControlSelected, AddressOf onTermSelected
+        AddHandler ctrl0.ControlDeselected, AddressOf onTermDeselected
         col0.Add(ctrl0)
         Dim ctrl1 As New TermSourceComboBoxControl(cmbxarr, 1, TableLayoutPanelInternal.RowCount) With {.Dock = DockStyle.Fill, .Parent = TableLayoutPanelInternal}
         AddHandler ctrl1.TermModified, AddressOf onTermModified
         AddHandler ctrl1.SelectedIndexChanged, AddressOf onSIChanged
+        AddHandler ctrl1.ControlSelected, AddressOf onTermSelected
+        AddHandler ctrl1.ControlDeselected, AddressOf onTermDeselected
         col1.Add(ctrl1)
         TableLayoutPanelInternal.RowCount += 1
         TableLayoutPanelInternal.RowStyles.Add(New RowStyle(SizeType.Percent, 100 / (_project.dataCount + 1)))
@@ -253,6 +329,8 @@ Public Class TermEditorTable
             RemoveHandler _ctrl.SelectedIndexChanged, AddressOf onSIChanged
         End If
         RemoveHandler ctrl.TermModified, AddressOf onTermModified
+        RemoveHandler ctrl.ControlSelected, AddressOf onTermSelected
+        RemoveHandler ctrl.ControlDeselected, AddressOf onTermDeselected
         ctrl.Dispose()
         ctrl = Nothing
     End Sub
