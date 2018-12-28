@@ -7,6 +7,7 @@ Public Class TermEditorTable
     Private col1 As New List(Of TermSourceBaseControl)
     Private _selected As New List(Of TermSourceBaseControl)
     Private ppr As Integer = 200
+    Public Event TermSourceControlSelected(sender As Object, e As TermSourceControlSelectedEventArgs)
     Public Sub New()
         InitializeComponent()
     End Sub
@@ -129,6 +130,57 @@ Public Class TermEditorTable
         TableLayoutPanelInternal.SetRow(ctrl2, ctrl2.Row)
         TableLayoutPanelInternal.SetRow(ctrl3, ctrl3.Row)
     End Sub
+    Public Sub swapRows(row1 As Integer, row2 As Integer)
+        If Not projectCheck() Then Return
+        If row1 > _project.dataCount - 1 Or row2 > _project.dataCount - 1 Or row1 < 0 Or row2 < 0 Then Return
+        Dim ctrl0 As TermSourceBaseControl = col0(row1)
+        Dim ctrl1 As TermSourceBaseControl = col1(row1)
+        Dim ctrl2 As TermSourceBaseControl = col0(row2)
+        Dim ctrl3 As TermSourceBaseControl = col1(row2)
+        Dim d0 As TermSet(Of TermSource, TermSource) = _project.data(row1)
+        Dim d1 As TermSet(Of TermSource, TermSource) = _project.data(row2)
+        ctrl0.Row = row2
+        ctrl1.Row = row2
+        ctrl2.Row = row1
+        ctrl3.Row = row1
+        _project.data(row2) = d0
+        _project.data(row1) = d1
+        TableLayoutPanelInternal.SetRow(ctrl0, ctrl0.Row)
+        TableLayoutPanelInternal.SetRow(ctrl1, ctrl1.Row)
+        TableLayoutPanelInternal.SetRow(ctrl2, ctrl2.Row)
+        TableLayoutPanelInternal.SetRow(ctrl3, ctrl3.Row)
+    End Sub
+    Public Sub resetControl(column As Integer, row As Integer)
+        If Not projectCheck() Then Return
+        If row > _project.dataCount - 1 Or column > 1 Or row < 0 Or column < 0 Then Return
+        If column = 0 Then
+            _project.data(row).Term1 = New EmptyTerm()
+            TableLayoutPanelInternal.Controls.Remove(col0(row))
+            killControl(col0(row))
+            Dim ctrl As New TermSourceComboBoxControl(cmbxarr, column, row) With {.Dock = DockStyle.Fill, .Parent = TableLayoutPanelInternal}
+            AddHandler ctrl.TermModified, AddressOf onTermModified
+            AddHandler ctrl.SelectedIndexChanged, AddressOf onSIChanged
+            AddHandler ctrl.ControlSelected, AddressOf onTermSelected
+            AddHandler ctrl.ControlDeselected, AddressOf onTermDeselected
+            col0(row) = ctrl
+            TableLayoutPanelInternal.Controls.Add(ctrl, column, row)
+            ctrl.Enabled = True
+            ctrl.Visible = True
+        ElseIf column = 1 Then
+            _project.data(row).Term2 = New EmptyTerm()
+            TableLayoutPanelInternal.Controls.Remove(col1(row))
+            killControl(col1(row))
+            Dim ctrl As New TermSourceComboBoxControl(cmbxarr, column, row) With {.Dock = DockStyle.Fill, .Parent = TableLayoutPanelInternal}
+            AddHandler ctrl.TermModified, AddressOf onTermModified
+            AddHandler ctrl.SelectedIndexChanged, AddressOf onSIChanged
+            AddHandler ctrl.ControlSelected, AddressOf onTermSelected
+            AddHandler ctrl.ControlDeselected, AddressOf onTermDeselected
+            col1(row) = ctrl
+            TableLayoutPanelInternal.Controls.Add(ctrl, column, row)
+            ctrl.Enabled = True
+            ctrl.Visible = True
+        End If
+    End Sub
     Public Sub saveTerms()
         If Not projectCheck() Then Return
         For cnt As Integer = 0 To _project.dataCount - 1 Step 1
@@ -239,7 +291,46 @@ Public Class TermEditorTable
     Private Sub onTermSelected(sender As Object, e As TermSourceControlEventArgs)
         If canCastObject(Of TermSourceBaseControl)(sender) Then
             Dim c As TermSourceBaseControl = castObject(Of TermSourceBaseControl)(sender)
-            If Not _selected.Contains(c) And c.Selected Then _selected.Add(c)
+            If _selected.Count > 0 Then
+                If Not (Control.ModifierKeys.HasFlag(Keys.Control) Or Control.ModifierKeys.HasFlag(Keys.Shift)) Then
+                    For Each current As TermSourceBaseControl In _selected
+                        current.Deselect()
+                    Next
+                    _selected.Clear()
+                End If
+            End If
+            If Not _selected.Contains(c) And c.Selected Then
+                _selected.Add(c)
+                RaiseEvent TermSourceControlSelected(Me, New TermSourceControlSelectedEventArgs(c, _selected.ToArray))
+            End If
+            If Control.ModifierKeys.HasFlag(Keys.Shift) And _selected.Count >= 2 Then
+                Dim ls As TermSourceBaseControl = _selected(_selected.Count - 2)
+                Dim cs As TermSourceBaseControl = _selected(_selected.Count - 1)
+                If ls.Row = cs.Row Then Return
+                Dim vb As Integer = 0
+                If ls.Row < cs.Row Then vb = ls.Row
+                If cs.Row < ls.Row Then vb = cs.Row
+                Dim ve As Integer = 0
+                If ls.Row > cs.Row Then ve = ls.Row
+                If cs.Row > ls.Row Then ve = cs.Row
+                If ls.Column = cs.Column Then
+                    If ls.Row = cs.Row - 1 Or ls.Row = cs.Row + 1 Then Return
+                    If cs.Column = 0 Then
+                        For i As Integer = vb + 1 To ve - 1 Step 1
+                            col0(i).Select()
+                        Next
+                    ElseIf cs.Column = 1 Then
+                        For i As Integer = vb + 1 To ve - 1 Step 1
+                            col1(i).Select()
+                        Next
+                    End If
+                Else
+                    For i As Integer = vb To ve Step 1
+                        col0(i).Select()
+                        col1(i).Select()
+                    Next
+                End If
+            End If
         End If
     End Sub
     Private Sub onTermDeselected(sender As Object, e As TermSourceControlEventArgs)
@@ -350,4 +441,41 @@ Public Class TermEditorTable
             Return False
         End Try
     End Function
+    Public ReadOnly Property TableColumn(col As Column) As TermSourceBaseControl()
+        Get
+            If col = Column.Column0 Then
+                Return col0.ToArray
+            ElseIf col = Column.Column1 Then
+                Return col1.ToArray
+            End If
+            Return New TermSourceBaseControl() {}
+        End Get
+    End Property
+    Public Enum Column
+        Column0 = 0
+        Column1 = 1
+    End Enum
+End Class
+
+Public Class TermSourceControlSelectedEventArgs
+    Inherits EventArgs
+    Protected _lscontrol As TermSourceBaseControl = Nothing
+    Protected _scontrols As TermSourceBaseControl() = Nothing
+    Public Sub New(lcontrol As TermSourceBaseControl)
+        _lscontrol = lcontrol
+    End Sub
+    Public Sub New(lcontrol As TermSourceBaseControl, scontrols As TermSourceBaseControl())
+        _lscontrol = lcontrol
+        _scontrols = scontrols
+    End Sub
+    Public ReadOnly Property LastSelectedControl As TermSourceBaseControl
+        Get
+            Return _lscontrol
+        End Get
+    End Property
+    Public ReadOnly Property SelectedControls As TermSourceBaseControl()
+        Get
+            Return _scontrols
+        End Get
+    End Property
 End Class

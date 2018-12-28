@@ -127,24 +127,37 @@ Partial Class MainProgram
         Me.TabPageViewer = New System.Windows.Forms.TabPage()
         Me.Tablepv = New System.Windows.Forms.TableLayoutPanel()
         Me.lblpvt = New System.Windows.Forms.Label()
+        Me.TableLayoutPanelpv1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TableLayoutPanelpv2 = New System.Windows.Forms.TableLayoutPanel()
+        Me.butpvforward = New System.Windows.Forms.Button()
+        Me.butpvback = New System.Windows.Forms.Button()
+        Me.lblpvz = New System.Windows.Forms.Label()
+        Me.nudpvzoom = New System.Windows.Forms.NumericUpDown()
+        Me.TableScrollablepv1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.pbxpv1 = New System.Windows.Forms.PictureBox()
         Me.TabPageExport = New System.Windows.Forms.TabPage()
         Me.Tablepe = New System.Windows.Forms.TableLayoutPanel()
         Me.lblpet = New System.Windows.Forms.Label()
+        Me.TableLayoutPanelpe1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.butpee = New System.Windows.Forms.Button()
+        Me.lblpeepc = New System.Windows.Forms.Label()
+        Me.cmbxpeec = New System.Windows.Forms.ComboBox()
         Me.TableLayoutPanelsb = New System.Windows.Forms.TableLayoutPanel()
         Me.lblstatus = New System.Windows.Forms.Label()
         Me.butrender = New System.Windows.Forms.Button()
-        Me.TableLayoutPanelpe1 = New System.Windows.Forms.TableLayoutPanel()
-        Me.lblpeepc = New System.Windows.Forms.Label()
-        Me.cmbxpeec = New System.Windows.Forms.ComboBox()
-        Me.butpee = New System.Windows.Forms.Button()
-        Me.TableLayoutPanelpv1 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TableLayoutPanelpv2 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TableScrollablepv1 = New System.Windows.Forms.TableLayoutPanel()
-        Me.pbxpv1 = New System.Windows.Forms.PictureBox()
-        Me.butpvback = New System.Windows.Forms.Button()
-        Me.butpvforward = New System.Windows.Forms.Button()
-        Me.lblpvz = New System.Windows.Forms.Label()
-        Me.nudpvzoom = New System.Windows.Forms.NumericUpDown()
+        Me.TermEditorTablepd1 = New captainalm.FlashCardMaker.TermEditorTable()
+        Me.ToolStripSeparator9 = New System.Windows.Forms.ToolStripSeparator()
+        Me.DataEditorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AddRowToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RemoveRowToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator10 = New System.Windows.Forms.ToolStripSeparator()
+        Me.MoveRowUpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MoveRowDownToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator11 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ImportDataToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ExportDataToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator12 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ClearCellToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.TableLayoutPanelc.SuspendLayout()
         Me.TabControl1.SuspendLayout()
@@ -169,17 +182,18 @@ Partial Class MainProgram
         Me.TabPageData.SuspendLayout()
         Me.Tablepd.SuspendLayout()
         Me.TableLayoutPanelpd1.SuspendLayout()
+        Me.TableScrollablepd1.SuspendLayout()
         Me.TabPageViewer.SuspendLayout()
         Me.Tablepv.SuspendLayout()
-        Me.TabPageExport.SuspendLayout()
-        Me.Tablepe.SuspendLayout()
-        Me.TableLayoutPanelsb.SuspendLayout()
-        Me.TableLayoutPanelpe1.SuspendLayout()
         Me.TableLayoutPanelpv1.SuspendLayout()
         Me.TableLayoutPanelpv2.SuspendLayout()
+        CType(Me.nudpvzoom, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableScrollablepv1.SuspendLayout()
         CType(Me.pbxpv1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudpvzoom, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPageExport.SuspendLayout()
+        Me.Tablepe.SuspendLayout()
+        Me.TableLayoutPanelpe1.SuspendLayout()
+        Me.TableLayoutPanelsb.SuspendLayout()
         Me.SuspendLayout()
         '
         'FileToolStripMenuItem
@@ -267,7 +281,7 @@ Partial Class MainProgram
         '
         'EditToolStripMenuItem
         '
-        Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UndoToolStripMenuItem, Me.RedoToolStripMenuItem, Me.ToolStripSeparator7, Me.CutToolStripMenuItem, Me.CopyToolStripMenuItem, Me.PasteToolStripMenuItem, Me.DeleteToolStripMenuItem, Me.ToolStripSeparator8, Me.SelectAllToolStripMenuItem})
+        Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UndoToolStripMenuItem, Me.RedoToolStripMenuItem, Me.ToolStripSeparator7, Me.CutToolStripMenuItem, Me.CopyToolStripMenuItem, Me.PasteToolStripMenuItem, Me.DeleteToolStripMenuItem, Me.ToolStripSeparator8, Me.SelectAllToolStripMenuItem, Me.ToolStripSeparator9, Me.DataEditorToolStripMenuItem})
         Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
         Me.EditToolStripMenuItem.Size = New System.Drawing.Size(39, 20)
         Me.EditToolStripMenuItem.Text = "Edit"
@@ -275,53 +289,53 @@ Partial Class MainProgram
         'UndoToolStripMenuItem
         '
         Me.UndoToolStripMenuItem.Name = "UndoToolStripMenuItem"
-        Me.UndoToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
+        Me.UndoToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.UndoToolStripMenuItem.Text = "Undo"
         '
         'RedoToolStripMenuItem
         '
         Me.RedoToolStripMenuItem.Name = "RedoToolStripMenuItem"
-        Me.RedoToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
+        Me.RedoToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.RedoToolStripMenuItem.Text = "Redo"
         '
         'ToolStripSeparator7
         '
         Me.ToolStripSeparator7.Name = "ToolStripSeparator7"
-        Me.ToolStripSeparator7.Size = New System.Drawing.Size(119, 6)
+        Me.ToolStripSeparator7.Size = New System.Drawing.Size(149, 6)
         '
         'CutToolStripMenuItem
         '
         Me.CutToolStripMenuItem.Name = "CutToolStripMenuItem"
-        Me.CutToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
+        Me.CutToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.CutToolStripMenuItem.Text = "Cut"
         '
         'CopyToolStripMenuItem
         '
         Me.CopyToolStripMenuItem.Name = "CopyToolStripMenuItem"
-        Me.CopyToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
+        Me.CopyToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.CopyToolStripMenuItem.Text = "Copy"
         '
         'PasteToolStripMenuItem
         '
         Me.PasteToolStripMenuItem.Name = "PasteToolStripMenuItem"
-        Me.PasteToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
+        Me.PasteToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.PasteToolStripMenuItem.Text = "Paste"
         '
         'DeleteToolStripMenuItem
         '
         Me.DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem"
-        Me.DeleteToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
+        Me.DeleteToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.DeleteToolStripMenuItem.Text = "Delete"
         '
         'ToolStripSeparator8
         '
         Me.ToolStripSeparator8.Name = "ToolStripSeparator8"
-        Me.ToolStripSeparator8.Size = New System.Drawing.Size(119, 6)
+        Me.ToolStripSeparator8.Size = New System.Drawing.Size(149, 6)
         '
         'SelectAllToolStripMenuItem
         '
         Me.SelectAllToolStripMenuItem.Name = "SelectAllToolStripMenuItem"
-        Me.SelectAllToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
+        Me.SelectAllToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.SelectAllToolStripMenuItem.Text = "Select All"
         '
         'ViewToolStripMenuItem
@@ -1191,6 +1205,7 @@ Partial Class MainProgram
         Me.TableScrollablepd1.ColumnCount = 1
         Me.TableScrollablepd1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableScrollablepd1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableScrollablepd1.Controls.Add(Me.TermEditorTablepd1, 0, 0)
         Me.TableScrollablepd1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableScrollablepd1.Location = New System.Drawing.Point(3, 79)
         Me.TableScrollablepd1.Name = "TableScrollablepd1"
@@ -1239,6 +1254,107 @@ Partial Class MainProgram
         Me.lblpvt.Text = "CALM Flashcard Maker : Project Viewer"
         Me.lblpvt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'TableLayoutPanelpv1
+        '
+        Me.TableLayoutPanelpv1.ColumnCount = 1
+        Me.TableLayoutPanelpv1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanelpv1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanelpv1.Controls.Add(Me.TableLayoutPanelpv2, 0, 1)
+        Me.TableLayoutPanelpv1.Controls.Add(Me.TableScrollablepv1, 0, 0)
+        Me.TableLayoutPanelpv1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanelpv1.Location = New System.Drawing.Point(3, 41)
+        Me.TableLayoutPanelpv1.Name = "TableLayoutPanelpv1"
+        Me.TableLayoutPanelpv1.RowCount = 2
+        Me.TableLayoutPanelpv1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80.0!))
+        Me.TableLayoutPanelpv1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
+        Me.TableLayoutPanelpv1.Size = New System.Drawing.Size(564, 211)
+        Me.TableLayoutPanelpv1.TabIndex = 4
+        '
+        'TableLayoutPanelpv2
+        '
+        Me.TableLayoutPanelpv2.ColumnCount = 4
+        Me.TableLayoutPanelpv2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.0!))
+        Me.TableLayoutPanelpv2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.0!))
+        Me.TableLayoutPanelpv2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
+        Me.TableLayoutPanelpv2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
+        Me.TableLayoutPanelpv2.Controls.Add(Me.butpvforward, 1, 0)
+        Me.TableLayoutPanelpv2.Controls.Add(Me.butpvback, 0, 0)
+        Me.TableLayoutPanelpv2.Controls.Add(Me.lblpvz, 2, 0)
+        Me.TableLayoutPanelpv2.Controls.Add(Me.nudpvzoom, 3, 0)
+        Me.TableLayoutPanelpv2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanelpv2.Location = New System.Drawing.Point(3, 171)
+        Me.TableLayoutPanelpv2.Name = "TableLayoutPanelpv2"
+        Me.TableLayoutPanelpv2.RowCount = 1
+        Me.TableLayoutPanelpv2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanelpv2.Size = New System.Drawing.Size(558, 37)
+        Me.TableLayoutPanelpv2.TabIndex = 0
+        '
+        'butpvforward
+        '
+        Me.butpvforward.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.butpvforward.Location = New System.Drawing.Point(170, 3)
+        Me.butpvforward.Name = "butpvforward"
+        Me.butpvforward.Size = New System.Drawing.Size(161, 31)
+        Me.butpvforward.TabIndex = 1
+        Me.butpvforward.Text = "Next Card ->"
+        Me.butpvforward.UseVisualStyleBackColor = True
+        '
+        'butpvback
+        '
+        Me.butpvback.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.butpvback.Location = New System.Drawing.Point(3, 3)
+        Me.butpvback.Name = "butpvback"
+        Me.butpvback.Size = New System.Drawing.Size(161, 31)
+        Me.butpvback.TabIndex = 0
+        Me.butpvback.Text = "<- Previous Card"
+        Me.butpvback.UseVisualStyleBackColor = True
+        '
+        'lblpvz
+        '
+        Me.lblpvz.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblpvz.Location = New System.Drawing.Point(337, 7)
+        Me.lblpvz.Name = "lblpvz"
+        Me.lblpvz.Size = New System.Drawing.Size(105, 23)
+        Me.lblpvz.TabIndex = 2
+        Me.lblpvz.Text = "Zoom:"
+        Me.lblpvz.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'nudpvzoom
+        '
+        Me.nudpvzoom.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.nudpvzoom.Increment = New Decimal(New Integer() {5, 0, 0, 0})
+        Me.nudpvzoom.Location = New System.Drawing.Point(448, 8)
+        Me.nudpvzoom.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
+        Me.nudpvzoom.Name = "nudpvzoom"
+        Me.nudpvzoom.Size = New System.Drawing.Size(107, 20)
+        Me.nudpvzoom.TabIndex = 3
+        Me.nudpvzoom.Value = New Decimal(New Integer() {100, 0, 0, 0})
+        '
+        'TableScrollablepv1
+        '
+        Me.TableScrollablepv1.AutoScroll = True
+        Me.TableScrollablepv1.ColumnCount = 1
+        Me.TableScrollablepv1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableScrollablepv1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableScrollablepv1.Controls.Add(Me.pbxpv1, 0, 0)
+        Me.TableScrollablepv1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableScrollablepv1.Location = New System.Drawing.Point(3, 3)
+        Me.TableScrollablepv1.Name = "TableScrollablepv1"
+        Me.TableScrollablepv1.RowCount = 1
+        Me.TableScrollablepv1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableScrollablepv1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 162.0!))
+        Me.TableScrollablepv1.Size = New System.Drawing.Size(558, 162)
+        Me.TableScrollablepv1.TabIndex = 1
+        '
+        'pbxpv1
+        '
+        Me.pbxpv1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.pbxpv1.Location = New System.Drawing.Point(3, 3)
+        Me.pbxpv1.Name = "pbxpv1"
+        Me.pbxpv1.Size = New System.Drawing.Size(552, 156)
+        Me.pbxpv1.TabIndex = 0
+        Me.pbxpv1.TabStop = False
+        '
         'TabPageExport
         '
         Me.TabPageExport.Controls.Add(Me.Tablepe)
@@ -1278,6 +1394,56 @@ Partial Class MainProgram
         Me.lblpet.Text = "CALM Flashcard Maker : Project Export"
         Me.lblpet.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'TableLayoutPanelpe1
+        '
+        Me.TableLayoutPanelpe1.ColumnCount = 3
+        Me.TableLayoutPanelpe1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanelpe1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanelpe1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanelpe1.Controls.Add(Me.butpee, 2, 0)
+        Me.TableLayoutPanelpe1.Controls.Add(Me.lblpeepc, 0, 0)
+        Me.TableLayoutPanelpe1.Controls.Add(Me.cmbxpeec, 1, 0)
+        Me.TableLayoutPanelpe1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanelpe1.Location = New System.Drawing.Point(3, 41)
+        Me.TableLayoutPanelpe1.Name = "TableLayoutPanelpe1"
+        Me.TableLayoutPanelpe1.RowCount = 1
+        Me.TableLayoutPanelpe1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanelpe1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 211.0!))
+        Me.TableLayoutPanelpe1.Size = New System.Drawing.Size(564, 211)
+        Me.TableLayoutPanelpe1.TabIndex = 4
+        '
+        'butpee
+        '
+        Me.butpee.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.butpee.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.butpee.Location = New System.Drawing.Point(379, 3)
+        Me.butpee.Name = "butpee"
+        Me.butpee.Size = New System.Drawing.Size(182, 205)
+        Me.butpee.TabIndex = 5
+        Me.butpee.Text = "Export ->"
+        Me.butpee.UseVisualStyleBackColor = True
+        '
+        'lblpeepc
+        '
+        Me.lblpeepc.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblpeepc.Location = New System.Drawing.Point(3, 94)
+        Me.lblpeepc.Name = "lblpeepc"
+        Me.lblpeepc.Size = New System.Drawing.Size(182, 23)
+        Me.lblpeepc.TabIndex = 0
+        Me.lblpeepc.Text = "Exporter:"
+        Me.lblpeepc.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'cmbxpeec
+        '
+        Me.cmbxpeec.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cmbxpeec.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmbxpeec.FormattingEnabled = True
+        Me.cmbxpeec.Items.AddRange(New Object() {"Print Project", "Save Project Images"})
+        Me.cmbxpeec.Location = New System.Drawing.Point(191, 95)
+        Me.cmbxpeec.Name = "cmbxpeec"
+        Me.cmbxpeec.Size = New System.Drawing.Size(182, 21)
+        Me.cmbxpeec.TabIndex = 1
+        '
         'TableLayoutPanelsb
         '
         Me.TableLayoutPanelsb.ColumnCount = 2
@@ -1315,156 +1481,83 @@ Partial Class MainProgram
         Me.butrender.Text = "Render"
         Me.butrender.UseVisualStyleBackColor = True
         '
-        'TableLayoutPanelpe1
+        'TermEditorTablepd1
         '
-        Me.TableLayoutPanelpe1.ColumnCount = 3
-        Me.TableLayoutPanelpe1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.TableLayoutPanelpe1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.TableLayoutPanelpe1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.TableLayoutPanelpe1.Controls.Add(Me.butpee, 2, 0)
-        Me.TableLayoutPanelpe1.Controls.Add(Me.lblpeepc, 0, 0)
-        Me.TableLayoutPanelpe1.Controls.Add(Me.cmbxpeec, 1, 0)
-        Me.TableLayoutPanelpe1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanelpe1.Location = New System.Drawing.Point(3, 41)
-        Me.TableLayoutPanelpe1.Name = "TableLayoutPanelpe1"
-        Me.TableLayoutPanelpe1.RowCount = 1
-        Me.TableLayoutPanelpe1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanelpe1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanelpe1.Size = New System.Drawing.Size(564, 211)
-        Me.TableLayoutPanelpe1.TabIndex = 4
+        Me.TermEditorTablepd1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TermEditorTablepd1.Location = New System.Drawing.Point(3, 3)
+        Me.TermEditorTablepd1.Name = "TermEditorTablepd1"
+        Me.TermEditorTablepd1.PixelsPerRow = 200
+        Me.TermEditorTablepd1.Size = New System.Drawing.Size(558, 167)
+        Me.TermEditorTablepd1.TabIndex = 0
         '
-        'lblpeepc
+        'ToolStripSeparator9
         '
-        Me.lblpeepc.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblpeepc.Location = New System.Drawing.Point(3, 94)
-        Me.lblpeepc.Name = "lblpeepc"
-        Me.lblpeepc.Size = New System.Drawing.Size(181, 23)
-        Me.lblpeepc.TabIndex = 0
-        Me.lblpeepc.Text = "Exporter:"
-        Me.lblpeepc.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.ToolStripSeparator9.Name = "ToolStripSeparator9"
+        Me.ToolStripSeparator9.Size = New System.Drawing.Size(149, 6)
         '
-        'cmbxpeec
+        'DataEditorToolStripMenuItem
         '
-        Me.cmbxpeec.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.cmbxpeec.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbxpeec.FormattingEnabled = True
-        Me.cmbxpeec.Items.AddRange(New Object() {"Print Project", "Save Project Images"})
-        Me.cmbxpeec.Location = New System.Drawing.Point(190, 95)
-        Me.cmbxpeec.Name = "cmbxpeec"
-        Me.cmbxpeec.Size = New System.Drawing.Size(181, 21)
-        Me.cmbxpeec.TabIndex = 1
+        Me.DataEditorToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ImportDataToolStripMenuItem, Me.ExportDataToolStripMenuItem, Me.ToolStripSeparator11, Me.AddRowToolStripMenuItem, Me.RemoveRowToolStripMenuItem, Me.ToolStripSeparator10, Me.MoveRowUpToolStripMenuItem, Me.MoveRowDownToolStripMenuItem, Me.ToolStripSeparator12, Me.ClearCellToolStripMenuItem})
+        Me.DataEditorToolStripMenuItem.Name = "DataEditorToolStripMenuItem"
+        Me.DataEditorToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.DataEditorToolStripMenuItem.Text = "Data Editor"
         '
-        'butpee
+        'AddRowToolStripMenuItem
         '
-        Me.butpee.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.butpee.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.butpee.Location = New System.Drawing.Point(377, 3)
-        Me.butpee.Name = "butpee"
-        Me.butpee.Size = New System.Drawing.Size(184, 205)
-        Me.butpee.TabIndex = 5
-        Me.butpee.Text = "Export ->"
-        Me.butpee.UseVisualStyleBackColor = True
+        Me.AddRowToolStripMenuItem.Name = "AddRowToolStripMenuItem"
+        Me.AddRowToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.AddRowToolStripMenuItem.Text = "Add Row"
         '
-        'TableLayoutPanelpv1
+        'RemoveRowToolStripMenuItem
         '
-        Me.TableLayoutPanelpv1.ColumnCount = 1
-        Me.TableLayoutPanelpv1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanelpv1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanelpv1.Controls.Add(Me.TableLayoutPanelpv2, 0, 1)
-        Me.TableLayoutPanelpv1.Controls.Add(Me.TableScrollablepv1, 0, 0)
-        Me.TableLayoutPanelpv1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanelpv1.Location = New System.Drawing.Point(3, 41)
-        Me.TableLayoutPanelpv1.Name = "TableLayoutPanelpv1"
-        Me.TableLayoutPanelpv1.RowCount = 2
-        Me.TableLayoutPanelpv1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80.0!))
-        Me.TableLayoutPanelpv1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
-        Me.TableLayoutPanelpv1.Size = New System.Drawing.Size(564, 211)
-        Me.TableLayoutPanelpv1.TabIndex = 4
+        Me.RemoveRowToolStripMenuItem.Name = "RemoveRowToolStripMenuItem"
+        Me.RemoveRowToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.RemoveRowToolStripMenuItem.Text = "Remove Row"
         '
-        'TableLayoutPanelpv2
+        'ToolStripSeparator10
         '
-        Me.TableLayoutPanelpv2.ColumnCount = 4
-        Me.TableLayoutPanelpv2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.0!))
-        Me.TableLayoutPanelpv2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.0!))
-        Me.TableLayoutPanelpv2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
-        Me.TableLayoutPanelpv2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
-        Me.TableLayoutPanelpv2.Controls.Add(Me.butpvforward, 1, 0)
-        Me.TableLayoutPanelpv2.Controls.Add(Me.butpvback, 0, 0)
-        Me.TableLayoutPanelpv2.Controls.Add(Me.lblpvz, 2, 0)
-        Me.TableLayoutPanelpv2.Controls.Add(Me.nudpvzoom, 3, 0)
-        Me.TableLayoutPanelpv2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanelpv2.Location = New System.Drawing.Point(3, 171)
-        Me.TableLayoutPanelpv2.Name = "TableLayoutPanelpv2"
-        Me.TableLayoutPanelpv2.RowCount = 1
-        Me.TableLayoutPanelpv2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanelpv2.Size = New System.Drawing.Size(558, 37)
-        Me.TableLayoutPanelpv2.TabIndex = 0
+        Me.ToolStripSeparator10.Name = "ToolStripSeparator10"
+        Me.ToolStripSeparator10.Size = New System.Drawing.Size(161, 6)
         '
-        'TableScrollablepv1
+        'MoveRowUpToolStripMenuItem
         '
-        Me.TableScrollablepv1.AutoScroll = True
-        Me.TableScrollablepv1.ColumnCount = 1
-        Me.TableScrollablepv1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableScrollablepv1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableScrollablepv1.Controls.Add(Me.pbxpv1, 0, 0)
-        Me.TableScrollablepv1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableScrollablepv1.Location = New System.Drawing.Point(3, 3)
-        Me.TableScrollablepv1.Name = "TableScrollablepv1"
-        Me.TableScrollablepv1.RowCount = 1
-        Me.TableScrollablepv1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableScrollablepv1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableScrollablepv1.Size = New System.Drawing.Size(558, 162)
-        Me.TableScrollablepv1.TabIndex = 1
+        Me.MoveRowUpToolStripMenuItem.Name = "MoveRowUpToolStripMenuItem"
+        Me.MoveRowUpToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.MoveRowUpToolStripMenuItem.Text = "Move Row Up"
         '
-        'pbxpv1
+        'MoveRowDownToolStripMenuItem
         '
-        Me.pbxpv1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.pbxpv1.Location = New System.Drawing.Point(3, 3)
-        Me.pbxpv1.Name = "pbxpv1"
-        Me.pbxpv1.Size = New System.Drawing.Size(552, 156)
-        Me.pbxpv1.TabIndex = 0
-        Me.pbxpv1.TabStop = False
+        Me.MoveRowDownToolStripMenuItem.Name = "MoveRowDownToolStripMenuItem"
+        Me.MoveRowDownToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.MoveRowDownToolStripMenuItem.Text = "Move Row Down"
         '
-        'butpvback
+        'ToolStripSeparator11
         '
-        Me.butpvback.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.butpvback.Location = New System.Drawing.Point(3, 3)
-        Me.butpvback.Name = "butpvback"
-        Me.butpvback.Size = New System.Drawing.Size(161, 31)
-        Me.butpvback.TabIndex = 0
-        Me.butpvback.Text = "<- Previous Card"
-        Me.butpvback.UseVisualStyleBackColor = True
+        Me.ToolStripSeparator11.Name = "ToolStripSeparator11"
+        Me.ToolStripSeparator11.Size = New System.Drawing.Size(161, 6)
         '
-        'butpvforward
+        'ImportDataToolStripMenuItem
         '
-        Me.butpvforward.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.butpvforward.Location = New System.Drawing.Point(170, 3)
-        Me.butpvforward.Name = "butpvforward"
-        Me.butpvforward.Size = New System.Drawing.Size(161, 31)
-        Me.butpvforward.TabIndex = 1
-        Me.butpvforward.Text = "Next Card ->"
-        Me.butpvforward.UseVisualStyleBackColor = True
+        Me.ImportDataToolStripMenuItem.Name = "ImportDataToolStripMenuItem"
+        Me.ImportDataToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.ImportDataToolStripMenuItem.Text = "Import Data..."
         '
-        'lblpvz
+        'ExportDataToolStripMenuItem
         '
-        Me.lblpvz.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblpvz.Location = New System.Drawing.Point(337, 7)
-        Me.lblpvz.Name = "lblpvz"
-        Me.lblpvz.Size = New System.Drawing.Size(105, 23)
-        Me.lblpvz.TabIndex = 2
-        Me.lblpvz.Text = "Zoom:"
-        Me.lblpvz.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.ExportDataToolStripMenuItem.Name = "ExportDataToolStripMenuItem"
+        Me.ExportDataToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.ExportDataToolStripMenuItem.Text = "Export Data..."
         '
-        'nudpvzoom
+        'ToolStripSeparator12
         '
-        Me.nudpvzoom.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.nudpvzoom.Increment = New Decimal(New Integer() {5, 0, 0, 0})
-        Me.nudpvzoom.Location = New System.Drawing.Point(448, 8)
-        Me.nudpvzoom.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
-        Me.nudpvzoom.Name = "nudpvzoom"
-        Me.nudpvzoom.Size = New System.Drawing.Size(107, 20)
-        Me.nudpvzoom.TabIndex = 3
-        Me.nudpvzoom.Value = New Decimal(New Integer() {100, 0, 0, 0})
+        Me.ToolStripSeparator12.Name = "ToolStripSeparator12"
+        Me.ToolStripSeparator12.Size = New System.Drawing.Size(161, 6)
+        '
+        'ClearCellToolStripMenuItem
+        '
+        Me.ClearCellToolStripMenuItem.Name = "ClearCellToolStripMenuItem"
+        Me.ClearCellToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.ClearCellToolStripMenuItem.Text = "Clear Cell"
         '
         'MainProgram
         '
@@ -1508,17 +1601,18 @@ Partial Class MainProgram
         Me.TabPageData.ResumeLayout(False)
         Me.Tablepd.ResumeLayout(False)
         Me.TableLayoutPanelpd1.ResumeLayout(False)
+        Me.TableScrollablepd1.ResumeLayout(False)
         Me.TabPageViewer.ResumeLayout(False)
         Me.Tablepv.ResumeLayout(False)
-        Me.TabPageExport.ResumeLayout(False)
-        Me.Tablepe.ResumeLayout(False)
-        Me.TableLayoutPanelsb.ResumeLayout(False)
-        Me.TableLayoutPanelpe1.ResumeLayout(False)
         Me.TableLayoutPanelpv1.ResumeLayout(False)
         Me.TableLayoutPanelpv2.ResumeLayout(False)
+        CType(Me.nudpvzoom, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableScrollablepv1.ResumeLayout(False)
         CType(Me.pbxpv1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudpvzoom, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPageExport.ResumeLayout(False)
+        Me.Tablepe.ResumeLayout(False)
+        Me.TableLayoutPanelpe1.ResumeLayout(False)
+        Me.TableLayoutPanelsb.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1645,4 +1739,17 @@ Partial Class MainProgram
     Friend WithEvents butpvback As System.Windows.Forms.Button
     Friend WithEvents lblpvz As System.Windows.Forms.Label
     Friend WithEvents nudpvzoom As System.Windows.Forms.NumericUpDown
+    Friend WithEvents TermEditorTablepd1 As captainalm.FlashCardMaker.TermEditorTable
+    Friend WithEvents ToolStripSeparator9 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents DataEditorToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ImportDataToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ExportDataToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator11 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents AddRowToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents RemoveRowToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator10 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents MoveRowUpToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents MoveRowDownToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator12 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ClearCellToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 End Class

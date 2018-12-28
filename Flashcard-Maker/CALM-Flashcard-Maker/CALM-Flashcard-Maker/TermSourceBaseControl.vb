@@ -84,6 +84,7 @@ Public Class TermSourceBaseControl
             Return _s
         End Get
         Set(value As Boolean)
+            If _s = value Then Return
             _s = value
 #If Paint Then
             Me.Invalidate(True)
@@ -128,7 +129,7 @@ Public Class TermSourceBaseControl
     End Function
 #End If
     Private Sub TermSourceBaseControl_MouseClick(sender As Object, e As MouseEventArgs) Handles MyBase.MouseClick
-        _s = True
+        Selected = True
 #If Paint Then
         Me.Invalidate(True)
 #End If
