@@ -22,4 +22,9 @@
             Return TextboxInternal
         End Get
     End Property
+    Public Overrides ReadOnly Property InternalControl As Control
+        Get
+            Return TextboxInternal
+        End Get
+    End Property
 End Class

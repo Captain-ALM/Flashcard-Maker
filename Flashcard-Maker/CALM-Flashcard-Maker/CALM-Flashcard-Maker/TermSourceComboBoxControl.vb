@@ -24,6 +24,11 @@
     Private Sub ComboBoxInternal_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBoxInternal.SelectedIndexChanged
         RaiseEvent SelectedIndexChanged(Me, New TermSourceComboBoxControlSelectedIndexChangedEventArgs(Column, Row, ComboBoxInternal.SelectedIndex))
     End Sub
+    Public Overrides ReadOnly Property InternalControl As Control
+        Get
+            Return ComboBoxInternal
+        End Get
+    End Property
 End Class
 
 Public Class TermSourceComboBoxControlSelectedIndexChangedEventArgs

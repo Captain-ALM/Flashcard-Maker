@@ -24,6 +24,11 @@
         ButtonInternal.Image = _term.getImage(ButtonInternal.Width, ButtonInternal.Height)
         OnTermModified(Me, New TermSourceControlEventArgs(Column, Row, _term))
     End Sub
+    Public Overrides ReadOnly Property InternalControl As Control
+        Get
+            Return ButtonInternal
+        End Get
+    End Property
 End Class
 
 Public Class TermSourceButtonControlClickEventArgs
