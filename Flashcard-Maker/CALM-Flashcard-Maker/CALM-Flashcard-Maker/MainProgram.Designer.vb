@@ -22,6 +22,7 @@ Partial Class MainProgram
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainProgram))
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NewProjectToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -47,6 +48,18 @@ Partial Class MainProgram
         Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator8 = New System.Windows.Forms.ToolStripSeparator()
         Me.SelectAllToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator9 = New System.Windows.Forms.ToolStripSeparator()
+        Me.DataEditorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ImportDataToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ExportDataToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator11 = New System.Windows.Forms.ToolStripSeparator()
+        Me.AddRowToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RemoveRowToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator10 = New System.Windows.Forms.ToolStripSeparator()
+        Me.MoveRowUpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MoveRowDownToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator12 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ClearCellToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StartTabToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
@@ -124,6 +137,7 @@ Partial Class MainProgram
         Me.butpdid = New System.Windows.Forms.Button()
         Me.butpded = New System.Windows.Forms.Button()
         Me.TableScrollablepd1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TermEditorTablepd1 = New captainalm.FlashCardMaker.TermEditorTable()
         Me.TabPageViewer = New System.Windows.Forms.TabPage()
         Me.Tablepv = New System.Windows.Forms.TableLayoutPanel()
         Me.lblpvt = New System.Windows.Forms.Label()
@@ -145,19 +159,20 @@ Partial Class MainProgram
         Me.TableLayoutPanelsb = New System.Windows.Forms.TableLayoutPanel()
         Me.lblstatus = New System.Windows.Forms.Label()
         Me.butrender = New System.Windows.Forms.Button()
-        Me.TermEditorTablepd1 = New captainalm.FlashCardMaker.TermEditorTable()
-        Me.ToolStripSeparator9 = New System.Windows.Forms.ToolStripSeparator()
-        Me.DataEditorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AddRowToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.RemoveRowToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator10 = New System.Windows.Forms.ToolStripSeparator()
-        Me.MoveRowUpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.MoveRowDownToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator11 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ImportDataToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ExportDataToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator12 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ClearCellToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ContextMenuStripde = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.DataManagementToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ImportDataToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ExportDataToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RowManagementToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AddRowToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RemoveRowToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MoveRowUpToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MoveRowDownToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ClearCellToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.FontDialogNoSize1 = New captainalm.FlashCardMaker.FontDialogNoSize()
+        Me.ColorDialog1 = New System.Windows.Forms.ColorDialog()
+        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.MenuStrip1.SuspendLayout()
         Me.TableLayoutPanelc.SuspendLayout()
         Me.TabControl1.SuspendLayout()
@@ -194,6 +209,7 @@ Partial Class MainProgram
         Me.Tablepe.SuspendLayout()
         Me.TableLayoutPanelpe1.SuspendLayout()
         Me.TableLayoutPanelsb.SuspendLayout()
+        Me.ContextMenuStripde.SuspendLayout()
         Me.SuspendLayout()
         '
         'FileToolStripMenuItem
@@ -337,6 +353,75 @@ Partial Class MainProgram
         Me.SelectAllToolStripMenuItem.Name = "SelectAllToolStripMenuItem"
         Me.SelectAllToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.SelectAllToolStripMenuItem.Text = "Select All"
+        '
+        'ToolStripSeparator9
+        '
+        Me.ToolStripSeparator9.Name = "ToolStripSeparator9"
+        Me.ToolStripSeparator9.Size = New System.Drawing.Size(149, 6)
+        '
+        'DataEditorToolStripMenuItem
+        '
+        Me.DataEditorToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ImportDataToolStripMenuItem, Me.ExportDataToolStripMenuItem, Me.ToolStripSeparator11, Me.AddRowToolStripMenuItem, Me.RemoveRowToolStripMenuItem, Me.ToolStripSeparator10, Me.MoveRowUpToolStripMenuItem, Me.MoveRowDownToolStripMenuItem, Me.ToolStripSeparator12, Me.ClearCellToolStripMenuItem})
+        Me.DataEditorToolStripMenuItem.Name = "DataEditorToolStripMenuItem"
+        Me.DataEditorToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.DataEditorToolStripMenuItem.Text = "Data Editor"
+        '
+        'ImportDataToolStripMenuItem
+        '
+        Me.ImportDataToolStripMenuItem.Name = "ImportDataToolStripMenuItem"
+        Me.ImportDataToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.ImportDataToolStripMenuItem.Text = "Import Data..."
+        '
+        'ExportDataToolStripMenuItem
+        '
+        Me.ExportDataToolStripMenuItem.Name = "ExportDataToolStripMenuItem"
+        Me.ExportDataToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.ExportDataToolStripMenuItem.Text = "Export Data..."
+        '
+        'ToolStripSeparator11
+        '
+        Me.ToolStripSeparator11.Name = "ToolStripSeparator11"
+        Me.ToolStripSeparator11.Size = New System.Drawing.Size(161, 6)
+        '
+        'AddRowToolStripMenuItem
+        '
+        Me.AddRowToolStripMenuItem.Name = "AddRowToolStripMenuItem"
+        Me.AddRowToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.AddRowToolStripMenuItem.Text = "Add Row"
+        '
+        'RemoveRowToolStripMenuItem
+        '
+        Me.RemoveRowToolStripMenuItem.Name = "RemoveRowToolStripMenuItem"
+        Me.RemoveRowToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.RemoveRowToolStripMenuItem.Text = "Remove Row"
+        '
+        'ToolStripSeparator10
+        '
+        Me.ToolStripSeparator10.Name = "ToolStripSeparator10"
+        Me.ToolStripSeparator10.Size = New System.Drawing.Size(161, 6)
+        '
+        'MoveRowUpToolStripMenuItem
+        '
+        Me.MoveRowUpToolStripMenuItem.Name = "MoveRowUpToolStripMenuItem"
+        Me.MoveRowUpToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.MoveRowUpToolStripMenuItem.Text = "Move Row Up"
+        '
+        'MoveRowDownToolStripMenuItem
+        '
+        Me.MoveRowDownToolStripMenuItem.Name = "MoveRowDownToolStripMenuItem"
+        Me.MoveRowDownToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.MoveRowDownToolStripMenuItem.Text = "Move Row Down"
+        '
+        'ToolStripSeparator12
+        '
+        Me.ToolStripSeparator12.Name = "ToolStripSeparator12"
+        Me.ToolStripSeparator12.Size = New System.Drawing.Size(161, 6)
+        '
+        'ClearCellToolStripMenuItem
+        '
+        Me.ClearCellToolStripMenuItem.Name = "ClearCellToolStripMenuItem"
+        Me.ClearCellToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.ClearCellToolStripMenuItem.Text = "Clear Cell"
         '
         'ViewToolStripMenuItem
         '
@@ -795,6 +880,7 @@ Partial Class MainProgram
         'nudpoch
         '
         Me.nudpoch.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.nudpoch.InterceptArrowKeys = False
         Me.nudpoch.Location = New System.Drawing.Point(135, 83)
         Me.nudpoch.Maximum = New Decimal(New Integer() {1189, 0, 0, 0})
         Me.nudpoch.Minimum = New Decimal(New Integer() {10, 0, 0, 0})
@@ -850,6 +936,7 @@ Partial Class MainProgram
         'nudpocw
         '
         Me.nudpocw.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.nudpocw.InterceptArrowKeys = False
         Me.nudpocw.Location = New System.Drawing.Point(135, 45)
         Me.nudpocw.Maximum = New Decimal(New Integer() {841, 0, 0, 0})
         Me.nudpocw.Minimum = New Decimal(New Integer() {10, 0, 0, 0})
@@ -1038,6 +1125,7 @@ Partial Class MainProgram
         '
         Me.nudporfs.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.nudporfs.Enabled = False
+        Me.nudporfs.InterceptArrowKeys = False
         Me.nudporfs.Location = New System.Drawing.Point(135, 5)
         Me.nudporfs.Maximum = New Decimal(New Integer() {1638, 0, 0, 0})
         Me.nudporfs.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
@@ -1103,6 +1191,7 @@ Partial Class MainProgram
         'nudpotc
         '
         Me.nudpotc.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.nudpotc.InterceptArrowKeys = False
         Me.nudpotc.Location = New System.Drawing.Point(135, 5)
         Me.nudpotc.Maximum = New Decimal(New Integer() {1000000, 0, 0, 0})
         Me.nudpotc.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
@@ -1215,6 +1304,16 @@ Partial Class MainProgram
         Me.TableScrollablepd1.Size = New System.Drawing.Size(564, 173)
         Me.TableScrollablepd1.TabIndex = 5
         '
+        'TermEditorTablepd1
+        '
+        Me.TermEditorTablepd1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TermEditorTablepd1.Location = New System.Drawing.Point(3, 3)
+        Me.TermEditorTablepd1.Name = "TermEditorTablepd1"
+        Me.TermEditorTablepd1.PixelsPerRow = 200
+        Me.TermEditorTablepd1.SelectedControls = New captainalm.FlashCardMaker.TermSourceBaseControl(-1) {}
+        Me.TermEditorTablepd1.Size = New System.Drawing.Size(558, 167)
+        Me.TermEditorTablepd1.TabIndex = 0
+        '
         'TabPageViewer
         '
         Me.TabPageViewer.Controls.Add(Me.Tablepv)
@@ -1323,6 +1422,7 @@ Partial Class MainProgram
         '
         Me.nudpvzoom.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.nudpvzoom.Increment = New Decimal(New Integer() {5, 0, 0, 0})
+        Me.nudpvzoom.InterceptArrowKeys = False
         Me.nudpvzoom.Location = New System.Drawing.Point(448, 8)
         Me.nudpvzoom.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
         Me.nudpvzoom.Name = "nudpvzoom"
@@ -1456,7 +1556,7 @@ Partial Class MainProgram
         Me.TableLayoutPanelsb.Name = "TableLayoutPanelsb"
         Me.TableLayoutPanelsb.RowCount = 1
         Me.TableLayoutPanelsb.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanelsb.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanelsb.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44.0!))
         Me.TableLayoutPanelsb.Size = New System.Drawing.Size(578, 44)
         Me.TableLayoutPanelsb.TabIndex = 2
         '
@@ -1481,83 +1581,84 @@ Partial Class MainProgram
         Me.butrender.Text = "Render"
         Me.butrender.UseVisualStyleBackColor = True
         '
-        'TermEditorTablepd1
+        'ContextMenuStripde
         '
-        Me.TermEditorTablepd1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TermEditorTablepd1.Location = New System.Drawing.Point(3, 3)
-        Me.TermEditorTablepd1.Name = "TermEditorTablepd1"
-        Me.TermEditorTablepd1.PixelsPerRow = 200
-        Me.TermEditorTablepd1.Size = New System.Drawing.Size(558, 167)
-        Me.TermEditorTablepd1.TabIndex = 0
+        Me.ContextMenuStripde.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DataManagementToolStripMenuItem, Me.RowManagementToolStripMenuItem, Me.ClearCellToolStripMenuItem1})
+        Me.ContextMenuStripde.Name = "ContextMenuStripde"
+        Me.ContextMenuStripde.Size = New System.Drawing.Size(173, 92)
         '
-        'ToolStripSeparator9
+        'DataManagementToolStripMenuItem
         '
-        Me.ToolStripSeparator9.Name = "ToolStripSeparator9"
-        Me.ToolStripSeparator9.Size = New System.Drawing.Size(149, 6)
+        Me.DataManagementToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ImportDataToolStripMenuItem1, Me.ExportDataToolStripMenuItem1})
+        Me.DataManagementToolStripMenuItem.Name = "DataManagementToolStripMenuItem"
+        Me.DataManagementToolStripMenuItem.Size = New System.Drawing.Size(172, 22)
+        Me.DataManagementToolStripMenuItem.Text = "Data Management"
         '
-        'DataEditorToolStripMenuItem
+        'ImportDataToolStripMenuItem1
         '
-        Me.DataEditorToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ImportDataToolStripMenuItem, Me.ExportDataToolStripMenuItem, Me.ToolStripSeparator11, Me.AddRowToolStripMenuItem, Me.RemoveRowToolStripMenuItem, Me.ToolStripSeparator10, Me.MoveRowUpToolStripMenuItem, Me.MoveRowDownToolStripMenuItem, Me.ToolStripSeparator12, Me.ClearCellToolStripMenuItem})
-        Me.DataEditorToolStripMenuItem.Name = "DataEditorToolStripMenuItem"
-        Me.DataEditorToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
-        Me.DataEditorToolStripMenuItem.Text = "Data Editor"
+        Me.ImportDataToolStripMenuItem1.Name = "ImportDataToolStripMenuItem1"
+        Me.ImportDataToolStripMenuItem1.Size = New System.Drawing.Size(152, 22)
+        Me.ImportDataToolStripMenuItem1.Text = "Import Data..."
         '
-        'AddRowToolStripMenuItem
+        'ExportDataToolStripMenuItem1
         '
-        Me.AddRowToolStripMenuItem.Name = "AddRowToolStripMenuItem"
-        Me.AddRowToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
-        Me.AddRowToolStripMenuItem.Text = "Add Row"
+        Me.ExportDataToolStripMenuItem1.Name = "ExportDataToolStripMenuItem1"
+        Me.ExportDataToolStripMenuItem1.Size = New System.Drawing.Size(152, 22)
+        Me.ExportDataToolStripMenuItem1.Text = "Export Data..."
         '
-        'RemoveRowToolStripMenuItem
+        'RowManagementToolStripMenuItem
         '
-        Me.RemoveRowToolStripMenuItem.Name = "RemoveRowToolStripMenuItem"
-        Me.RemoveRowToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
-        Me.RemoveRowToolStripMenuItem.Text = "Remove Row"
+        Me.RowManagementToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddRowToolStripMenuItem1, Me.RemoveRowToolStripMenuItem1, Me.MoveRowUpToolStripMenuItem1, Me.MoveRowDownToolStripMenuItem1})
+        Me.RowManagementToolStripMenuItem.Name = "RowManagementToolStripMenuItem"
+        Me.RowManagementToolStripMenuItem.Size = New System.Drawing.Size(172, 22)
+        Me.RowManagementToolStripMenuItem.Text = "Row Management"
         '
-        'ToolStripSeparator10
+        'AddRowToolStripMenuItem1
         '
-        Me.ToolStripSeparator10.Name = "ToolStripSeparator10"
-        Me.ToolStripSeparator10.Size = New System.Drawing.Size(161, 6)
+        Me.AddRowToolStripMenuItem1.Name = "AddRowToolStripMenuItem1"
+        Me.AddRowToolStripMenuItem1.Size = New System.Drawing.Size(164, 22)
+        Me.AddRowToolStripMenuItem1.Text = "Add Row"
         '
-        'MoveRowUpToolStripMenuItem
+        'RemoveRowToolStripMenuItem1
         '
-        Me.MoveRowUpToolStripMenuItem.Name = "MoveRowUpToolStripMenuItem"
-        Me.MoveRowUpToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
-        Me.MoveRowUpToolStripMenuItem.Text = "Move Row Up"
+        Me.RemoveRowToolStripMenuItem1.Name = "RemoveRowToolStripMenuItem1"
+        Me.RemoveRowToolStripMenuItem1.Size = New System.Drawing.Size(164, 22)
+        Me.RemoveRowToolStripMenuItem1.Text = "Remove Row"
         '
-        'MoveRowDownToolStripMenuItem
+        'MoveRowUpToolStripMenuItem1
         '
-        Me.MoveRowDownToolStripMenuItem.Name = "MoveRowDownToolStripMenuItem"
-        Me.MoveRowDownToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
-        Me.MoveRowDownToolStripMenuItem.Text = "Move Row Down"
+        Me.MoveRowUpToolStripMenuItem1.Name = "MoveRowUpToolStripMenuItem1"
+        Me.MoveRowUpToolStripMenuItem1.Size = New System.Drawing.Size(164, 22)
+        Me.MoveRowUpToolStripMenuItem1.Text = "Move Row Up"
         '
-        'ToolStripSeparator11
+        'MoveRowDownToolStripMenuItem1
         '
-        Me.ToolStripSeparator11.Name = "ToolStripSeparator11"
-        Me.ToolStripSeparator11.Size = New System.Drawing.Size(161, 6)
+        Me.MoveRowDownToolStripMenuItem1.Name = "MoveRowDownToolStripMenuItem1"
+        Me.MoveRowDownToolStripMenuItem1.Size = New System.Drawing.Size(164, 22)
+        Me.MoveRowDownToolStripMenuItem1.Text = "Move Row Down"
         '
-        'ImportDataToolStripMenuItem
+        'ClearCellToolStripMenuItem1
         '
-        Me.ImportDataToolStripMenuItem.Name = "ImportDataToolStripMenuItem"
-        Me.ImportDataToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
-        Me.ImportDataToolStripMenuItem.Text = "Import Data..."
+        Me.ClearCellToolStripMenuItem1.Name = "ClearCellToolStripMenuItem1"
+        Me.ClearCellToolStripMenuItem1.Size = New System.Drawing.Size(172, 22)
+        Me.ClearCellToolStripMenuItem1.Text = "Clear Cell"
         '
-        'ExportDataToolStripMenuItem
+        'FontDialogNoSize1
         '
-        Me.ExportDataToolStripMenuItem.Name = "ExportDataToolStripMenuItem"
-        Me.ExportDataToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
-        Me.ExportDataToolStripMenuItem.Text = "Export Data..."
+        Me.FontDialogNoSize1.ColorValue = System.Drawing.Color.Black
+        Me.FontDialogNoSize1.FontValue = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         '
-        'ToolStripSeparator12
+        'SaveFileDialog1
         '
-        Me.ToolStripSeparator12.Name = "ToolStripSeparator12"
-        Me.ToolStripSeparator12.Size = New System.Drawing.Size(161, 6)
+        Me.SaveFileDialog1.Filter = "CALM Flashcard Maker Project Files (*.fcp;*.calmfcmp)|*.fcp;*.calmfcmp|All Files " & _
+    "(*.*)|*.*"
+        Me.SaveFileDialog1.Title = "Save Project As:"
         '
-        'ClearCellToolStripMenuItem
+        'OpenFileDialog1
         '
-        Me.ClearCellToolStripMenuItem.Name = "ClearCellToolStripMenuItem"
-        Me.ClearCellToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
-        Me.ClearCellToolStripMenuItem.Text = "Clear Cell"
+        Me.OpenFileDialog1.Filter = "CALM Flashcard Maker Project Files (*.fcp;*.calmfcmp)|*.fcp;*.calmfcmp|All Files " & _
+    "(*.*)|*.*"
+        Me.OpenFileDialog1.Title = "Open Project:"
         '
         'MainProgram
         '
@@ -1613,6 +1714,7 @@ Partial Class MainProgram
         Me.Tablepe.ResumeLayout(False)
         Me.TableLayoutPanelpe1.ResumeLayout(False)
         Me.TableLayoutPanelsb.ResumeLayout(False)
+        Me.ContextMenuStripde.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1752,4 +1854,18 @@ Partial Class MainProgram
     Friend WithEvents MoveRowDownToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripSeparator12 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents ClearCellToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ContextMenuStripde As System.Windows.Forms.ContextMenuStrip
+    Friend WithEvents DataManagementToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ImportDataToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ExportDataToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents RowManagementToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents AddRowToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents RemoveRowToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents MoveRowUpToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents MoveRowDownToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ClearCellToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents FontDialogNoSize1 As captainalm.FlashCardMaker.FontDialogNoSize
+    Friend WithEvents ColorDialog1 As System.Windows.Forms.ColorDialog
+    Friend WithEvents SaveFileDialog1 As System.Windows.Forms.SaveFileDialog
+    Friend WithEvents OpenFileDialog1 As System.Windows.Forms.OpenFileDialog
 End Class

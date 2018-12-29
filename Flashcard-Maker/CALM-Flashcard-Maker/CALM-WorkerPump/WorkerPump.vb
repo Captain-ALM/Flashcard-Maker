@@ -574,4 +574,8 @@ Public Class EventTypes
     Public Shared ReadOnly ValueChanged As New EventType("ValueChanged")
     Public Shared ReadOnly SelectedIndexChanged As New EventType("SelectedIndexChanged")
     Public Shared ReadOnly DialogClosed As New EventType("DialogClosed")
+    Public Shared ReadOnly TermSourceControlSelected As New EventType("TermSourceControlSelected")
+    Public Shared ReadOnly KeyDown As New EventType("KeyDown")
+    Public Shared ReadOnly KeyUp As New EventType("KeyUp")
+    Public Shared ReadOnly KeyPress As New EventType("KeyPress")
 End Class

@@ -34,6 +34,53 @@ Public Class TermEditorTable
             ppr = value
         End Set
     End Property
+    Public Property SelectedControls As TermSourceBaseControl()
+        Get
+            Return _selected.ToArray
+        End Get
+        Set(value As TermSourceBaseControl())
+            For Each e As TermSourceBaseControl In value
+                If (col0.Contains(e) Or col1.Contains(e)) And Not _selected.Contains(e) And e.Selected Then _selected.Add(e)
+                If (col0.Contains(e) Or col1.Contains(e)) And Not _selected.Contains(e) And Not e.Selected Then e.Select()
+            Next
+        End Set
+    End Property
+    Public ReadOnly Property SelectedRows As Integer()
+        Get
+            Dim sr As New List(Of Integer)
+            For i As Integer = 0 To ((col0.Count + col1.Count) \ 2) - 1 Step 1
+                If col0(i).Selected And col1(i).Selected Then sr.Add(i)
+            Next
+            Return sr.ToArray
+        End Get
+    End Property
+    Public ReadOnly Property SelectedColumns As Integer()
+        Get
+            Dim sr As New List(Of Integer)
+            Dim b0 As Boolean = True
+            Dim b1 As Boolean = True
+            For i As Integer = 0 To ((col0.Count + col1.Count) \ 2) - 1 Step 1
+                b0 = b0 And col0(i).Selected
+                b1 = b1 And col1(i).Selected
+            Next
+            If b0 And col0.Count > 0 Then sr.Add(0)
+            If b1 And col1.Count > 0 Then sr.Add(1)
+            Return sr.ToArray
+        End Get
+    End Property
+    Public Sub selectAll()
+        For Each e As TermSourceBaseControl In col0
+            e.Select()
+        Next
+        For Each e As TermSourceBaseControl In col1
+            e.Select()
+        Next
+    End Sub
+    Public Sub deselectAll()
+        For Each e As TermSourceBaseControl In _selected
+            e.Deselect()
+        Next
+    End Sub
     Public Sub addRow(at As Integer)
         If Not projectCheck() Then Return
         If at > _project.dataCount - 1 Then Return

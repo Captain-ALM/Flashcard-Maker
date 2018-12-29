@@ -211,6 +211,7 @@ Partial Class GlobalOptions
         'nudmax
         '
         Me.nudmax.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.nudmax.InterceptArrowKeys = False
         Me.nudmax.Location = New System.Drawing.Point(141, 20)
         Me.nudmax.Maximum = New Decimal(New Integer() {1638, 0, 0, 0})
         Me.nudmax.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
@@ -262,6 +263,7 @@ Partial Class GlobalOptions
         'nudmin
         '
         Me.nudmin.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.nudmin.InterceptArrowKeys = False
         Me.nudmin.Location = New System.Drawing.Point(141, 20)
         Me.nudmin.Maximum = New Decimal(New Integer() {1638, 0, 0, 0})
         Me.nudmin.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
@@ -334,6 +336,7 @@ Partial Class GlobalOptions
         'nudch
         '
         Me.nudch.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.nudch.InterceptArrowKeys = False
         Me.nudch.Location = New System.Drawing.Point(139, 83)
         Me.nudch.Maximum = New Decimal(New Integer() {1189, 0, 0, 0})
         Me.nudch.Minimum = New Decimal(New Integer() {10, 0, 0, 0})
@@ -389,6 +392,7 @@ Partial Class GlobalOptions
         'nudcw
         '
         Me.nudcw.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.nudcw.InterceptArrowKeys = False
         Me.nudcw.Location = New System.Drawing.Point(139, 45)
         Me.nudcw.Maximum = New Decimal(New Integer() {841, 0, 0, 0})
         Me.nudcw.Minimum = New Decimal(New Integer() {10, 0, 0, 0})
@@ -577,6 +581,7 @@ Partial Class GlobalOptions
         '
         Me.nudrfs.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.nudrfs.Enabled = False
+        Me.nudrfs.InterceptArrowKeys = False
         Me.nudrfs.Location = New System.Drawing.Point(139, 5)
         Me.nudrfs.Maximum = New Decimal(New Integer() {1638, 0, 0, 0})
         Me.nudrfs.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
@@ -642,6 +647,7 @@ Partial Class GlobalOptions
         'nudtc
         '
         Me.nudtc.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.nudtc.InterceptArrowKeys = False
         Me.nudtc.Location = New System.Drawing.Point(139, 5)
         Me.nudtc.Maximum = New Decimal(New Integer() {1000000, 0, 0, 0})
         Me.nudtc.Minimum = New Decimal(New Integer() {1, 0, 0, 0})

@@ -27,6 +27,16 @@ Public NotInheritable Class Project
         End Get
     End Property
 
+    Public Property Name As String
+        Get
+            Return pnom
+        End Get
+        Set(value As String)
+            pnom = value
+            pset.setName(value)
+        End Set
+    End Property
+
     Public Sub ImplementSettings()
         clearCards()
         clearImages()

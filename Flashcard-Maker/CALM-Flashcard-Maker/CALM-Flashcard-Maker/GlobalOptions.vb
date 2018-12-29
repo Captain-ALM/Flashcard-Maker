@@ -116,7 +116,7 @@ Public NotInheritable Class GlobalOptions
             lst.Add(Me)
             If ue Then wp.addEvent(FontDialogNoSize, lst, EventTypes.DialogClosed, New FontDialogSuccessEventArgs(FontDialogNoSize.FontValue, FontDialogNoSize.ColorValue))
         End If
-        If ue Then wp.addEvent(Of GlobalOptions)(FontDialogNoSize, Me, EventTypes.Click, e)
+        If ue Then wp.addEvent(Of GlobalOptions)(butcfs, Me, EventTypes.Click, e)
         If ue Then butcfs.Enabled = True
     End Sub
 
@@ -129,7 +129,7 @@ Public NotInheritable Class GlobalOptions
             lst.Add(Me)
             If ue Then wp.addEvent(ColorDialog1, lst, EventTypes.DialogClosed, New ColorDialogSuccessEventArgs(ColorDialog1.Color))
         End If
-        If ue Then wp.addEvent(Of GlobalOptions)(ColorDialog1, Me, EventTypes.Click, e)
+        If ue Then wp.addEvent(Of GlobalOptions)(butcfc, Me, EventTypes.Click, e)
         If ue Then butcfc.Enabled = True
     End Sub
 
