@@ -137,7 +137,6 @@ Partial Class MainProgram
         Me.butpdid = New System.Windows.Forms.Button()
         Me.butpded = New System.Windows.Forms.Button()
         Me.TableScrollablepd1 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TermEditorTablepd1 = New captainalm.FlashCardMaker.TermEditorTable()
         Me.TabPageViewer = New System.Windows.Forms.TabPage()
         Me.Tablepv = New System.Windows.Forms.TableLayoutPanel()
         Me.lblpvt = New System.Windows.Forms.Label()
@@ -169,10 +168,15 @@ Partial Class MainProgram
         Me.MoveRowUpToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.MoveRowDownToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ClearCellToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.FontDialogNoSize1 = New captainalm.FlashCardMaker.FontDialogNoSize()
         Me.ColorDialog1 = New System.Windows.Forms.ColorDialog()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.TermEditorTablepd1 = New captainalm.FlashCardMaker.TermEditorTable()
+        Me.FontDialogNoSize1 = New captainalm.FlashCardMaker.FontDialogNoSize()
+        Me.CutToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CopyToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PasteToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SelectAllToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.TableLayoutPanelc.SuspendLayout()
         Me.TabControl1.SuspendLayout()
@@ -1304,16 +1308,6 @@ Partial Class MainProgram
         Me.TableScrollablepd1.Size = New System.Drawing.Size(564, 173)
         Me.TableScrollablepd1.TabIndex = 5
         '
-        'TermEditorTablepd1
-        '
-        Me.TermEditorTablepd1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TermEditorTablepd1.Location = New System.Drawing.Point(3, 3)
-        Me.TermEditorTablepd1.Name = "TermEditorTablepd1"
-        Me.TermEditorTablepd1.PixelsPerRow = 200
-        Me.TermEditorTablepd1.SelectedControls = New captainalm.FlashCardMaker.TermSourceBaseControl(-1) {}
-        Me.TermEditorTablepd1.Size = New System.Drawing.Size(558, 167)
-        Me.TermEditorTablepd1.TabIndex = 0
-        '
         'TabPageViewer
         '
         Me.TabPageViewer.Controls.Add(Me.Tablepv)
@@ -1583,9 +1577,9 @@ Partial Class MainProgram
         '
         'ContextMenuStripde
         '
-        Me.ContextMenuStripde.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DataManagementToolStripMenuItem, Me.RowManagementToolStripMenuItem, Me.ClearCellToolStripMenuItem1})
+        Me.ContextMenuStripde.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CutToolStripMenuItem1, Me.CopyToolStripMenuItem1, Me.PasteToolStripMenuItem1, Me.SelectAllToolStripMenuItem1, Me.DataManagementToolStripMenuItem, Me.RowManagementToolStripMenuItem, Me.ClearCellToolStripMenuItem1})
         Me.ContextMenuStripde.Name = "ContextMenuStripde"
-        Me.ContextMenuStripde.Size = New System.Drawing.Size(173, 92)
+        Me.ContextMenuStripde.Size = New System.Drawing.Size(173, 180)
         '
         'DataManagementToolStripMenuItem
         '
@@ -1597,13 +1591,13 @@ Partial Class MainProgram
         'ImportDataToolStripMenuItem1
         '
         Me.ImportDataToolStripMenuItem1.Name = "ImportDataToolStripMenuItem1"
-        Me.ImportDataToolStripMenuItem1.Size = New System.Drawing.Size(152, 22)
+        Me.ImportDataToolStripMenuItem1.Size = New System.Drawing.Size(146, 22)
         Me.ImportDataToolStripMenuItem1.Text = "Import Data..."
         '
         'ExportDataToolStripMenuItem1
         '
         Me.ExportDataToolStripMenuItem1.Name = "ExportDataToolStripMenuItem1"
-        Me.ExportDataToolStripMenuItem1.Size = New System.Drawing.Size(152, 22)
+        Me.ExportDataToolStripMenuItem1.Size = New System.Drawing.Size(146, 22)
         Me.ExportDataToolStripMenuItem1.Text = "Export Data..."
         '
         'RowManagementToolStripMenuItem
@@ -1643,11 +1637,6 @@ Partial Class MainProgram
         Me.ClearCellToolStripMenuItem1.Size = New System.Drawing.Size(172, 22)
         Me.ClearCellToolStripMenuItem1.Text = "Clear Cell"
         '
-        'FontDialogNoSize1
-        '
-        Me.FontDialogNoSize1.ColorValue = System.Drawing.Color.Black
-        Me.FontDialogNoSize1.FontValue = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        '
         'SaveFileDialog1
         '
         Me.SaveFileDialog1.Filter = "CALM Flashcard Maker Project Files (*.fcp;*.calmfcmp)|*.fcp;*.calmfcmp|All Files " & _
@@ -1659,6 +1648,45 @@ Partial Class MainProgram
         Me.OpenFileDialog1.Filter = "CALM Flashcard Maker Project Files (*.fcp;*.calmfcmp)|*.fcp;*.calmfcmp|All Files " & _
     "(*.*)|*.*"
         Me.OpenFileDialog1.Title = "Open Project:"
+        '
+        'TermEditorTablepd1
+        '
+        Me.TermEditorTablepd1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TermEditorTablepd1.Location = New System.Drawing.Point(3, 3)
+        Me.TermEditorTablepd1.Name = "TermEditorTablepd1"
+        Me.TermEditorTablepd1.PixelsPerRow = 200
+        Me.TermEditorTablepd1.SelectedControls = New captainalm.FlashCardMaker.TermSourceBaseControl(-1) {}
+        Me.TermEditorTablepd1.Size = New System.Drawing.Size(558, 167)
+        Me.TermEditorTablepd1.TabIndex = 0
+        '
+        'FontDialogNoSize1
+        '
+        Me.FontDialogNoSize1.ColorValue = System.Drawing.Color.Black
+        Me.FontDialogNoSize1.FontValue = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        '
+        'CutToolStripMenuItem1
+        '
+        Me.CutToolStripMenuItem1.Name = "CutToolStripMenuItem1"
+        Me.CutToolStripMenuItem1.Size = New System.Drawing.Size(172, 22)
+        Me.CutToolStripMenuItem1.Text = "Cut"
+        '
+        'CopyToolStripMenuItem1
+        '
+        Me.CopyToolStripMenuItem1.Name = "CopyToolStripMenuItem1"
+        Me.CopyToolStripMenuItem1.Size = New System.Drawing.Size(172, 22)
+        Me.CopyToolStripMenuItem1.Text = "Copy"
+        '
+        'PasteToolStripMenuItem1
+        '
+        Me.PasteToolStripMenuItem1.Name = "PasteToolStripMenuItem1"
+        Me.PasteToolStripMenuItem1.Size = New System.Drawing.Size(172, 22)
+        Me.PasteToolStripMenuItem1.Text = "Paste"
+        '
+        'SelectAllToolStripMenuItem1
+        '
+        Me.SelectAllToolStripMenuItem1.Name = "SelectAllToolStripMenuItem1"
+        Me.SelectAllToolStripMenuItem1.Size = New System.Drawing.Size(172, 22)
+        Me.SelectAllToolStripMenuItem1.Text = "Select All"
         '
         'MainProgram
         '
@@ -1868,4 +1896,8 @@ Partial Class MainProgram
     Friend WithEvents ColorDialog1 As System.Windows.Forms.ColorDialog
     Friend WithEvents SaveFileDialog1 As System.Windows.Forms.SaveFileDialog
     Friend WithEvents OpenFileDialog1 As System.Windows.Forms.OpenFileDialog
+    Friend WithEvents CutToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents CopyToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents PasteToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents SelectAllToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
 End Class

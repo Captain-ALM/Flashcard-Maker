@@ -1,5 +1,6 @@
 ﻿Public Class TermSourceComboBoxControl
     Protected _term As TermSource = Nothing
+    Protected _itms As String() = Nothing
     Public Event SelectedIndexChanged(source As Object, e As TermSourceComboBoxControlSelectedIndexChangedEventArgs)
     Public Sub New(items As String(), c As Integer, r As Integer, Optional sindex As Integer = 0)
         MyBase.New(c, r)
@@ -8,6 +9,7 @@
         ComboBoxInternal.DropDownStyle = ComboBoxStyle.DropDownList
         ComboBoxInternal.Items.Clear()
         ComboBoxInternal.Items.AddRange(items)
+        _itms = items
         If sindex > 0 And sindex < ComboBoxInternal.Items.Count Then ComboBoxInternal.SelectedIndex = sindex
     End Sub
     Public Overrides Sub setTerm(term As TermSource)
@@ -29,6 +31,10 @@
             Return ComboBoxInternal
         End Get
     End Property
+    Public Overrides Function Duplicate() As TermSourceBaseControl
+        Dim sc As TermSourceComboBoxControl = New TermSourceComboBoxControl(DeepCopyHelper.deepCopy(Of String())(_itms), _col, _row) With {.SelectionColor = _scol}
+        Return sc
+    End Function
 End Class
 
 Public Class TermSourceComboBoxControlSelectedIndexChangedEventArgs

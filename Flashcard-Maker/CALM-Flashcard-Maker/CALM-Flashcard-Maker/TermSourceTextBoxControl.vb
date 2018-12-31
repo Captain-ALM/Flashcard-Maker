@@ -27,4 +27,8 @@
             Return TextboxInternal
         End Get
     End Property
+    Public Overrides Function Duplicate() As TermSourceBaseControl
+        Dim sc As TermSourceTextBoxControl = New TermSourceTextBoxControl(DeepCopyHelper.deepCopy(Of TextTerm)(_term), _col, _row) With {.SelectionColor = _scol}
+        Return sc
+    End Function
 End Class

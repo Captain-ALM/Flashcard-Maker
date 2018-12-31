@@ -83,7 +83,7 @@ Public Class TermEditorTable
     End Sub
     Public Sub addRow(at As Integer)
         If Not projectCheck() Then Return
-        If at > _project.dataCount - 1 Then Return
+        If at > _project.dataCount - 1 Or at < 0 Then Return
         _project.addData(New TermSet(Of TermSource, TermSource)(New EmptyTerm(), New EmptyTerm()))
         For cnt As Integer = TableLayoutPanelInternal.RowCount - 1 To at - 1 Step -1
             _project.data(cnt) = _project.data(cnt - 1)
@@ -114,7 +114,7 @@ Public Class TermEditorTable
     End Sub
     Public Sub removeRow(at As Integer)
         If Not projectCheck() Then Return
-        If at > _project.dataCount - 1 Then Return
+        If at > _project.dataCount - 1 Or at < 0 Then Return
         _project.removeData(at)
         Dim ctrl0 As TermSourceBaseControl = col0(at)
         Dim ctrl1 As TermSourceBaseControl = col1(at)
@@ -159,7 +159,7 @@ Public Class TermEditorTable
     End Sub
     Public Sub moveRowDown(row As Integer)
         If Not projectCheck() Then Return
-        If row > _project.dataCount - 2 Then Return
+        If row > _project.dataCount - 2 Or row < 0 Then Return
         Dim ctrl0 As TermSourceBaseControl = col0(row)
         Dim ctrl1 As TermSourceBaseControl = col1(row)
         Dim ctrl2 As TermSourceBaseControl = col0(row + 1)
@@ -196,6 +196,28 @@ Public Class TermEditorTable
         TableLayoutPanelInternal.SetRow(ctrl1, ctrl1.Row)
         TableLayoutPanelInternal.SetRow(ctrl2, ctrl2.Row)
         TableLayoutPanelInternal.SetRow(ctrl3, ctrl3.Row)
+    End Sub
+    Public Sub setRow(row As Integer, ctrls As Pair(Of TermSourceBaseControl, TermSourceBaseControl))
+        If Not projectCheck() Then Return
+        If row > TableLayoutPanelInternal.RowCount - 2 Or row < 0 Then Return
+        Dim ctrl0 As TermSourceBaseControl = col0(row)
+        Dim ctrl1 As TermSourceBaseControl = col1(row)
+        col0(row) = ctrls.Item1
+        col1(row) = ctrls.Item2
+        ctrls.Item1.Column = ctrl0.Column
+        ctrls.Item1.Row = ctrl0.Row
+        ctrls.Item2.Column = ctrl1.Column
+        ctrls.Item2.Row = ctrl1.Row
+        TableLayoutPanelInternal.Controls.Remove(ctrl0)
+        TableLayoutPanelInternal.Controls.Remove(ctrl1)
+        killControl(ctrl0)
+        killControl(ctrl1)
+        ctrls.Item1.Dock = DockStyle.Fill
+        ctrls.Item2.Dock = DockStyle.Fill
+        ctrls.Item1.Parent = TableLayoutPanelInternal
+        ctrls.Item2.Parent = TableLayoutPanelInternal
+        TableLayoutPanelInternal.Controls.Add(ctrls.Item1, ctrls.Item1.Column, ctrls.Item1.Row)
+        TableLayoutPanelInternal.Controls.Add(ctrls.Item2, ctrls.Item2.Column, ctrls.Item2.Row)
     End Sub
     Public Sub resetControl(column As Integer, row As Integer)
         If Not projectCheck() Then Return
@@ -335,7 +357,7 @@ Public Class TermEditorTable
     Private Function projectCheck()
         If _project Is Nothing Then Return False Else Return True
     End Function
-    Private Sub onTermSelected(sender As Object, e As TermSourceControlEventArgs)
+    Public Sub onTermSelected(sender As Object, e As TermSourceControlEventArgs)
         If canCastObject(Of TermSourceBaseControl)(sender) Then
             Dim c As TermSourceBaseControl = castObject(Of TermSourceBaseControl)(sender)
             If _selected.Count > 0 Then
@@ -380,20 +402,20 @@ Public Class TermEditorTable
             End If
         End If
     End Sub
-    Private Sub onTermDeselected(sender As Object, e As TermSourceControlEventArgs)
+    Public Sub onTermDeselected(sender As Object, e As TermSourceControlEventArgs)
         If canCastObject(Of TermSourceBaseControl)(sender) Then
             Dim c As TermSourceBaseControl = castObject(Of TermSourceBaseControl)(sender)
             If _selected.Contains(c) And Not c.Selected Then _selected.Remove(c)
         End If
     End Sub
-    Private Sub onTermModified(sender As Object, e As TermSourceControlEventArgs)
+    Public Sub onTermModified(sender As Object, e As TermSourceControlEventArgs)
         If e.Column = 0 Then
             _project.data(e.Row).Term1 = col0(e.Row).Term
         ElseIf e.Column = 1 Then
             _project.data(e.Row).Term2 = col1(e.Row).Term
         End If
     End Sub
-    Private Sub onSIChanged(sender As Object, e As TermSourceComboBoxControlSelectedIndexChangedEventArgs)
+    Public Sub onSIChanged(sender As Object, e As TermSourceComboBoxControlSelectedIndexChangedEventArgs)
         If e.SelectedIndex > 0 Then
             If canCastObject(Of Control)(sender) Then
                 Dim c As Control = castObject(Of Control)(sender)
@@ -496,6 +518,12 @@ Public Class TermEditorTable
                 Return col1.ToArray
             End If
             Return New TermSourceBaseControl() {}
+        End Get
+    End Property
+    Public ReadOnly Property TableRow(row As Integer) As Pair(Of TermSourceBaseControl, TermSourceBaseControl)
+        Get
+            If row < 0 Or row > TableLayoutPanelInternal.RowCount - 1 Then Return New Pair(Of TermSourceBaseControl, TermSourceBaseControl)(Nothing, Nothing)
+            Return New Pair(Of TermSourceBaseControl, TermSourceBaseControl)(col0(row), col1(row))
         End Get
     End Property
     Public Enum Column

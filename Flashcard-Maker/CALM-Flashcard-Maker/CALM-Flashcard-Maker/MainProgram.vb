@@ -8,6 +8,8 @@ Public Class MainProgram
     Friend project As Project = Nothing
     Friend project_path As String = ""
 
+    'Private tcshpo As TableControlSizeHooker = Nothing
+
     'Should not construct externally.
     Sub New(Optional ByRef workerp As WorkerPump = Nothing)
         ' This call is required by the designer.
@@ -32,6 +34,9 @@ Public Class MainProgram
     Private Sub MainProgram_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         FontDialogNoSize1.FontDialog.ShowColor = False
         FontDialogNoSize1.FontDialog.ShowEffects = True
+        'tcshpo = New TableControlSizeHooker(Me, TableScrollablepo1, TableLayoutPanelpo1) With {.ResizeDelay = 2500, .MinumumSize = New Size(552, 274)}
+        'tcshpo.hookEvents()
+        'tcshpo.forceCheckAndUpdate()
         If ue Then wp.addEvent(New WorkerEvent(Me, EventTypes.Load, e))
     End Sub
 
@@ -339,126 +344,270 @@ Public Class MainProgram
         End If
     End Sub
     Private Sub NewProjectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NewProjectToolStripMenuItem.Click
-
+        If ue Then
+            NewProjectToolStripMenuItem.Enabled = False
+            wp.addEvent(NewProjectToolStripMenuItem, New List(Of Object())(New Object() {FileToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub OpenProjectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenProjectToolStripMenuItem.Click
-
+        If ue Then
+            OpenProjectToolStripMenuItem.Enabled = False
+            wp.addEvent(OpenProjectToolStripMenuItem, New List(Of Object())(New Object() {FileToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub ImportProjectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImportProjectToolStripMenuItem.Click
-
+        If ue Then
+            ImportProjectToolStripMenuItem.Enabled = False
+            wp.addEvent(ImportProjectToolStripMenuItem, New List(Of Object())(New Object() {FileToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub SaveProjectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveProjectToolStripMenuItem.Click
-
+        If ue Then
+            SaveProjectToolStripMenuItem.Enabled = False
+            wp.addEvent(SaveProjectToolStripMenuItem, New List(Of Object())(New Object() {FileToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub SaveAsProjectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveAsProjectToolStripMenuItem.Click
-
+        If ue Then
+            SaveAsProjectToolStripMenuItem.Enabled = False
+            wp.addEvent(SaveAsProjectToolStripMenuItem, New List(Of Object())(New Object() {FileToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub CloseProjectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CloseProjectToolStripMenuItem.Click
-
+        If ue Then
+            CloseProjectToolStripMenuItem.Enabled = False
+            wp.addEvent(CloseProjectToolStripMenuItem, New List(Of Object())(New Object() {FileToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
 #Region "InternalExportOptions-0.0-Only"
     Private Sub PrintProjectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PrintProjectToolStripMenuItem.Click
-
+        If ue Then
+            PrintProjectToolStripMenuItem.Enabled = False
+            wp.addEvent(PrintProjectToolStripMenuItem, New List(Of Object())(New Object() {ExportProjectToolStripMenuItem, FileToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub SaveProjectImagesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveProjectImagesToolStripMenuItem.Click
-
+        If ue Then
+            SaveProjectImagesToolStripMenuItem.Enabled = False
+            wp.addEvent(SaveProjectImagesToolStripMenuItem, New List(Of Object())(New Object() {ExportProjectToolStripMenuItem, FileToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
 #End Region
     Private Sub CloseProgramToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CloseProgramToolStripMenuItem.Click
-
+        If ue Then
+            CloseProgramToolStripMenuItem.Enabled = False
+            wp.addEvent(CloseProgramToolStripMenuItem, New List(Of Object())(New Object() {FileToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub UndoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UndoToolStripMenuItem.Click
-
+        If ue Then
+            UndoToolStripMenuItem.Enabled = False
+            wp.addEvent(UndoToolStripMenuItem, New List(Of Object())(New Object() {EditToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub RedoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RedoToolStripMenuItem.Click
-
+        If ue Then
+            RedoToolStripMenuItem.Enabled = False
+            wp.addEvent(RedoToolStripMenuItem, New List(Of Object())(New Object() {EditToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub CutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CutToolStripMenuItem.Click
-
+        If ue Then
+            CutToolStripMenuItem.Enabled = False
+            wp.addEvent(CutToolStripMenuItem, New List(Of Object())(New Object() {EditToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub CopyToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CopyToolStripMenuItem.Click
-
+        If ue Then
+            CopyToolStripMenuItem.Enabled = False
+            wp.addEvent(CopyToolStripMenuItem, New List(Of Object())(New Object() {EditToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub PasteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PasteToolStripMenuItem.Click
-
+        If ue Then
+            PasteToolStripMenuItem.Enabled = False
+            wp.addEvent(PasteToolStripMenuItem, New List(Of Object())(New Object() {EditToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub DeleteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteToolStripMenuItem.Click
-
+        If ue Then
+            DeleteToolStripMenuItem.Enabled = False
+            wp.addEvent(DeleteToolStripMenuItem, New List(Of Object())(New Object() {EditToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub SelectAllToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectAllToolStripMenuItem.Click
-
+        If ue Then
+            SelectAllToolStripMenuItem.Enabled = False
+            wp.addEvent(SelectAllToolStripMenuItem, New List(Of Object())(New Object() {EditToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub ImportDataToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImportDataToolStripMenuItem.Click
-
+        If ue Then
+            ImportDataToolStripMenuItem.Enabled = False
+            wp.addEvent(ImportDataToolStripMenuItem, New List(Of Object())(New Object() {DataEditorToolStripMenuItem, EditToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub ExportDataToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportDataToolStripMenuItem.Click
-
+        If ue Then
+            ExportDataToolStripMenuItem.Enabled = False
+            wp.addEvent(ExportDataToolStripMenuItem, New List(Of Object())(New Object() {DataEditorToolStripMenuItem, EditToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub AddRowToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddRowToolStripMenuItem.Click
-
+        If ue Then
+            AddRowToolStripMenuItem.Enabled = False
+            wp.addEvent(AddRowToolStripMenuItem, New List(Of Object())(New Object() {DataEditorToolStripMenuItem, EditToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub RemoveRowToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RemoveRowToolStripMenuItem.Click
-
+        If ue Then
+            RemoveRowToolStripMenuItem.Enabled = False
+            wp.addEvent(RemoveRowToolStripMenuItem, New List(Of Object())(New Object() {DataEditorToolStripMenuItem, EditToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub MoveRowUpToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MoveRowUpToolStripMenuItem.Click
-
+        If ue Then
+            MoveRowUpToolStripMenuItem.Enabled = False
+            wp.addEvent(MoveRowUpToolStripMenuItem, New List(Of Object())(New Object() {DataEditorToolStripMenuItem, EditToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub MoveRowDownToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MoveRowDownToolStripMenuItem.Click
-
+        If ue Then
+            MoveRowDownToolStripMenuItem.Enabled = False
+            wp.addEvent(MoveRowDownToolStripMenuItem, New List(Of Object())(New Object() {DataEditorToolStripMenuItem, EditToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub ClearCellToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearCellToolStripMenuItem.Click
-
+        If ue Then
+            ClearCellToolStripMenuItem.Enabled = False
+            wp.addEvent(ClearCellToolStripMenuItem, New List(Of Object())(New Object() {DataEditorToolStripMenuItem, EditToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub StartTabToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles StartTabToolStripMenuItem.Click
-
+        If ue Then
+            StartTabToolStripMenuItem.Enabled = False
+            wp.addEvent(StartTabToolStripMenuItem, New List(Of Object())(New Object() {ViewToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub ProjectOptionsToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ProjectOptionsToolStripMenuItem1.Click
-
+        If ue Then
+            ProjectOptionsToolStripMenuItem.Enabled = False
+            wp.addEvent(ProjectOptionsToolStripMenuItem, New List(Of Object())(New Object() {ViewToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub ProjectDataToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProjectDataToolStripMenuItem.Click
-
+        If ue Then
+            ProjectDataToolStripMenuItem.Enabled = False
+            wp.addEvent(ProjectDataToolStripMenuItem, New List(Of Object())(New Object() {ViewToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub ProjectViewerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProjectViewerToolStripMenuItem.Click
-
+        If ue Then
+            ProjectViewerToolStripMenuItem.Enabled = False
+            wp.addEvent(ProjectViewerToolStripMenuItem, New List(Of Object())(New Object() {ViewToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub ProjectExportToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProjectExportToolStripMenuItem.Click
-
+        If ue Then
+            ProjectExportToolStripMenuItem.Enabled = False
+            wp.addEvent(ProjectExportToolStripMenuItem, New List(Of Object())(New Object() {ViewToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub GlobalOptionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GlobalOptionsToolStripMenuItem.Click
-
+        If ue Then
+            GlobalOptionsToolStripMenuItem.Enabled = False
+            wp.addEvent(GlobalOptionsToolStripMenuItem, New List(Of Object())(New Object() {SettingsToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub ProjectOptionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProjectOptionsToolStripMenuItem.Click
-
+        If ue Then
+            ProjectOptionsToolStripMenuItem.Enabled = False
+            wp.addEvent(ProjectOptionsToolStripMenuItem, New List(Of Object())(New Object() {SettingsToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub ProgramHelpToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProgramHelpToolStripMenuItem.Click
-
+        If ue Then
+            ProgramHelpToolStripMenuItem.Enabled = False
+            wp.addEvent(ProgramHelpToolStripMenuItem, New List(Of Object())(New Object() {HelpToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub ReportAnIssueToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReportAnIssueToolStripMenuItem.Click
-
+        If ue Then
+            ReportAnIssueToolStripMenuItem.Enabled = False
+            wp.addEvent(ReportAnIssueToolStripMenuItem, New List(Of Object())(New Object() {HelpToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
-
+        If ue Then
+            AboutToolStripMenuItem.Enabled = False
+            wp.addEvent(AboutToolStripMenuItem, New List(Of Object())(New Object() {HelpToolStripMenuItem, MenuStrip1, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub ImportDataToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ImportDataToolStripMenuItem1.Click
-
+        If ue Then
+            ImportDataToolStripMenuItem1.Enabled = False
+            wp.addEvent(ImportDataToolStripMenuItem1, New List(Of Object())(New Object() {DataManagementToolStripMenuItem, ContextMenuStripde, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub ExportDataToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ExportDataToolStripMenuItem1.Click
-
+        If ue Then
+            ExportDataToolStripMenuItem1.Enabled = False
+            wp.addEvent(ExportDataToolStripMenuItem1, New List(Of Object())(New Object() {DataManagementToolStripMenuItem, ContextMenuStripde, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub AddRowToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles AddRowToolStripMenuItem1.Click
-
+        If ue Then
+            AddRowToolStripMenuItem1.Enabled = False
+            wp.addEvent(AddRowToolStripMenuItem1, New List(Of Object())(New Object() {RowManagementToolStripMenuItem, ContextMenuStripde, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub RemoveRowToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles RemoveRowToolStripMenuItem1.Click
-
+        If ue Then
+            RemoveRowToolStripMenuItem1.Enabled = False
+            wp.addEvent(RemoveRowToolStripMenuItem1, New List(Of Object())(New Object() {RowManagementToolStripMenuItem, ContextMenuStripde, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub MoveRowUpToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles MoveRowUpToolStripMenuItem1.Click
-
+        If ue Then
+            MoveRowUpToolStripMenuItem1.Enabled = False
+            wp.addEvent(MoveRowUpToolStripMenuItem1, New List(Of Object())(New Object() {RowManagementToolStripMenuItem, ContextMenuStripde, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub MoveRowDownToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles MoveRowDownToolStripMenuItem1.Click
-
+        If ue Then
+            MoveRowDownToolStripMenuItem1.Enabled = False
+            wp.addEvent(MoveRowDownToolStripMenuItem1, New List(Of Object())(New Object() {RowManagementToolStripMenuItem, ContextMenuStripde, Me}), EventTypes.Click, e)
+        End If
     End Sub
     Private Sub ClearCellToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ClearCellToolStripMenuItem1.Click
-
+        If ue Then
+            ClearCellToolStripMenuItem1.Enabled = False
+            wp.addEvent(ClearCellToolStripMenuItem1, New List(Of Object())(New Object() {ContextMenuStripde, Me}), EventTypes.Click, e)
+        End If
+    End Sub
+    Private Sub CutToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles CutToolStripMenuItem1.Click
+        If ue Then
+            CutToolStripMenuItem1.Enabled = False
+            wp.addEvent(CutToolStripMenuItem1, New List(Of Object())(New Object() {ContextMenuStripde, Me}), EventTypes.Click, e)
+        End If
+    End Sub
+    Private Sub CopyToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles CopyToolStripMenuItem1.Click
+        If ue Then
+            CopyToolStripMenuItem1.Enabled = False
+            wp.addEvent(CopyToolStripMenuItem1, New List(Of Object())(New Object() {ContextMenuStripde, Me}), EventTypes.Click, e)
+        End If
+    End Sub
+    Private Sub PasteToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles PasteToolStripMenuItem1.Click
+        If ue Then
+            PasteToolStripMenuItem1.Enabled = False
+            wp.addEvent(PasteToolStripMenuItem1, New List(Of Object())(New Object() {ContextMenuStripde, Me}), EventTypes.Click, e)
+        End If
+    End Sub
+    Private Sub SelectAllToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles SelectAllToolStripMenuItem1.Click
+        If ue Then
+            SelectAllToolStripMenuItem1.Enabled = False
+            wp.addEvent(SelectAllToolStripMenuItem1, New List(Of Object())(New Object() {ContextMenuStripde, Me}), EventTypes.Click, e)
+        End If
     End Sub
 End Class
 
@@ -500,6 +649,13 @@ Public Class TableControlSizeHooker
     Private maxsize As Size = Nothing
     Private sizing As Boolean = False
     Private sizingp As Boolean = False
+    Private ssize As Boolean = False
+    Private slockssize As New Object()
+    Private ssizep As Boolean = False
+    Private slockssizep As New Object()
+    Private delay As Integer = 1000
+    Private t_del As Threading.Thread = Nothing
+
     Public Sub New(f As Form, p As TableLayoutPanel, Optional he As Boolean = False)
         _parent = p
         _control = _parent.Container.Components(0)
@@ -520,6 +676,22 @@ Public Class TableControlSizeHooker
         _form = f
         If he Then hookEvents()
     End Sub
+    Private Sub d_thread()
+        While True
+            If ShouldSize And ShouldSizeParent Then Form.Invoke(Sub() Me.forceCheckAndUpdate())
+            Threading.Thread.Sleep(delay)
+            ShouldSize = True
+            ShouldSizeParent = True
+        End While
+    End Sub
+    Public Property ResizeDelay As Integer
+        Get
+            Return delay
+        End Get
+        Set(value As Integer)
+            delay = value
+        End Set
+    End Property
     Public ReadOnly Property ParentControl As TableLayoutPanel
         Get
             Return _parent
@@ -551,13 +723,40 @@ Public Class TableControlSizeHooker
             maxsize = value
         End Set
     End Property
+    Private Property ShouldSize As Boolean
+        Get
+            Return ssize
+        End Get
+        Set(value As Boolean)
+            SyncLock slockssize
+                ssize = value
+            End SyncLock
+        End Set
+    End Property
+    Private Property ShouldSizeParent As Boolean
+        Get
+            Return ssizep
+        End Get
+        Set(value As Boolean)
+            SyncLock slockssizep
+                ssizep = value
+            End SyncLock
+        End Set
+    End Property
     Public Sub hookEvents()
         AddHandler _parent.Layout, AddressOf onResizeParent
         AddHandler _control.Layout, AddressOf onResize
+        If t_del Is Nothing Then
+            t_del = New Threading.Thread(AddressOf d_thread) With {.IsBackground = True}
+            t_del.Start()
+        End If
     End Sub
     Public Sub unhookEvents()
         RemoveHandler _parent.Layout, AddressOf onResizeParent
         RemoveHandler _control.Layout, AddressOf onResize
+        If t_del IsNot Nothing Then If t_del.IsAlive Then t_del.Abort()
+        If t_del.IsAlive Then t_del.Join(delay)
+        t_del = Nothing
     End Sub
     Private Function hasMin() As Boolean
         If minsize.IsEmpty Or minsize.Height < 1 Or minsize.Width < 1 Then Return False Else Return True
@@ -572,12 +771,16 @@ Public Class TableControlSizeHooker
         Return ctrl.Height - (cctrl.Margin.Top + cctrl.Margin.Bottom + System.Windows.Forms.SystemInformation.HorizontalScrollBarHeight)
     End Function
     Public Sub forceCheckAndUpdate()
-        onResize(Nothing, New LayoutEventArgs(Nothing, Nothing))
+        ShouldSize = True
+        ShouldSizeParent = True
         onResizeParent(Nothing, New LayoutEventArgs(Nothing, Nothing))
+        onResize(Nothing, New LayoutEventArgs(Nothing, Nothing))
     End Sub
     Private Sub onResizeParent(sender As Object, e As LayoutEventArgs)
         If sizingp Then Return
+        If Not ShouldSizeParent Then Return
         sizingp = True
+        ShouldSizeParent = False
         _form.SuspendLayout()
         If hasMin() Then
             If width(_parent, _control) >= minsize.Width Or height(_parent, _control) >= minsize.Height Then
@@ -598,9 +801,12 @@ Public Class TableControlSizeHooker
     End Sub
     Private Sub onResize(sender As Object, e As LayoutEventArgs)
         If sizing Then Return
+        If Not ShouldSize Then Return
         sizing = True
+        ShouldSize = False
         _form.SuspendLayout()
         If hasMin() Then
+            _control.MinimumSize = New Size(0, 0)
             If _control.Width + System.Windows.Forms.SystemInformation.VerticalScrollBarWidth < minsize.Width Or _control.Height + System.Windows.Forms.SystemInformation.HorizontalScrollBarHeight < minsize.Height Then
                 _control.Dock = DockStyle.Top
                 _control.Width = minsize.Width - System.Windows.Forms.SystemInformation.VerticalScrollBarWidth
@@ -611,6 +817,7 @@ Public Class TableControlSizeHooker
             End If
         End If
         If hasMax() Then
+            _control.MaximumSize = New Size(0, 0)
             If _control.Width > maxsize.Width Or _control.Height > maxsize.Height Then
                 _control.Dock = DockStyle.Top
                 _control.Width = maxsize.Width

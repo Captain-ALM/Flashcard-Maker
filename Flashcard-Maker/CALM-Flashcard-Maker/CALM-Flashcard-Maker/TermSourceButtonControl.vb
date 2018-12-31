@@ -29,6 +29,10 @@
             Return ButtonInternal
         End Get
     End Property
+    Public Overrides Function Duplicate() As TermSourceBaseControl
+        Dim sc As TermSourceButtonControl = New TermSourceButtonControl(DeepCopyHelper.deepCopy(Of TermSource)(_term), _col, _row) With {.SelectionColor = _scol}
+        Return sc
+    End Function
 End Class
 
 Public Class TermSourceButtonControlClickEventArgs

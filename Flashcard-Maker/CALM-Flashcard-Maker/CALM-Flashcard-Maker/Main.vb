@@ -134,7 +134,7 @@ Module Main
         AddHandler worker.OnPumpException, AddressOf ope
         worker.addFormInstance(New AboutBx(worker))
         worker.addFormInstance(New GlobalOptions(worker))
-        worker.addFormInstance(New MainProgram())
+        worker.addFormInstance(New MainProgram(worker))
         worker.addParser(New PGlobalOptions())
 
         'Close the splash form and thread.
@@ -243,7 +243,7 @@ End Enum
 ''' Internal Binary Serializer Helper.
 ''' </summary>
 ''' <remarks></remarks>
-NotInheritable Class BinarySerializer
+Friend NotInheritable Class BinarySerializer
     Private Shared formatter As New BinaryFormatter()
     Private Shared slock As New Object()
     Public Shared Function serialize(obj As Object) As String
@@ -330,7 +330,7 @@ NotInheritable Class BinarySerializer
     End Function
 End Class
 
-Friend Class UnhandledExceptionBooter
+Friend NotInheritable Class UnhandledExceptionBooter
     Private expviewer As UnhandledExceptionViewer = Nothing
     Public Sub New(ByRef exv As UnhandledExceptionViewer)
         expviewer = exv
@@ -346,5 +346,14 @@ Friend Class UnhandledExceptionBooter
         Else
             Return DialogResult.None
         End If
+    End Function
+End Class
+
+Friend NotInheritable Class DeepCopyHelper
+    Public Shared Function deepCopy(obj As Object) As Object
+        Return BinarySerializer.deserialize(BinarySerializer.serialize(obj))
+    End Function
+    Public Shared Function deepCopy(Of t)(obj As t) As t
+        Return BinarySerializer.deserialize(Of t)(BinarySerializer.serialize(Of t)(obj))
     End Function
 End Class

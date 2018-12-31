@@ -3,6 +3,8 @@
 #Const Paint = False
 
 Public Class TermSourceBaseControl
+    Implements ICloneable
+
     Protected _col As Integer = 0
     Protected _row As Integer = 0
     Protected _scol As Color = Color.Blue
@@ -134,6 +136,13 @@ Public Class TermSourceBaseControl
         Me.Invalidate(True)
 #End If
     End Sub
+    Public Overridable Function Duplicate() As TermSourceBaseControl
+        Throw New NotImplementedException()
+    End Function
+
+    Public Function Clone() As Object Implements ICloneable.Clone
+        Return Duplicate()
+    End Function
 End Class
 
 Public Class TermSourceControlEventArgs
