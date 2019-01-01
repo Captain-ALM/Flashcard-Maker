@@ -136,6 +136,7 @@ Module Main
         worker.addFormInstance(New GlobalOptions(worker))
         worker.addFormInstance(New MainProgram(worker))
         worker.addParser(New PGlobalOptions())
+        worker.addParser(New PMainProgram())
 
         'Close the splash form and thread.
         sc.CloseForm()
@@ -156,7 +157,10 @@ Module Main
     End Sub
 
     Public Sub shutdown()
-        If worker.pumping() Then worker.stopPumpForce()
+        If worker.Pumping() Then worker.stopPumpForce()
+        RemoveHandler worker.OnPumpException, AddressOf ope
+        If Not worker.Disposing And Not worker.IsDisposed Then worker.Dispose()
+        worker = Nothing
     End Sub
 
     Sub decodeArgs()

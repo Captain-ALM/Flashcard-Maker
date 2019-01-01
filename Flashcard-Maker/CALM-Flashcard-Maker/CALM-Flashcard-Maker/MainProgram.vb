@@ -1,6 +1,8 @@
 ﻿Imports captainalm.workerpumper
 
 Public Class MainProgram
+    Implements IWorkerPumpReceiver
+
     Private formClosingDone As Boolean = False
     Private formClosedDone As Boolean = False
     Private wp As WorkerPump = Nothing
@@ -203,7 +205,7 @@ Public Class MainProgram
             wp.addEvent(butpded, New List(Of Object)(New Object() {Me}), EventTypes.Click, e)
         End If
     End Sub
-    
+
     Private Sub TermEditorTablepd1_KeyDown(sender As Object, e As KeyEventArgs) Handles TermEditorTablepd1.KeyDown
         If ue Then
             TermEditorTablepd1.Enabled = False
@@ -609,6 +611,18 @@ Public Class MainProgram
             wp.addEvent(SelectAllToolStripMenuItem1, New List(Of Object())(New Object() {ContextMenuStripde, Me}), EventTypes.Click, e)
         End If
     End Sub
+
+    Public Property WorkerPump As WorkerPump Implements IWorkerPumpReceiver.WorkerPump
+        Get
+            Return wp
+        End Get
+        Set(value As WorkerPump)
+            If value IsNot Nothing Then
+                wp = value
+                ue = True
+            End If
+        End Set
+    End Property
 End Class
 
 Public Class FileDialogSuccessEventArgs

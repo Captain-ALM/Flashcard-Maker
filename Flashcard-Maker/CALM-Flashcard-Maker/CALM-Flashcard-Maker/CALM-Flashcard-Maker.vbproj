@@ -115,6 +115,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="PGlobalOptions.vb" />
+    <Compile Include="PMainProgram.vb" />
     <Compile Include="Project.vb" />
     <Compile Include="SplashScr.designer.vb">
       <DependentUpon>SplashScr.vb</DependentUpon>

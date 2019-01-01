@@ -65,7 +65,8 @@ Public Class WorkerPump
     ''' </summary>
     ''' <param name="f">The form instance.</param>
     ''' <remarks></remarks>
-    Public Sub addFormInstance(f As Form)
+    Public Sub addFormInstance(Of t As {Form, IWorkerPumpReceiver})(f As t)
+        f.WorkerPump = Me
         formInstanceRegistry.Add(f)
     End Sub
     ''' <summary>
@@ -81,9 +82,11 @@ Public Class WorkerPump
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Function pumping() As Boolean
-        Return pump Or wThread.IsAlive
-    End Function
+    Public ReadOnly Property Pumping() As Boolean
+        Get
+            Return pump Or wThread.IsAlive
+        End Get
+    End Property
     ''' <summary>
     ''' Stops the pump.
     ''' </summary>
@@ -166,6 +169,7 @@ Public Class WorkerPump
     ''' <param name="p">The Parser instance.</param>
     ''' <remarks></remarks>
     Public Sub addParser(p As IEventParser)
+        p.WorkerPump = Me
         parsers.Add(p)
     End Sub
     ''' <summary>
@@ -347,20 +351,52 @@ Public Class WorkerPump
                         If Not ev.EventSource.parentObjs.Contains(ev.EventSource.sourceObj) Then
                             If canCastObject(Of Control)(ev.EventSource.sourceObj) And Not canCastObject(Of Form)(ev.EventSource.sourceObj) Then
                                 Dim c As Control = castObject(Of Control)(ev.EventSource.sourceObj)
-                                c.Invoke(Sub() c.Enabled = False)
+                                c.Invoke(Sub()
+                                             Try
+                                                 c.Enabled = False
+                                             Catch ex As ThreadAbortException
+                                                 Throw ex
+                                             Catch ex As Exception
+                                                 RaiseEvent OnPumpException(ex)
+                                             End Try
+                                         End Sub)
                             ElseIf canCastObject(Of Form)(ev.EventSource.sourceObj) Then
                                 Dim f As Form = castObject(Of Form)(ev.EventSource.sourceObj)
-                                If f.Visible Then f.Invoke(Sub() f.Enabled = False)
+                                If f.Visible Then f.Invoke(Sub()
+                                                               Try
+                                                                   f.Enabled = False
+                                                               Catch ex As ThreadAbortException
+                                                                   Throw ex
+                                                               Catch ex As Exception
+                                                                   RaiseEvent OnPumpException(ex)
+                                                               End Try
+                                                           End Sub)
                             End If
                         End If
                         Dim en As Boolean = parseEvents(ev)
                         If Not ev.EventSource.parentObjs.Contains(ev.EventSource.sourceObj) And en Then
                             If canCastObject(Of Control)(ev.EventSource.sourceObj) And Not canCastObject(Of Form)(ev.EventSource.sourceObj) Then
                                 Dim c As Control = castObject(Of Control)(ev.EventSource.sourceObj)
-                                c.Invoke(Sub() c.Enabled = True)
+                                c.Invoke(Sub()
+                                             Try
+                                                 c.Enabled = True
+                                             Catch ex As ThreadAbortException
+                                                 Throw ex
+                                             Catch ex As Exception
+                                                 RaiseEvent OnPumpException(ex)
+                                             End Try
+                                         End Sub)
                             ElseIf canCastObject(Of Form)(ev.EventSource.sourceObj) Then
                                 Dim f As Form = castObject(Of Form)(ev.EventSource.sourceObj)
-                                If f.Visible Then f.Invoke(Sub() f.Enabled = True)
+                                If f.Visible Then f.Invoke(Sub()
+                                                               Try
+                                                                   f.Enabled = True
+                                                               Catch ex As ThreadAbortException
+                                                                   Throw ex
+                                                               Catch ex As Exception
+                                                                   RaiseEvent OnPumpException(ex)
+                                                               End Try
+                                                           End Sub)
                             End If
                         End If
                         If workerStates.ContainsKey(ev) Then
@@ -452,10 +488,24 @@ Public Class WorkerPump
 
 End Class
 ''' <summary>
+''' This Interface is used to get and set the WorkerPump a Supporting Instance Uses.
+''' </summary>
+''' <remarks></remarks>
+Public Interface IWorkerPumpReceiver
+    ''' <summary>
+    ''' Gets or sets the WorkerPump of a supporting class.
+    ''' </summary>
+    ''' <value>The worker pump instance.</value>
+    ''' <returns>The worker pump the class uses.</returns>
+    ''' <remarks></remarks>
+    Property WorkerPump As WorkerPump
+End Interface
+''' <summary>
 ''' This Interface is Used For Event Parsers.
 ''' </summary>
 ''' <remarks></remarks>
 Public Interface IEventParser
+    Inherits IWorkerPumpReceiver
     ''' <summary>
     ''' Parses a WorkerEvent.
     ''' </summary>

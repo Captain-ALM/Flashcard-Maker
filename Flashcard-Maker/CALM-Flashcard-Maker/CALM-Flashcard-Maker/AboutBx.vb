@@ -1,6 +1,8 @@
 ﻿Imports captainalm.workerpumper
 
 Public NotInheritable Class AboutBx
+    Implements IWorkerPumpReceiver
+
     Private formClosingDone As Boolean = False
     Private formClosedDone As Boolean = False
     Private wp As WorkerPump = Nothing
@@ -84,4 +86,16 @@ Public NotInheritable Class AboutBx
         Me.TextBox1.Text = "License: " & vbCrLf & license
         If ue Then wp.addEvent(Me, EventTypes.Shown, e)
     End Sub
+
+    Public Property WorkerPump As WorkerPump Implements IWorkerPumpReceiver.WorkerPump
+        Get
+            Return wp
+        End Get
+        Set(value As WorkerPump)
+            If value IsNot Nothing Then
+                wp = value
+                ue = True
+            End If
+        End Set
+    End Property
 End Class

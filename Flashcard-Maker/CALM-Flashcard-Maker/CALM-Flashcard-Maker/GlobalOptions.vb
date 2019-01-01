@@ -3,6 +3,8 @@ Imports captainalm.workerpumper
 Imports System.Drawing.Printing
 
 Public NotInheritable Class GlobalOptions
+    Implements IWorkerPumpReceiver
+
     Private formClosingDone As Boolean = False
     Private formClosedDone As Boolean = False
     Private wp As WorkerPump = Nothing
@@ -213,6 +215,18 @@ Public NotInheritable Class GlobalOptions
     Private Sub butok_Click(sender As Object, e As EventArgs) Handles butok.Click
         Me.Close()
     End Sub
+
+    Public Property WorkerPump As WorkerPump Implements IWorkerPumpReceiver.WorkerPump
+        Get
+            Return wp
+        End Get
+        Set(value As WorkerPump)
+            If value IsNot Nothing Then
+                wp = value
+                ue = True
+            End If
+        End Set
+    End Property
 End Class
 
 Public Class FontDialogSuccessEventArgs

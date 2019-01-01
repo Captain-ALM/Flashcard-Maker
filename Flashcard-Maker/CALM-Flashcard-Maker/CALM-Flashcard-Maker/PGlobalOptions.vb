@@ -556,4 +556,6 @@ Public Class PGlobalOptions
     Private Function getValueFromControl(Of t)(inv As Control, del As retdel) As t
         Return inv.Invoke(del)
     End Function
+
+    Public Property WorkerPump As WorkerPump Implements IWorkerPumpReceiver.WorkerPump
 End Class
